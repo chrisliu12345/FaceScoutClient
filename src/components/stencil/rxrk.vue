@@ -95,7 +95,7 @@
                   :key="index"
                   :label="item.n"
                   :value="item.v"
-                ></el-option>
+                 ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="文化程度:" style="margin-left: 20px;margin-bottom: 10px;">
@@ -104,7 +104,7 @@
                 <el-option label="本科" value="2"></el-option>
               </el-select>
             </el-form-item>
-          </el-form>
+          </el-form>0
         </el-row>
 
         <el-row>
