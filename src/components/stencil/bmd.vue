@@ -1,121 +1,175 @@
 <template>
-  <el-row>
-    <el-col :span="24">
-      <el-tabs :tab-position="tabPosition" style="height: 50px;margin-left: 10px;margin-right: 10px">
-        <el-tab-pane label="二次开发1">二次开发1</el-tab-pane>
-        <el-tab-pane label="二次开发2">二次开发2</el-tab-pane>
-        <el-tab-pane label="二次开发3">二次开发3</el-tab-pane>
-        <el-tab-pane label="二次开发4">二次开发4</el-tab-pane>
-        <el-tab-pane label="二次开发5">二次开发5</el-tab-pane>
-      </el-tabs>
-
-    </el-col>
-    <el-col :span="5">
-      <div class="grid-content bg-purple">
-        <el-tree
-          :props="props1"
-          :load="loadNode1"
-          lazy
-          show-checkbox>
-        </el-tree>
-      </div>
-    </el-col>
-    <el-col :span="18">
-      <div class="grid-content bg-purple-light">
-        <div class="container" align="center">
-          <div class="player" style="width: 100%;height: 100%">
-            <video-player class="video-player vjs-custom-skin"
-                          ref="videoPlayer"
-                          :playsinline="true"
-                          :options="playerOptions"
-                          @play="onPlayerPlay($event)"
-                          @pause="onPlayerPause($event)"
-            >
-            </video-player>
+  <div class="bmd">
+    <br>
+    <el-row :gutter="24">
+      <el-col :span="8" :offset="2">
+        <el-card class="box-card box_card_bmd" style="padding-bottom: 50%">
+          <div><label>添加或修改白名单</label></div>
+          <br><br>
+          <div align="left" style="font-size: 14px"><br>
+            <el-row>
+              <el-col :span="4" :offset="2">
+                <div style="margin-top: 15%">姓名:&nbsp;&nbsp;</div>
+              </el-col>
+              <el-col :span="18">
+                <el-input v-model="whiteDate.name" class="bmd_inputType"></el-input>
+              </el-col>
+            </el-row>
+            <br>
+            <el-row>
+              <el-col :span="4" :offset="2">
+                <div style="margin-top: 15%">身份证号码:&nbsp;&nbsp;</div>
+              </el-col>
+              <el-col :span="18">
+                <el-input v-model="whiteDate.name" class="bmd_inputType" ></el-input>
+              </el-col>
+            </el-row>
           </div>
-        </div>
-      </div>
-    </el-col>
-  </el-row>
+          <br>
+          <br>
+          <div align="center">
+            <el-button type="primary" plain style="width: 120px">添加</el-button>
+            <el-button type="primary" plain style="width: 120px">更新</el-button>
+          </div>
+          <div style="padding-top: 25%">
+            添加成功!
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="12">
+        <el-card class="box-card box_card_bmd" style="padding-bottom: 50%">
+          <div><label>白名单列表</label></div>
+          <br>
+          <br>
+          <div align="center">
+            <el-table
+              ref="singleTable"
+              :data="tableDataChange"
+              highlight-current-row
+              @current-change="handleCurrentChange"
+              style="width: 100%;">
+              <el-table-column
+                width="130">
+              </el-table-column>
+              <el-table-column
+                property="date"
+                label="姓名"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                width="100">
+              </el-table-column>
+              <el-table-column
+                property="name"
+                label="身份证号"
+                width="120">
+              </el-table-column>
+              <el-table-column
+                width="100">
+              </el-table-column>
+              <el-table-column
+                label="操作">
+                <template slot-scope="scope">
+                  <i class="el-icon-error" style="margin-left: 2%" v-on:click="deleteRow(scope.$index, tableData)"></i>
+                </template>
+              </el-table-column>
+            </el-table>
+            <br>
+            <br>
+            <div align="right">
+              <el-pagination
+                background
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page="currentPage"
+                :page-sizes="[10, 20, 30, 40]"
+                :page-size="10"
+                layout="total, sizes, prev, pager, next, jumper"
+                :total="50">
+              </el-pagination>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script>
-import {videoPlayer} from 'vue-video-player'
-
-export default {
-  name: 'bmd',
-  data () {
-    return {
-      playerOptions: {
-        //        playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
-        autoplay: false, // 如果true,浏览器准备好时开始回放。
-        muted: false, // 默认情况下将会消除任何音频。
-        loop: false, // 导致视频一结束就重新开始。
-        preload: 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
-        language: 'zh-CN',
-        aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
-        fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
-        sources: [{
-          type: 'video/mp4',
-          src: 'https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm' // 你的m3u8地址（必填）
-        }],
-        // poster: 'poster.jpg', 你的封面地址
-        width: document.documentElement.clientWidth,
-        notSupportedMessage: '此视频暂无法播放，请稍后再试', // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
-        controlBar: {
-          timeDivider: true,
-          durationDisplay: true,
-          remainingTimeDisplay: false,
-          fullscreenToggle: true // 全屏按钮
-        }
-      },
-      tabPosition: 'top',
-      props1: {
-        label: 'name',
-        children: 'zones',
-        isLeaf: 'leaf'
-      }
-    }
-  },
-  components: {
-    videoPlayer
-  },
-  methods: {
-    onPlayerPlay (player) {
-      alert('play')
-    },
-    onPlayerPause (player) {
-      alert('pause')
-    },
-    loadNode1 (node, resolve) {
-      if (node.level === 0) {
-        return resolve([{name: 'region'}])
-      }
-      if (node.level > 1) return resolve([])
-      setTimeout(() => {
-        const data = [{
-          name: 'leaf',
-          leaf: true
+  export default {
+    name: "bmd",
+    data(){
+      return {
+        whiteDate: {
+          name: '',
+          idCard: ''
+        },
+        tableData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
         }, {
-          name: 'zone',
-          zones: [{
-            name: '123', leaf: true}]
-        }]
-        resolve(data)
-      }, 500)
-    }
-  },
-  computed: {
-    player () {
-      return this.$refs.videoPlayer.player
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1516 弄'
+        }],
+        tableDataChange: [],
+        currentPage: 1
+      }
+    },
+    mounted: function () {
+      this.tableDataChange = this.tableData;
+    },
+    methods: {
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
+        this.tableDataChange = this.tableData.slice((val - 1) * 10, (val - 1) * 10 + 10);
+      },
+      deleteRow(index, rows) {
+        rows.splice(index, 1);
+      }
     }
   }
-}
+
 </script>
 
-<style type="text/css" scoped>
-  .container {
-    background-color: #efefef;
-    min-height: 80%;
+<style>
+  .bmd{
+    overflow:hidden;
+    min-width: 1200px;
+    height: 880px;
+    background-image: url(/static/img/bmd_back.png);
+    background-repeat: no-repeat;
+    background-size: 85% 85%;
+    color: azure;
+    z-index: 9;
+    margin:5% 0% 5% 10%;
   }
+  .box_card_bmd{
+    border:0px!important;
+    background-color:rgba(255,255,255,0);
+    margin-top:20px;
+    position:relative;
+    left:-150px;
+  }
+  .bmd_inputType{
+    width: 80%;
+  }
+  .bmd_inputType input{
+    background-color: rgba(255,255,255,0)!important;
+    border: 2px solid rgba(47,123,165,1);
+    color:white;
+  }
+
 </style>

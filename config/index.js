@@ -13,8 +13,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-     /* '*':'http://192.168.5.213:8050/'*/
-      '*':'http://localhost:8050/'
+      /*'*':'http://192.168.5.213:8050/'*/
+      '*':'http://localhost:8801/'
     },
 
     // Various Dev Server settings

@@ -2,11 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import login from '@/components/login'
 import logout from '@/components/logout'
-import Bddb from '@/components/stencil/bddb'
+import Bdbd from '@/components/stencil/bdbd'
 import Zhcx from '@/components/stencil/zhcx'
 import Bmd from '@/components/stencil/bmd'
 import Rxrk from '@/components/stencil/rxrk'
-import Rxbd from '@/components/stencil/rxbd'
+import Rxbd from '@/components/stencil/rxbdzh'
 import register from '@/components/register'
 import UserInfo from '@/components/layout/user/userinfo'
 import Password from '@/components/layout/user/changePassword'
@@ -14,7 +14,7 @@ import Help from '@/components/layout/user/help'
 import Home from '@/components/home'
 import ProductAdd from '@/components/stencil/resource/productAdd'
 import InterfaceAdd from '@/components/stencil/resource/interfaceAdd'
-import Census from '@/components/stencil/intelligence/census'
+import Hjcc from '@/components/stencil/hjcc'
 Vue.use(Router)
 
 const router = new Router({
@@ -49,16 +49,16 @@ const router = new Router({
           component: Rxrk
         },
         {
-          path: '/bddb',
-          name: 'bddb',
+          path: '/bdbd',
+          name: 'bdbd',
           meta: {
             requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
           },
-          component: Bddb
+          component: Bdbd
         },
         {
-          path: '/rxbd',
-          name: 'rxbd',
+          path: '/rxbdzh',
+          name: 'rxbdzh',
           meta: {
             requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
           },
@@ -121,12 +121,12 @@ const router = new Router({
           component: InterfaceAdd
         },
         {
-          path: '/census',
-          name: 'census',
+          path: '/hjcc',
+          name: 'hjcc',
           meta: {
             requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
           },
-          component: Census
+          component: Hjcc
         }
 
       ]

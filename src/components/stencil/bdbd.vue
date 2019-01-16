@@ -28,7 +28,7 @@
         </div>
         <div ><img :src="localImgUrl1" class="image2 avatar"></div>
         <div style="margin-top: 10%;margin-bottom: 10%" >
-          <el-button type="success" style="width: 180px; height: 50px">开始对比</el-button>
+          <el-button type="success" style="width: 180px; height: 50px" @click="bddb_ksdb">开始对比</el-button>
         </div>
         <div ><img :src="localImgUrl2" class="image2 avatar"></div>
         <div style="margin-top: 7%">
@@ -62,7 +62,7 @@
 
 <script>
   export default {
-    name: 'bddb',
+    name: 'bdbd',
     data () {
       return {
         imageUrl1:'/static/img/people.jpg',
@@ -74,6 +74,10 @@
     methods: {
       handleChange (val) {
         // console.log(val);
+      },
+      bddb_ksdb(){
+        //this.$router.push('/rxrk')
+
       },
       handleAvatarSuccess1(res, file) {
         this.imageUrl1 = URL.createObjectURL(file.raw),
@@ -145,5 +149,6 @@
     display: block;
     background-size: 85% 85%;
     color: azure;
+    margin-top: 50px;
   }
 </style>

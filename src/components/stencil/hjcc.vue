@@ -1,5 +1,5 @@
 <template>
-  <div class="census" style="min-width: 1400px;">
+  <div class="census">
   <el-row style="margin-top: 50px">
     <el-col :span="21" :offset="1" style=" border-style: solid;
       border-width: 1px;
@@ -107,6 +107,7 @@
       <div align="right"  style="margin-top: 10px">
         <span class="demonstration"></span>
         <el-pagination
+          background="true"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
@@ -123,7 +124,7 @@
 
 <script>
 export default {
-  name: "faceTrack",
+  name: "hjcc",
   data() {
     return {
         pageSize:10,
@@ -444,7 +445,7 @@ export default {
   }
   .hjinput_inner>.el-input>.el-input__inner{
   background-color: rgba(255,255,255,0);
-  border: 2px solid rgba(70,129,219,1)
+  border: 1px solid rgba(70,129,219,1)
 }
   .el-button--primary.is-plain{
   background-color:rgba(51,135,221,0.49);
@@ -458,24 +459,8 @@ export default {
     display: block;
     background-size: 85% 85%;
     color: azure;
+    min-width: 1400px;
+    margin-top: 5%;
   }
-  .el-input--mini>.el-input__inner{
-    background-color: rgba(255,255,255,0);
-    border: 1px solid rgba(255,255,255,1);
-  }
-  .el-pagination .btn-next, .el-pagination .btn-prev{
-    background-color: rgba(255,255,255,0);
-    border:1px solid  #ffffff;
-  }
-  .el-pagination button:disabled{
-   background-color: rgba(255,255,255,0);;
-  }
-  .el-pager li{
-    background-color: rgba(255,255,255,0);
-    border:1px solid  #ffffff;
-  }
-  .is-in-pagination>.el-input__inner{
-    background-color: rgba(255,255,255,0);
-    border: 1px solid rgba(255,255,255,1);
-  }
+
 </style>

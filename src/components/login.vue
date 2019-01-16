@@ -84,10 +84,10 @@ export default {
         if (valid) {
           this.$axios({
             method: 'post',
-            url: '/jwt/login',
+            url: '/login',
             data: {
-              'username': this.ruleForm2.account,
-              'password': this.ruleForm2.pass
+              "username": this.ruleForm2.account,
+              "password": this.ruleForm2.pass
             },
             headers: {
               'Authorization': ' '
@@ -98,7 +98,8 @@ export default {
             } else {
               console.log(res.data)
               // 将token存储到浏览器请求头
-              this.userToken = 'Bearer ' + res.data.token
+              /*this.userToken = 'Bearer ' + res.data.token*/
+              this.userToken = res.headers.authorization
               this.changeLogin({Authorization: this.userToken})
               // 将用户姓名存储到localStorage(只能存储字符串信息)，以便在菜单栏top.vue中使用
               sessionStorage.setItem('userInfo', res.data.name)

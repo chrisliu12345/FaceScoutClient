@@ -22,7 +22,8 @@
        <el-row >
         <el-upload
           class="upload-demo"
-          action="/user/uploadPic"
+          action="/face/common/checkPhoto"
+          :headers="myHeaders"
           auto-upload
           :show-file-list="false"
           :on-success="handleAvatarSuccess1"
@@ -33,7 +34,7 @@
 
 
       </el-col>
-      <el-col :span="6" offset="5">
+      <el-col :span="6" :offset="5">
         <el-row>
 
           <el-row>
@@ -41,26 +42,26 @@
               <p class="highLine" >基础信息</p>
             </el-col>
           </el-row>
-          <el-form ref="form" :label-position="labelPosition" :model="form" label-width="80px" style="color:white;">
+          <el-form ref="baseInfoForm" :label-position="labelPosition" :model="baseInfoForm" label-width="80px" style="color:white;">
             <el-form-item label="入库类型:" style="margin-left: 20px;margin-top:5%;margin-bottom: 10px;">
-              <el-select v-model="form.rktype" placeholder="请选择类型" style="width:265px;height:36px;" class="rxrkSelect">
+              <el-select v-model="baseInfoForm.rktype" placeholder="请选择类型" style="width:265px;height:36px;" class="rxrkSelect">
                 <el-option label="常住人口" value="1"></el-option>
                 <el-option label="流动人口" value="2"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item :label-position="labelPosition" label="身份证号码:" label-width="100px" style="margin-bottom: 10px;">
-              <el-input v-model="form.sfID" placeholder="请输入18位身份证号" class="rxrk_jcxx"></el-input>
+              <el-input v-model="baseInfoForm.sfID" placeholder="请输入18位身份证号" class="rxrk_jcxx" id="idcard" @blur="pdcsny"></el-input>
             </el-form-item>
             <el-form-item :label-position="labelPosition" label="姓名:" label-width="100px" style="margin-bottom: 10px;">
-              <el-input v-model="form.name" placeholder="请输入姓名" class="rxrk_jcxx"></el-input>
+              <el-input v-model="baseInfoForm.name" placeholder="请输入姓名" class="rxrk_jcxx"></el-input>
             </el-form-item>
             <el-form-item :label-position="labelPosition" label="性别:" label-width="100px" style="margin-bottom: 10px;">
-              <el-radio v-model="form.gender" label="1">男</el-radio>
-              <el-radio v-model="form.gender" label="2">女</el-radio>
+              <el-radio v-model="baseInfoForm.gender" label="1">男</el-radio>
+              <el-radio v-model="baseInfoForm.gender" label="2">女</el-radio>
             </el-form-item>
             <el-form-item :label-position="labelPosition" label="出生年月:" label-width="100px" style="margin-bottom: 10px;">
               <el-date-picker
-                v-model="form.birthday"
+                v-model="baseInfoForm.birthday"
                 type="date"
                 placeholder="请输入出生年月"
                 style="width:265px;"
@@ -68,7 +69,7 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item label="籍贯:" style="margin-left: 20px;margin-bottom:10px;">
-              <el-select v-model="form.nativePlace" placeholder="请选择籍贯" style="width:265px;" class="rxrkSelect">
+              <el-select v-model="baseInfoForm.nativePlace" placeholder="请选择籍贯" style="width:265px;" class="rxrkSelect">
                 <el-option
                   v-for="item in navtivePlaces"
                   :key="item.value"
@@ -78,19 +79,19 @@
               </el-select>
             </el-form-item>
             <el-form-item label="民族:" style="margin-left: 20px;margin-bottom: 10px;">
-              <el-select v-model="form.nation" placeholder="请选择民族" style="width:265px;" class="rxrkSelect">
+              <el-select v-model="baseInfoForm.nation" placeholder="请选择民族" style="width:265px;" class="rxrkSelect">
                 <el-option label="汉族" value="1"></el-option>
                 <el-option label="回族" value="2"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="宗教信仰:" style="margin-left: 20px;margin-bottom: 10px;">
-              <el-select v-model="form.faith" placeholder="请选择宗教信仰" style="width:265px;" class="rxrkSelect">
+              <el-select v-model="baseInfoForm.faith" placeholder="请选择宗教信仰" style="width:265px;" class="rxrkSelect">
                 <el-option label="无宗教信仰" value="1"></el-option>
                 <el-option label="基督教" value="2"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="文化程度:" style="margin-left: 20px;margin-bottom: 10px;">
-              <el-select v-model="form.educationDegree" placeholder="请选择文化程度" style="width:265px;" class="rxrkSelect">
+              <el-select v-model="baseInfoForm.educationDegree" placeholder="请选择文化程度" style="width:265px;" class="rxrkSelect">
                 <el-option label="专科" value="1"></el-option>
                 <el-option label="本科" value="2"></el-option>
               </el-select>
@@ -105,10 +106,10 @@
         </el-row>
         <el-row >
           <el-col :span="8">
-            <img :src="imageUrl1" class="image avatar" style="width: 60%;height: 60%;margin: auto;">
+            <img :src="effectivImageUrl" class="image avatar effective_image" style="width: 60px; height: 60px;">
           </el-col>
           <el-col :span="8">
-            <el-button  type="primary" style="width: 80px;margin-top:10px;">提交</el-button>
+            <el-button  type="primary" @click="submitForm('baseInfoForm')" style="width: 80px;margin-top:10px;">提交</el-button>
           </el-col>
           <el-col :span="8">
             <el-button  type="primary" style="width:80px;margin-top:10px;">重置</el-button>
@@ -130,9 +131,14 @@
     },
     data() {
       return {
+          myHeaders:{
+            Authorization:sessionStorage.getItem('Authorization')
+          },
+          imgageName:'',
+        effectivImageUrl:'/static/img/people.jpg',
         imageUrl1:'/static/img/people.jpg',
         labelPosition: 'right',
-        form: {
+        baseInfoForm: {
           rktype: '',
           sfID: '',
           name: '',
@@ -163,9 +169,12 @@
     },
     methods: {
       handleAvatarSuccess1(res, file) {
-        this.imageUrl1 = URL.createObjectURL(file.raw)
+        this.imageUrl1 = URL.createObjectURL(file.raw);
+        this.effectivImageUrl="data:image/jpeg;base64,"+res.img;
+        this.imgageName=res.imgPath;
       },
       beforeAvatarUpload(file) {
+
         const isJPG = file.type === 'image/jpeg';
         const isLt2M = file.size / 1024 / 1024 < 2;
 
@@ -177,12 +186,54 @@
         }
         return isJPG && isLt2M;
       },
+      submitForm (formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.$axios({
+              method: 'post',
+              url: '/face/add/addPerson',
+              data: {
+                'type': this.baseInfoForm.rktype,
+                'idcard': this.baseInfoForm.sfID,
+                'tName': this.baseInfoForm.name,
+                'sex': this.baseInfoForm.gender,
+                /*birthday: this.baseInfoForm.birthday,*/
+                'pcc':this.baseInfoForm.nativePlace,
+                'nation': this.baseInfoForm.nation,
+                'rcb': this.baseInfoForm.faith,
+                'ccb':this.baseInfoForm.educationDegree,
+                'file':this.imgageName
+              },
+              headers: {
+                'Authorization': sessionStorage.getItem('Authorization')
+              }
+            }).then(res => { // res是返回结果
+              if (res.data.code === '401') {
+                this.$alert('账号或密码错误，请重新输入')
+              } else {
+                console.log(res.data)
+                //此处用来处理添加成功信息
+              }
+            }).catch(err => { // 请求失败就会捕获报错信息
+              console.log('服务正在维护，请稍后再试！')
+              console.log(err)
+            })
+          } else {
+            console.log('用户信息错误')
+            return false
+          }
+        })
+      },
+      pdcsny(){
+          console.log("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+      }
+    },
 
-    }
   }
 </script>
 <style>
   .rxrk{
+    overflow:hidden;
     min-width: 1200px;
     height: 880px;
     background-image: url(/static/img/rxrk_back.png);
@@ -228,17 +279,23 @@
     border: 2px solid rgba(47,123,165,1);
     color:white;
   }
-.rxrkDate>.el-input__inner{
-  background-color: rgba(255,255,255,0);
-  border: 2px solid rgba(47,123,165,1);
-  color:white;
-}
+  .rxrkDate>.el-input__inner{
+    background-color: rgba(255,255,255,0);
+    border: 2px solid rgba(47,123,165,1);
+    color:white;
+  }
   .rxrk_jcxx>.el-input__inner{
     background-color: rgba(255,255,255,0);
     border: 2px solid rgba(47,123,165,1);
     color:white;
   }
-div{
-  white-space:nowrap;
-}
+  div{
+    white-space:nowrap;
+  }
+  .effective_image{
+    width: 60px;
+    height: 60px;
+    border-radius:0.5em;
+    margin: auto;
+  }
 </style>

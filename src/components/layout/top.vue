@@ -5,7 +5,7 @@
       </h2>-->
     <el-col :span="4">
       <h2>
-        <span style="color: white">人脸侦查系统</span>
+        <span style="color: #E7F0FA;font-family:hyling;">人脸侦查系统</span>
       </h2>
     </el-col>
     <el-col :span="20">
@@ -20,7 +20,7 @@
         </el-menu-item>
 
       </el-menu>
-      <el-col :span="6">
+      <!--<el-col :span="6">
         <el-menu
           :default-active="activeIndex2"
           class="el-menu-demo"
@@ -32,7 +32,7 @@
           <el-menu-item index="999">
             <el-dropdown size="small" @command="handleCommand">
             <span class="el-dropdown-link" style="color: white">
-                  {{language}}<i class="el-icon-arrow-down el-icon--right"></i>
+                  {{language}}<i class="el-icon-arrow-down el-icon&#45;&#45;right"></i>
             </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item command="cn">中文</el-dropdown-item>
@@ -52,7 +52,7 @@
             <el-tag type="warning">{{userInfo}}</el-tag>
           </el-menu-item>
         </el-menu>
-      </el-col>
+      </el-col>-->
     </el-col>
 
 
@@ -66,11 +66,11 @@ export default {
     return {
       itemss: [
          {title: '人像入库', count: 1, locked: true, id: '1', idname:'rxrk',router: '/rxrk' ,dis:true},
-        {title: '人像比对', count: 1, locked: true, id: '2', idname:'rxbd',router: '/rxbd',dis:true},
+        {title: '人像比对', count: 1, locked: true, id: '2', idname:'rxbd',router: '/rxbdzh',dis:true},
         {title: '白名单', count: 1, locked: true, id: '3', idname:'bmd',router: '/bmd',dis:true}, //菜单的模拟数据
-        {title: '本地比对', count: 2, locked: true, id: '4', idname:'bddb',router: '/bddb',dis:true},
+        {title: '本地比对', count: 2, locked: true, id: '4', idname:'bddb',router: '/bdbd',dis:true},
         {title: '综合查询', count: 3, locked: false, id: '5',idname:'zhcx', router: '/zhcx',dis:true},
-        {title: '户籍查重', count: 3, locked: false, id: '6', idname:'census',router: '/census',dis:true}
+        {title: '户籍查重', count: 3, locked: false, id: '6', idname:'census',router: '/hjcc',dis:true}
       ],
       activeIndex: '1',
       activeIndex2: '1',
@@ -86,7 +86,6 @@ export default {
   mounted: function () {
     this.restaurants = this.loadAll()
     this.selectPicture()
-    this.selectMenu()
     this.isSelect=1
   },
   methods: {
@@ -164,19 +163,6 @@ export default {
       } else {
         console.log('server error')
       }
-    },
-    selectMenu () {
-      let type = sessionStorage.getItem('userType')
-      this.$axios({
-        method: 'post',
-        url: '/menu',
-        data: {type: type}
-      }).then(res => { // res是返回结果
-        console.log(res.data.data)
-        this.items = res.data.data
-      }).catch(err => { // 请求失败就会捕获报错信息
-        console.log(err)
-      })
     }
 
   }
@@ -286,8 +272,8 @@ export default {
     vertical-align: middle;
   }
   #bddb > .ele-menu-item-font:before{
-    -webkit-mask: url(/static/img/bddb.svg) no-repeat 50% 50%;
-    mask: url(/static/img/bddb.svg) no-repeat 50% 50%;
+    -webkit-mask: url(/static/img/bdbd.svg) no-repeat 50% 50%;
+    mask: url(/static/img/bdbd.svg) no-repeat 50% 50%;
     display: inline-block;
     content:'';
     mask-size: cover;
@@ -297,8 +283,8 @@ export default {
     vertical-align: middle;
   }
   #bddb > .router-link-active:before{
-    -webkit-mask: url(/static/img/bddb.svg) no-repeat 50% 50%;
-    mask: url(/static/img/bddb.svg) no-repeat 50% 50%;
+    -webkit-mask: url(/static/img/bdbd.svg) no-repeat 50% 50%;
+    mask: url(/static/img/bdbd.svg) no-repeat 50% 50%;
     display: inline-block;
     content:'';
     mask-size: cover;

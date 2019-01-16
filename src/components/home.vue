@@ -1,8 +1,8 @@
 <template >
 <div class="backImg">
-  <el-container >
+  <el-container class="home">
     <el-header><Top  @input="input"></Top></el-header>
-    <el-main style="padding: 0" ><Stencil :ind = 'ind'></Stencil></el-main>
+    <el-main class="home_el-main" style="padding: 0" ><Stencil :ind = 'ind'></Stencil></el-main>
     <el-footer style="padding: 0;height:0"><Foot></Foot></el-footer>
   </el-container>
 </div>
@@ -82,5 +82,12 @@ export default {
 
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
+  }
+
+  .backImg{
+    overflow: hidden;
+  }
+  .home_el-main{
+    overflow: hidden;
   }
 </style>
