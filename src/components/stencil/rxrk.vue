@@ -72,22 +72,30 @@
               <el-select v-model="baseInfoForm.nativePlace" placeholder="请选择籍贯" style="width:265px;" class="rxrkSelect">
                 <el-option
                   v-for="item in navtivePlaces"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
+                  :key="item.v"
+                  :label="item.n"
+                  :value="item.v">
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="民族:" style="margin-left: 20px;margin-bottom: 10px;">
               <el-select v-model="baseInfoForm.nation" placeholder="请选择民族" style="width:265px;" class="rxrkSelect">
-                <el-option label="汉族" value="1"></el-option>
-                <el-option label="回族" value="2"></el-option>
+                <el-option
+                  v-for="(item,index) in mzoptions"
+                  :key="index"
+                  :label="item.n"
+                  :value="item.v"
+                ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="宗教信仰:" style="margin-left: 20px;margin-bottom: 10px;">
               <el-select v-model="baseInfoForm.faith" placeholder="请选择宗教信仰" style="width:265px;" class="rxrkSelect">
-                <el-option label="无宗教信仰" value="1"></el-option>
-                <el-option label="基督教" value="2"></el-option>
+                <el-option
+                  v-for="(item,index) in zjoptions"
+                  :key="index"
+                  :label="item.n"
+                  :value="item.v"
+                ></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="文化程度:" style="margin-left: 20px;margin-bottom: 10px;">
@@ -125,6 +133,8 @@
   import ElRow from "element-ui/packages/row/src/row";
   import ElCol from "element-ui/packages/col/src/col";
   import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
+  import {StatusData} from "@/basedata/statusData.js"
+
   export default {
     name: "rxrk",
     components: {
@@ -135,6 +145,8 @@
             Authorization:sessionStorage.getItem('Authorization')
           },
           imgageName:'',
+        mzoptions:StatusData['Nationality'],
+        zjoptions:StatusData['Religiousbl'],
         effectivImageUrl:'/static/img/people.jpg',
         imageUrl1:'/static/img/people.jpg',
         labelPosition: 'right',
