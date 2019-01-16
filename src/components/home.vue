@@ -90,4 +90,42 @@ export default {
   .home_el-main{
     overflow: hidden;
   }
+
+
+
+
+  .el-pagination__total{
+    color: rgba(255,255,255,1)!important;
+  }
+  .btn-prev{
+    background-color: rgba(255,255,255,0)!important;
+    border: 1px solid rgba(255,255,255,1)!important;
+    color: white!important;
+  }
+  .number{
+    background-color: rgba(255,255,255,0)!important;
+    border: 1px solid rgba(255,255,255,1)!important;
+    color: white!important;
+  }
+  .active{
+    background:rgba(31,97,143,1)!important;
+  }
+  .btn-next{
+    background-color: rgba(255,255,255,0)!important;
+    border: 1px solid rgba(255,255,255,1)!important;
+    color: white!important;
+  }
+  .el-input--mini>.el-input__inner{
+    background-color: rgba(255,255,255,0)!important;
+    border: 1px solid rgba(255,255,255,1)!important;
+    color: white!important;
+  }
+  .el-pagination__editor>.el-input__inner {
+    background-color: rgba(255, 255, 255, 0) !important;
+    border: 1px solid rgba(255, 255, 255, 1) !important;
+    color: white !important;
+  }
+  .el-pagination__jump{
+    color: white;
+  }
 </style>

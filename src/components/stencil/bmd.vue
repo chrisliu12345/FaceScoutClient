@@ -3,13 +3,13 @@
     <br>
     <el-row :gutter="24">
       <el-col :span="8" :offset="2">
-        <el-card class="box-card box_card_bmd" style="padding-bottom: 50%">
-          <div><label>添加或修改白名单</label></div>
+        <el-card class="box-card box_card_bmd box_card_bmdform" style="padding-bottom: 50%">
+          <div class="bmd_font"><label>添加或修改白名单</label></div>
           <br><br>
-          <div align="left" style="font-size: 14px"><br>
+          <div align="left" style="font-size: 13px"><br>
             <el-row>
               <el-col :span="4" :offset="2">
-                <div style="margin-top: 15%">姓名:&nbsp;&nbsp;</div>
+                <div style="margin-top: 15%" class="bmd_font" >姓名:&nbsp;&nbsp;</div>
               </el-col>
               <el-col :span="18">
                 <el-input v-model="whiteDate.name" class="bmd_inputType"></el-input>
@@ -18,7 +18,7 @@
             <br>
             <el-row>
               <el-col :span="4" :offset="2">
-                <div style="margin-top: 15%">身份证号码:&nbsp;&nbsp;</div>
+                <div style="margin-top: 15%" class="bmd_font">身份证号码:&nbsp;&nbsp;</div>
               </el-col>
               <el-col :span="18">
                 <el-input v-model="whiteDate.name" class="bmd_inputType" ></el-input>
@@ -28,45 +28,44 @@
           <br>
           <br>
           <div align="center">
-            <el-button type="primary" plain style="width: 120px">添加</el-button>
-            <el-button type="primary" plain style="width: 120px">更新</el-button>
+            <el-button type="primary" plain class="bmd_button">添加</el-button>
+            <el-button type="primary" plain class="bmd_button">更新</el-button>
           </div>
-          <div style="padding-top: 25%">
+          <div style="padding-top: 25%" class="bmd_font">
             添加成功!
           </div>
         </el-card>
       </el-col>
-      <el-col :span="12">
-        <el-card class="box-card box_card_bmd" style="padding-bottom: 50%">
-          <div><label>白名单列表</label></div>
+      <el-col :span="13">
+        <el-card class="box-card box_card_bmd box_card_bmdlist" >
+          <div class="bmd_font"><label>白名单列表</label></div>
           <br>
           <br>
-          <div align="center">
+          <div align="left">
             <el-table
               ref="singleTable"
               :data="tableDataChange"
-              highlight-current-row
               @current-change="handleCurrentChange"
-              style="width: 100%;">
-              <el-table-column
-                width="130">
+              :row-style="getRowClass"
+              :header-row-style="getheaderClass"
+              :fit="true"
+
+              >
+              <el-table-column>
               </el-table-column>
+
               <el-table-column
                 property="date"
                 label="姓名"
-                width="120">
+               >
               </el-table-column>
-              <el-table-column
-                width="100">
-              </el-table-column>
+
               <el-table-column
                 property="name"
                 label="身份证号"
-                width="120">
+                >
               </el-table-column>
-              <el-table-column
-                width="100">
-              </el-table-column>
+
               <el-table-column
                 label="操作">
                 <template slot-scope="scope">
@@ -138,6 +137,17 @@
       },
       deleteRow(index, rows) {
         rows.splice(index, 1);
+      },getRowClass({row, column, rowIndex, columnIndex}) {
+        console.log("rowIndex="+rowIndex);
+        if(rowIndex%2==0){
+          return "color:white;opacity: 1;background-color: rgba(255,255,255,0.1)!important";
+        }else{
+          return "color:white;opacity: 1;background-color: rgba(255,255,255,0.2)!important";
+        }
+
+      },
+      getheaderClass({row, column, rowIndex, columnIndex}) {
+        return "color:white;opacity: 1;background-color: rgba(255,255,255,0.5)!important";
       }
     }
   }
@@ -151,25 +161,59 @@
     height: 880px;
     background-image: url(/static/img/bmd_back.png);
     background-repeat: no-repeat;
-    background-size: 85% 85%;
+    background-size: 84% 84%;
     color: azure;
-    z-index: 9;
-    margin:5% 0% 5% 10%;
+   /* z-index: 9;*/
+    margin:5% 0% 5% 15%;
   }
   .box_card_bmd{
     border:0px!important;
-    background-color:rgba(255,255,255,0);
+    background-color:rgba(255,255,255,0)!important;
     margin-top:20px;
     position:relative;
-    left:-150px;
+    left:-180px;
   }
   .bmd_inputType{
-    width: 80%;
+    width: 80%!important;
   }
   .bmd_inputType input{
-    background-color: rgba(255,255,255,0)!important;
+    background-color: rgba(255,255,255,0);
     border: 2px solid rgba(47,123,165,1);
     color:white;
   }
+.bmd_font{
+  color: white;
+  /*font-size: 14px;*/
+}
+.bmd_button{
+  width: 120px;
+  background:rgba(51,135,221,1)!important;
+  border:1px solid rgba(51,135,221,1)!important;
+  border-radius:2px!important;
+  color: white!important;
+}
 
+
+
+  .el-table--enable-row-hover .el-table__body tr:hover>td{
+    background-color: rgba(255,255,255,0.3)!important;
+  }
+
+  .el-table, .el-table__expanded-cell{
+    background-color: transparent;
+  }
+  .el-table th, .el-table tr{
+    background-color: transparent;
+  }
+  .box_card_bmdlist{
+    padding-bottom: 50%;
+    /*padding-right: 0px;*/
+  }
+  .box_card_bmdlist .el-card__body{
+      padding-right: 12px;
+    padding-left: 12px;
+  }
+  .box_card_bmdform .el-card__body{
+    margin-left: 30px;
+  }
 </style>

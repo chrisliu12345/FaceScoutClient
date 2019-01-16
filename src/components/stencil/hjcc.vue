@@ -63,7 +63,6 @@
         <el-table-column
           prop="name"
           label="姓名"
-
         >
         </el-table-column>
         <el-table-column
@@ -107,7 +106,7 @@
       <div align="right"  style="margin-top: 10px">
         <span class="demonstration"></span>
         <el-pagination
-          background="true"
+          background
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page="currentPage4"
@@ -440,9 +439,7 @@ export default {
   .el-table::before{
     height: 0px!important;
   }
-  .el-table{
-    width: 100% !important;
-  }
+
   .hjinput_inner>.el-input>.el-input__inner{
   background-color: rgba(255,255,255,0);
   border: 1px solid rgba(70,129,219,1)
