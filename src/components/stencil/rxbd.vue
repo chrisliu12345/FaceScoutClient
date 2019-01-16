@@ -6,14 +6,15 @@
           <el-card class="box-card box_card_rxbd">
             <div align="center"><span>请选择对比图像</span></div>
             <div>
-              <img :src="imageUrl2" class="img1">
+              <img :src="imageUrl1" class="img1">
               <div style="padding: 14px;">
                 <span style="font-size: 12px">请上传单人图片</span>
                 <div style="margin-top: 10%">
                   <el-upload
                     class="upload-demo"
-                    action="/user/uploadPic"
+                    action="/face/common/checkPhoto"
                     auto-upload
+                    :headers="myHeaders"
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess2"
                     :before-upload="beforeAvatarUpload">
@@ -35,9 +36,9 @@
         <el-card class="box-card box_card_rxbd">
           <div align="center"><span>筛选条件</span><br><br><br></div>
           <div align="left" style="font-size: 15px;margin-left: 5%">
-            年龄段: &nbsp;&nbsp;<el-input v-model="ruleForm.age1" style="width: 55px" maxlength="3" class="rxbd_sxtj"></el-input>
+            年龄段: &nbsp;&nbsp;<el-input v-model="ruleForm.agemin" style="width: 55px" maxlength="3" class="rxbd_sxtj"></el-input>
             ～
-            <el-input v-model="ruleForm.age2" style="width: 55px;margin-right: 10%" maxlength="3" class="rxbd_sxtj"></el-input>
+            <el-input v-model="ruleForm.agemax" style="width: 55px;margin-right: 10%" maxlength="3" class="rxbd_sxtj"></el-input>
             性别:&nbsp;&nbsp;<el-radio-group v-model="ruleForm.sex" style="margin-right: 10%">
             <el-radio :label="1"  class="rxbd_sxtj">男</el-radio>
             <el-radio :label="2"  class="rxbd_sxtj">女</el-radio>
@@ -45,21 +46,21 @@
             民族:&nbsp;&nbsp;
             <el-select v-model="ruleForm.nation" placeholder="请选择" style="width: 95px" class="rxbd_sxtj">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item in mzoptions"
+                :key="item.v"
+                :label="item.n"
+                :value="item.v">
               </el-option>
             </el-select>
           </div>
           <br>
           <div align="left" style="font-size: 15px;margin-left: 5%">
             相似度:&nbsp;&nbsp;相似度大于
-            <el-input v-model="ruleForm.age1" style="width: 75px" maxlength="3" class="rxbd_sxtj"></el-input>
+            <el-input v-model="ruleForm.per" style="width: 75px" maxlength="3" class="rxbd_sxtj"></el-input>
             %&nbsp;的前
-            <el-select v-model="ruleForm.nation" placeholder="请选择" style="width: 95px" class="rxbd_sxtj">
+            <el-select v-model="ruleForm.maxcount" placeholder="请选择" style="width: 95px" class="rxbd_sxtj">
               <el-option
-                v-for="item in options"
+                v-for="item in mxoptions"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value">
@@ -68,29 +69,29 @@
           </div>
           <br>
           <div align="left" style="font-size: 15px;margin-left: 5%">
-            籍贯:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-select v-model="ruleForm.place1" placeholder="请选择"
-                                                        style="width: 150px" class="rxbd_sxtj">
+            籍贯:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-select v-model="sheng" value-key="v" @change="selectPro" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item,index in prooptions"
+              :key="index"
+              :label="item.n"
+              :value="item">
             </el-option>
           </el-select>
-            <el-select v-model="ruleForm.place2" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
+            <el-select v-model="shi" value-key="v" @change="selectShi" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item in shioptions"
+                :key="item.v"
+                :label="item.n"
+                :value="item">
               </el-option>
             </el-select>
-            <el-select v-model="ruleForm.place3" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
+            <el-select v-model="qu" value-key="v"  placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item in quoptions"
+                :key="item.v"
+                :label="item.n"
+                :value="item">
               </el-option>
             </el-select>
           </div>
@@ -105,82 +106,86 @@
             </el-form>
           </div>
         </el-card>
-        <el-button  @click="$emit('changePage')" class="tjbutton">普通比对</el-button>
+        <el-button  @click="goSearch" class="tjbutton">普通比对</el-button>
       </el-col>
     </el-row>
   </div>
 
-
-
-
-
-
 </template>
 
 <script>
+
+  import {StatusData} from "@/basedata/statusData.js"
+  import {citydata} from "@/basedata/citydata-debug.js"
 
   export default {
     name: "rxbd",
     props:['cardData'],
     data() {
       return {
+        myHeaders:{
+          Authorization:sessionStorage.getItem('Authorization')
+        },
+        prooptions:citydata,
+        shioptions:[],
+        quoptions:[],
+        mzoptions:StatusData['Nationality'],
+        imageUrl1: '/static/img/people.jpg',
         imageUrl2: '/static/img/people.jpg',
+        sheng:'',
+        shi:'',
+        qu:'',
         ruleForm: {
-          age1: '',
-          age2: '',
+          agemin: '',
+          agemax: '',
+          per:10,
+          maxcount:10,
           sex: 1,
           nation: '',
-          place1: '',
-          place2: '',
-          place3: '',
-          type: []
+          pcc:'',
+          type: [0],
+          file:'',
+          pageSize:8,
+          pageNum:1
         },
-        options: [{
-          value: '选项1',
-          label: '黄金糕'
-        }, {
-          value: '选项2',
-          label: '双皮奶'
-        }, {
-          value: '选项3',
-          label: '蚵仔煎'
-        }, {
-          value: '选项4',
-          label: '龙须面'
-        }, {
-          value: '选项5',
-          label: '北京烤鸭'
-        }],
+        mxoptions: [
+          {value: 5},
+          {value: 10},
+          {value: 20},
+          {value: 50},
+          {value: 100},
+          {value: 500}
+          ],
         types: [{
-          value: '选项1',
+          value: '0',
           label: '常住'
         }, {
-          value: '选项2',
+          value: '1',
           label: '流动'
         }, {
-          value: '选项3',
+          value: '2',
           label: '重点'
         }, {
-          value: '选项4',
+          value: '3',
           label: '黄赌毒'
         },
           {
-            value: '选项5',
+            value: '9',
             label: '扒窃入口'
           }, {
-            value: '选项6',
+            value: '4',
             label: '诈骗犯'
           },
           {
-            value: '选项7',
+            value: '7',
             label: '非法集资'
           },
           {
-            value: '选项8',
+            value: '8',
             label: '外地飞抢'
           },
           {
-            value: '选项9',
+            value: '6',
             label: '出所'
           }],
 
@@ -188,7 +193,19 @@
     },
     methods: {
       handleAvatarSuccess2(res, file) {
-        this.imageUrl2 = URL.createObjectURL(file.raw)
+        if (res.code == 200) {
+        if (res.msg === 0) {
+          this.ruleForm.file = res.imgPath
+          this.imageUrl1 = URL.createObjectURL(file.raw)
+          this.imageUrl2 = URL.createObjectURL(file.raw)
+        } else if (res.msg === 1) {
+          this.$message.error('未检测到人脸，请重新上传!');
+        } else if (res.msg === 2) {
+          this.$message.error('检测到多张人脸,请重新上传!');
+        }
+      }else{
+          this.$message.error('上传失败!');
+      }
       },
       beforeAvatarUpload(file) {
         const isJPG = file.type === 'image/jpeg';
@@ -201,7 +218,51 @@
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
-      }
+      },
+      selectPro(){
+        this.shi = ''
+        this.qu = ''
+        this.shioptions = this.sheng['c']
+        this.quoptions = []
+      },
+      selectShi(){
+        this.qu = ''
+        this.quoptions = this.shi['c']
+      },
+      goSearch(){
+        if(this.ruleForm.file === ''){
+          return this.$message.error('请先上传人脸照片!');
+        }
+        if(this.ruleForm.type.length == 0){
+          return this.$message.error('请选择人员类型!');
+        }
+        if(this.sheng != ''){
+          this.ruleForm.pcc = this.sheng['v']
+        }
+        if(this.shi != ''){
+          this.ruleForm.pcc = this.sheng['v'] + this.shi['v']
+        }
+        if(this.qu != ''){
+          this.ruleForm.pcc = this.sheng['v'] + this.shi['v'] + this.qu['v']
+        }
+        this.$axios({
+          method: 'post',
+          url: '/face/compare/otn',
+          data: this.ruleForm,
+          headers: {
+            'Authorization': sessionStorage.getItem('Authorization')
+          }
+        }).then(res => {
+          if(res.data.code === 200){
+
+            this.$message.success('查询成功');
+            this.$emit("getsearchdata",res.data.data)
+            this.$emit("changepage")
+          }else{
+            this.$message.error('请求失败');
+          }
+        })
+        }
     }
   }
 </script>

@@ -19,7 +19,7 @@
               <el-col :span="8">
                 <el-upload
                   class="avatar-uploader"
-                  action="/user/uploadPic"
+                  action="/face/common/checkPhoto"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload">
@@ -43,9 +43,9 @@
         <el-card class="box-card box-card_rxbdres" style="font-size: 10px">
           <div ><span style="font-size: 16px;margin-right: 30%;">高级筛选</span><br><br></div>
           <div align="left" style="margin-left: 5%">
-            年龄段: &nbsp;&nbsp;<el-input v-model="ruleForm.age1" style="width: 55px" maxlength="3" class="rxbd_sxtj"></el-input>
+            年龄段: &nbsp;&nbsp;<el-input v-model="ruleForm.agemin" style="width: 55px" maxlength="3" class="rxbd_sxtj"></el-input>
             ～
-            <el-input v-model="ruleForm.age2" style="width: 55px;margin-right: 10%" maxlength="3" class="rxbd_sxtj"></el-input>
+            <el-input v-model="ruleForm.agemax" style="width: 55px;margin-right: 10%" maxlength="3" class="rxbd_sxtj"></el-input>
             性别:&nbsp;&nbsp;<el-radio-group v-model="ruleForm.sex" style="margin-right: 10%">
             <el-radio :label="1" class="rxbd_sxtj">男</el-radio>
             <el-radio :label="2" class="rxbd_sxtj">女</el-radio>
@@ -53,39 +53,39 @@
             民族:&nbsp;&nbsp;
             <el-select v-model="ruleForm.nation" placeholder="请选择" style="width: 95px" class="rxbd_sxtj">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item in mzoptions"
+                :key="item.v"
+                :label="item.n"
+                :value="item.v">
               </el-option>
             </el-select>
           </div>
           <br>
           <br>
           <div align="left" style="font-size: 15px;margin-left: 5%">
-            籍贯:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-select v-model="ruleForm.place1" placeholder="请选择"
-                                                        style="width: 150px" class="rxbd_sxtj">
+            籍贯:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <el-select v-model="sheng" value-key="v" @change="selectPro" placeholder="请选择"style="width: 150px" class="rxbd_sxtj">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              v-for="item,index in prooptions"
+              :key="index"
+              :label="item.n"
+              :value="item">
             </el-option>
           </el-select>
-            <el-select v-model="ruleForm.place2" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
+            <el-select v-model="shi" value-key="v" @change="selectShi" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item,index in shioptions"
+                :key="index"
+                :label="item.n"
+                :value="item">
               </el-option>
             </el-select>
-            <el-select v-model="ruleForm.place3" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
+            <el-select v-model="qu" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
               <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
+                v-for="item,index in quoptions"
+                :key="index"
+                :label="item.n"
+                :value="item">
               </el-option>
             </el-select>
           </div>
@@ -102,7 +102,7 @@
                 </el-form>
               </el-col>
               <el-col :span="8" :offset="0">
-                <el-button plain @click="" class="rxbdres_search">查询</el-button>
+                <el-button plain @click="goSearch" class="rxbdres_search">查询{{pageSize}}</el-button>
               </el-col>
             </el-row>
           </div>
@@ -114,7 +114,7 @@
       <el-card class="box-card box-card_rxbdres" style="margin-top: 0px;margin-right: 40px;">
        <el-col :span="24">
            <el-row>
-           <el-col :span="4">普通对比结果（共234条结果）</el-col>
+           <el-col :span="4">普通对比结果（共{{tableSizeSum}}条结果）</el-col>
            <el-col :span="6" :offset="14" class="rxbdres_bluebutton">(已选择{{checkList.length}}条)
              <el-button plain @click="cancelCheckedCard" >取消</el-button>
              <el-button plain>确认导出</el-button>
@@ -123,7 +123,7 @@
        </el-col>
       <el-col :span="24" style="margin-top: 0%">
         <el-row >
-          <el-col :span="6" v-for="it in items" :key="it.label">
+          <el-col :span="6" v-for="it in datas" :key="it.label">
             <el-card class="box-card box-card_rxbdres box-card_rxbdcard" >
            <CompareCard :cardData="it" v-on:handleCheckedCard="handleCheckedCard"></CompareCard>
           </el-card>
@@ -138,7 +138,7 @@
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
               :current-page="currentPage4"
-              :page-sizes="[10, 20, 50, 100]"
+              :page-sizes="[4, 8, 16, 32]"
               :pager-size="pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="tableSizeSum">
@@ -156,177 +156,90 @@
 import CompareCard from  '@/components/stencil/rxbdcard'
 import ElRow from "element-ui/packages/row/src/row";
 import ElCol from "element-ui/packages/col/src/col";
+import {StatusData} from "@/basedata/statusData.js"
+import {citydata} from "@/basedata/citydata-debug.js"
+
 export default {
     name: "rxbdres",
    data(){
       return {
-        pageSize:10,
+        prooptions:citydata,
+        shioptions:[],
+        quoptions:[],
+        mzoptions:StatusData['Nationality'],
+        sheng:'',
+        shi:'',
+        qu:'',
+
+        pageSize:8,
         currentPage4: 1,
-        tableSizeSum:50,
+        tableSizeSum:0,
         imageOne:'/static/img/people.jpg',
         imgUpload:'',
         ruleForm: {
-          age1: '',
-          age2: '',
+          agemin: '',
+          agemax: '',
+          per:10,
+          maxcount:10,
           sex: 1,
           nation: '',
-          place1: '',
-          place2: '',
-          place3: '',
-          type: []
+          pcc:'',
+          type: [0],
+          file:'',
+          pageSize:8,
+          pageNum:1
         },
-        options: [{
-          value: 1,
-          label: '黄金糕'
-        }, {
-          value: 2,
-          label: '双皮奶'
-        }, {
-          value: 3,
-          label: '蚵仔煎'
-        }, {
-          value:4,
-          label: '龙须面'
-        }, {
-          value: 5,
-          label: '北京烤鸭'
-        }],
-        items: [{
-          id:'01',
-          select:false,
-          img:'/static/img/people.jpg',
-          sim:'90%',
-          name:'孔令远',
-          sex:'男',
-          type:'诈骗犯',
-          idCard:'110224198909292038',
-          birth:'山东省青岛市永定路乙2号',
-          place:'北京海淀区永定路'
-        },
-          {
-            id:'02',
-            select:false,
-            img:'/static/img/people.jpg',
-            sim:'80%',
-            name:'孔令远',
-            sex:'男',
-            type:'诈骗犯',
-            idCard:'110224198909292038',
-            birth:'山东省青岛市永定路乙2号',
-            place:'未知地区（0）'
-          },
-          {
-            id:'03',
-            select:false,
-            img:'/static/img/people.jpg',
-            sim:'80%',
-            name:'孔令远',
-            sex:'男',
-            type:'诈骗犯',
-            idCard:'110224198909292038',
-            birth:'山东省青岛市永定路乙2号',
-            place:'未知地区（0）'
-          },
-          {
-            id:'04',
-            select:false,
-            img:'/static/img/people.jpg',
-            sim:'80%',
-            name:'孔令远',
-            sex:'男',
-            type:'诈骗犯',
-            idCard:'110224198909292038',
-            birth:'山东省青岛市永定路乙2号',
-            place:'未知地区（0）'
-          },
-          {
-            id:'05',
-            select:false,
-            img:'/static/img/people.jpg',
-            sim:'92%',
-            name:'孔令远',
-            sex:'男',
-            type:'诈骗犯',
-            idCard:'110224198909292038',
-            birth:'山东省青岛市永定路乙2号',
-            place:'北京海淀区永定路'
-          },
-          {
-            id:'06',
-            select:false,
-            img:'/static/img/people.jpg',
-            sim:'95%',
-            name:'孔令远',
-            sex:'男',
-            type:'诈骗犯',
-            idCard:'110224198909292038',
-            birth:'山东省青岛市永定路乙2号',
-            place:'未知地区（0）'
-          },
-          {
-            id:'07',
-            select:false,
-            img:'/static/img/people.jpg',
-            sim:'78%',
-            name:'孔令远',
-            sex:'男',
-            type:'诈骗犯',
-            idCard:'110224198909292038',
-            birth:'山东省青岛市永定路乙2号',
-            place:'未知地区（0）'
-
-          },
-          {
-            id:'08',
-            select:false,
-            img:'/static/img/people.jpg',
-            sim:'88%',
-            name:'孔令远',
-            sex:'男',
-            type:'诈骗犯',
-            idCard:'110224198909292038',
-            birth:'山东省青岛市永定路乙2号',
-            place:'北京海淀区永定路甲51号'
-          },],
         types: [{
-          value: 1,
+          value: '0',
           label: '常住'
         }, {
-          value: 2,
+          value: '1',
           label: '流动'
         }, {
-          value: 3,
+          value: '2',
           label: '重点'
         }, {
-          value: 4,
+          value: '3',
           label: '黄赌毒'
         },
           {
-            value:5,
+            value: '9',
             label: '扒窃入口'
           }, {
-            value: 6,
+            value: '4',
             label: '诈骗犯'
           },
           {
-            value: 7,
+            value: '7',
             label: '非法集资'
           },
           {
-            value: 8,
+            value: '8',
             label: '外地飞抢'
           },
           {
-            value: 9,
+            value: '6',
             label: '出所'
           }],
-        checkList:[]
+        checkList:[],
+        datas:[]
 
       }
    },
   methods:{
     handleAvatarSuccess(res, file) {
-      this.imgUpload = URL.createObjectURL(file.raw);
+      if (res.code == 200) {
+        if (res.msg === 0) {
+          this.ruleForm.file = res.imgPath
+          this.imgUpload = URL.createObjectURL(file.raw)
+        } else if (res.msg === 1) {
+          this.$message.error('未检测到人脸，请重新上传!');
+        } else if (res.msg === 2) {
+          this.$message.error('检测到多张人脸,请重新上传!');
+        }
+      }else{
+        this.$message.error('上传失败!');
+      }
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg';
@@ -367,6 +280,51 @@ export default {
       for(var i=0;i<pageSize&&((val-1)*pageSize+i)<this.tableDataSelect.length;i++){
         this.tableData[i]=this.tableDataSelect[(val-1)*pageSize+i];
       }
+    },
+    selectPro(){
+      this.shi = ''
+      this.qu = ''
+      this.shioptions = this.sheng['c']
+      this.quoptions = []
+    },
+    selectShi(){
+      this.qu = ''
+      this.quoptions = this.shi['c']
+    },
+    renderdata(data){
+      this.tableSizeSum = data.totalCount
+      this.pageSize = data.pageSize
+      this.currentPage4 = data.currPage
+      this.datas = data.list
+    },
+    goSearch(){
+      if(this.sheng != ''){
+        this.ruleForm.pcc = this.sheng['v']
+      }
+      if(this.shi != ''){
+        this.ruleForm.pcc = this.sheng['v'] + this.shi['v']
+      }
+      if(this.qu != ''){
+        this.ruleForm.pcc = this.sheng['v'] + this.shi['v'] + this.qu['v']
+      }
+      this.$axios({
+        method: 'post',
+        url: '/face/compare/otn',
+        data: this.ruleForm,
+        headers: {
+          'Authorization': sessionStorage.getItem('Authorization')
+        }
+      }).then(res => {
+        if(res.data.code === 200){
+          this.$message.success('查询成功');
+          this.tableSizeSum = res.data.data.totalCount
+          this.pageSize = res.data.data.pageSize
+          this.currentPage4 = res.data.data.currPage
+          this.datas = res.data.data.list
+        }else{
+          this.$message.error('请求失败');
+        }
+      })
     }
   },
 

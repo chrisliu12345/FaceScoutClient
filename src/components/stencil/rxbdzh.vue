@@ -1,7 +1,7 @@
 <template>
   <div>
-    <RXBD v-show="myShow" v-on:changePage="changePageFun"></RXBD>
-    <RXBDRES v-show="myShow2"></RXBDRES>
+    <RXBD v-show="myShow"  @changepage="changepage" @getsearchdata="getsearchdata"></RXBD>
+    <RXBDRES v-show="myShow2"  ></RXBDRES>
   </div>
 </template>
 
@@ -13,7 +13,8 @@ export default {
   data() {
     return {
         myShow:true,
-        myShow2:false
+        myShow2:false,
+      datas:[]
     };
   },
   components:{
@@ -21,9 +22,13 @@ export default {
     RXBDRES
   },
   methods:{
-      changePageFun(){
+      changepage(){
           this.myShow=false;
           this.myShow2=true;
+      },
+      getsearchdata(data){
+        this.datas = data
+        this.$children[1].renderdata(data)
       }
   }
 }

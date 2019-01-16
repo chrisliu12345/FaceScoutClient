@@ -1,7 +1,7 @@
 /**
  * 身份证相关信息
  */
-IceIdcard = {
+var IceIdcard = {
 	areaArray:{
 		'11':{
 			name:'北京市',
@@ -659,7 +659,7 @@ IceIdcard = {
 				},
 				'26':{
 					name:'临汾地区',
-					countys:{	
+					countys:{
 						'00':'',
 						'01':'临汾市',
 						'02':'侯马市',
@@ -4030,7 +4030,7 @@ IceIdcard = {
 						'36':'琼中黎族苗族自治县',
 						'37':'西沙群岛',
 						'38':'南沙群岛',
-						'39':'中沙群岛的岛礁及其海域'	
+						'39':'中沙群岛的岛礁及其海域'
 					}
 				}
 			}
@@ -5829,7 +5829,7 @@ IceIdcard = {
 					}
 				}
 			}
-		}		
+		}
 	},
 	/**
 	 * 获取地址
@@ -5842,7 +5842,7 @@ IceIdcard = {
 		countys = citys != undefined ? citys.countys[code.substr(4,2)] : undefined;
 		return province.name + (citys == undefined?'':citys.name) + (countys == undefined?'':countys);
 	},
-	
+
 	/**
 	 * 获取地址
 	 * @param code 身份证号前六位
@@ -5944,11 +5944,11 @@ IceIdcard = {
 						param.straddr = this.getAreaBycode(idcard.substr(0,6));
 						param.straddr1 = this.getAreaBycode1(idcard.substr(0,6));
 						return param;
-					}else{ 
+					}else{
 						param.error = Errors[3];
 						return param;
 					}
-				}else{ 
+				}else{
 					param.error = Errors[2];
 					return param;
 				}
@@ -5960,3 +5960,6 @@ IceIdcard = {
 		}
 	}
 };
+export { //很关键
+  IceIdcard
+}

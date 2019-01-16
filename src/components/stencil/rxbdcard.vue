@@ -11,14 +11,14 @@
       </el-col>
       <el-col>
         <el-row>
-          <el-col :span="3" :offset="2"> <img :src="cardData.img" class="imgCard"></el-col>
+          <el-col :span="3" :offset="2"> <img :src="dataimg+cardData.photo" class="imgCard"></el-col>
           <el-col :span="14" :offset="5" style="font-size: 10px;margin-left: 40px;">
             <div align="left">
-              <el-row>相似度:&nbsp;&nbsp;{{cardData.sim}}</el-row>
-              <el-row>姓&nbsp;&nbsp;&nbsp;名:&nbsp;&nbsp;{{cardData.name}}</el-row>
-              <el-row>性&nbsp;&nbsp;&nbsp;别:&nbsp;&nbsp;{{cardData.sex}}</el-row>
+              <el-row>相似度:&nbsp;&nbsp;{{cardData.resemblep}}</el-row>
+              <el-row>姓&nbsp;&nbsp;&nbsp;名:&nbsp;&nbsp;{{cardData.tName}}</el-row>
+              <el-row>性&nbsp;&nbsp;&nbsp;别:&nbsp;&nbsp;{{cardData.sex == 1 ? '男':'女'}}</el-row>
               <el-row>类&nbsp;&nbsp;&nbsp;型:&nbsp;&nbsp;{{cardData.type}}</el-row>
-              <el-row>身份证号:&nbsp;{{cardData.idCard}}</el-row>
+              <el-row>身份证号:&nbsp;{{cardData.idcard}}</el-row>
             </div>
       </el-col>
         </el-row>
@@ -26,10 +26,10 @@
       <el-col>
         <div align="left" style="font-size: 14px"><br>
         <el-row>
-          <el-col :offset="2">籍贯:&nbsp;&nbsp;{{cardData.birth}}</el-col>
+          <el-col :offset="2">籍贯:&nbsp;&nbsp;{{getAddr(cardData.np)}}</el-col>
         </el-row>
           <el-row>
-          <el-col :offset="2">户籍地:&nbsp;&nbsp;{{cardData.place}}</el-col>
+          <el-col :offset="2">户籍地:&nbsp;&nbsp;{{getAddr(cardData.pcc)}}</el-col>
           </el-row>
           </div>
       </el-col>
@@ -39,9 +39,12 @@
 </template>
 
 <script>
-export default {
+
+  import {IceIdcard} from '@/utils/IceIdcard.js' //注意路径
+   export default {
     name: "rxbdcard",
     props:['cardData'],
+     dataimg : "data:image/png;base64,",
     data(){
       return {
         formCard: {
@@ -57,7 +60,13 @@ export default {
       }
     },
   methods:{
-
+    getAddr:function(code){
+      try{
+        return IceIdcard.getAreaBycode(code.toString()) + '(' + code + ')';
+      }catch(e){
+        return '未知地区 (' + code + ')';
+      }
+    }
   }
 }
 </script>
