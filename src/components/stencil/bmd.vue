@@ -69,7 +69,7 @@
               <el-table-column
                 label="操作">
                 <template slot-scope="scope">
-                  <i class="el-icon-error" style="margin-left: 2%" v-on:click="deleteRow(scope.$index, tableData)"></i>
+                  <i class="el-icon-circle-close-outline" style="margin-left: 2%" v-on:click="deleteRow(scope.$index, tableData)"></i>
                 </template>
               </el-table-column>
             </el-table>
@@ -216,4 +216,5 @@
   .box_card_bmdform .el-card__body{
     margin-left: 30px;
   }
+
 </style>

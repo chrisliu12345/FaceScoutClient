@@ -338,7 +338,9 @@ export default {
     vertical-align: middle;
   }
   .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover{
-    background-color:#007AB4
+    background-color:#007AB4;
+    width: 174px;
+    height: 73px;
   }
 
   .picture1 {
@@ -352,5 +354,11 @@ export default {
     border-top-right-radius: 2em;
     border-bottom-right-radius: 2em;
     border-bottom-left-radius: 2em;
+  }
+  .el-menu--horizontal>.el-menu-item.is-active{
+    border:0px;
+    background:rgba(0,109,171,1);
+    width: 174px;
+    height: 73px;
   }
 </style>

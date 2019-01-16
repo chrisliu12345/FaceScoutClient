@@ -56,8 +56,8 @@
               <el-input v-model="baseInfoForm.name" placeholder="请输入姓名" class="rxrk_jcxx"></el-input>
             </el-form-item>
             <el-form-item :label-position="labelPosition" label="性别:" label-width="100px" style="margin-bottom: 10px;">
-              <el-radio v-model="baseInfoForm.gender" label="1">男</el-radio>
-              <el-radio v-model="baseInfoForm.gender" label="2">女</el-radio>
+              <el-radio v-model="baseInfoForm.gender" label="1" class="rxrk_radio">男</el-radio>
+              <el-radio v-model="baseInfoForm.gender" label="2" class="rxrk_radio">女</el-radio>
             </el-form-item>
             <el-form-item :label-position="labelPosition" label="出生年月:" label-width="100px" style="margin-bottom: 10px;">
               <el-date-picker
@@ -309,5 +309,10 @@
     height: 60px;
     border-radius:0.5em;
     margin: auto;
+  }
+  .rxrk_radio .el-radio__input>.el-radio__inner{
+    background-color: rgba(255,255,255,0) !important;
+    border: 1px solid rgba(47,123,165,1);
+    color:white;
   }
 </style>
