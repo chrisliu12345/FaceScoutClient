@@ -195,14 +195,14 @@
     methods: {
       handleAvatarSuccess2(res, file) {
         if (res.code == 200) {
-        if (res.msg === 0) {
-          this.ruleForm.file = res.imgPath
-          this.uploadimg = res.img
-          this.imageUrl1 = URL.createObjectURL(file.raw)
-          this.imageUrl2 = URL.createObjectURL(file.raw)
-        } else {
-          this.$message.error('检测人脸失败,请重新上传!');
-        }
+          if (res.msg === 0) {
+            this.ruleForm.file = res.imgPath
+            this.uploadimg = res.img
+            this.imageUrl1 = URL.createObjectURL(file.raw)
+            this.imageUrl2 = URL.createObjectURL(file.raw)
+          } else {
+            this.$message.error('检测人脸失败,请重新上传!');
+          }
       }else{
           this.$message.error('上传失败!');
       }
