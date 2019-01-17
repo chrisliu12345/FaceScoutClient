@@ -7,32 +7,30 @@
           <div class="bmd_font"><label>添加或修改白名单</label></div>
           <br><br>
           <div align="left" style="font-size: 13px"><br>
-            <el-row>
-              <el-col :span="4" :offset="2">
-                <div style="margin-top: 15%" class="bmd_font" >姓名:&nbsp;&nbsp;</div>
-              </el-col>
-              <el-col :span="18">
-                <el-input v-model="whiteDate.name" class="bmd_inputType"></el-input>
-              </el-col>
-            </el-row>
-            <br>
-            <el-row>
-              <el-col :span="4" :offset="2">
-                <div style="margin-top: 15%" class="bmd_font">身份证号码:&nbsp;&nbsp;</div>
-              </el-col>
-              <el-col :span="18">
-                <el-input v-model="whiteDate.name" class="bmd_inputType" ></el-input>
-              </el-col>
-            </el-row>
+
+            <el-form ref="whiteDate" :label-position="labelPosition" :model="whiteDate" label-width="80px" style="color:white;">
+              <el-form-item v-if="false" :label-position="labelPosition" label="姓名:" label-width="100px" style="margin-bottom: 10px;" prop="name">
+                <el-input v-model="whiteDate.id" id="bmd_id" type="hidden" class="bmd_inputType"></el-input>
+              </el-form-item>
+              <el-form-item :label-position="labelPosition" label="姓名:" label-width="100px" style="margin-bottom: 10px;" prop="name">
+                <el-input v-model="whiteDate.name" placeholder="请输入姓名" id="bmd_name" class="bmd_inputType"></el-input>
+              </el-form-item>
+              <el-form-item :label-position="labelPosition" label="身份证号码:" label-width="100px" style="margin-bottom: 10px;" prop="sfID">
+                <el-input v-model="whiteDate.idCard" placeholder="请输入18位身份证号" id="bmd_idCard" class="bmd_inputType"></el-input>
+              </el-form-item>
+            </el-form>
           </div>
           <br>
           <br>
           <div align="center">
-            <el-button type="primary" plain class="bmd_button">添加</el-button>
-            <el-button type="primary" plain class="bmd_button">更新</el-button>
+            <el-button type="primary" plain class="bmd_button" @click="submitForm('whiteDate','add')">添加</el-button>
+            <el-button type="primary" plain class="bmd_button" @click="submitForm('whiteDate','update')">更新</el-button>
           </div>
-          <div style="padding-top: 25%" class="bmd_font">
+          <div style="padding-top: 25%" class="bmd_font" v-show="bmdSuccess">
             添加成功!
+          </div>
+          <div style="padding-top: 25%" class="bmd_font" v-show="bmdFail">
+            添加失败!
           </div>
         </el-card>
       </el-col>
@@ -44,24 +42,27 @@
           <div align="left">
             <el-table
               ref="singleTable"
-              :data="tableDataChange"
+              :data="tableData"
               @current-change="handleCurrentChange"
               :row-style="getRowClass"
               :header-row-style="getheaderClass"
-              :fit="true"
-
-              >
+              :fit="true">
               <el-table-column>
               </el-table-column>
 
               <el-table-column
-                property="date"
+                property="id"
+                v-if="false">
+              </el-table-column>
+
+              <el-table-column
+                property="name"
                 label="姓名"
                >
               </el-table-column>
 
               <el-table-column
-                property="name"
+                property="idcard"
                 label="身份证号"
                 >
               </el-table-column>
@@ -69,7 +70,7 @@
               <el-table-column
                 label="操作">
                 <template slot-scope="scope">
-                  <i class="el-icon-circle-close-outline" style="margin-left: 2%" v-on:click="deleteRow(scope.$index, tableData)"></i>
+                  <i class="el-icon-circle-close-outline" style="margin-left: 2%" v-on:click="deleteRow(scope.row.id,scope.$index,whiteDate)"></i>
                 </template>
               </el-table-column>
             </el-table>
@@ -82,9 +83,9 @@
                 @current-change="handleCurrentChange"
                 :current-page="currentPage"
                 :page-sizes="[10, 20, 30, 40]"
-                :page-size="10"
+                :page-size="pageSize"
                 layout="total, sizes, prev, pager, next, jumper"
-                :total="50">
+                :total="pageCount">
               </el-pagination>
             </div>
           </div>
@@ -99,45 +100,88 @@
     name: "bmd",
     data(){
       return {
+        labelPosition: 'right',
+        bmdSuccess:false,
+        bmdFail:false,
+        pageCount:0,
         whiteDate: {
+            id:'',
           name: '',
           idCard: ''
         },
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }],
-        tableDataChange: [],
-        currentPage: 1
+        tableData: [],
+        currentPage: 1,
+        pageSize:10
       }
     },
     mounted: function () {
-      this.tableDataChange = this.tableData;
+      this.getBmdList();
     },
     methods: {
+        getBmdList(){
+            var param = {};
+            param.pageNum=this.currentPage;
+            param.pageSize=this.pageSize;
+            var paramJson = JSON.stringify(param);
+          this.$axios({
+            method: 'post',
+            url: '/face/whitelist/list',
+            data: paramJson,
+            headers: {
+              'Authorization': sessionStorage.getItem('Authorization'),
+              'content-Type':'application/json'
+            }
+          }).then(res => { // res是返回结果
+            if(res.data.code==200){
+              console.log(res.data)
+              //此处用来处理添加成功信息
+             this.pageCount=res.data.page.totalCount;
+              this.tableData=res.data.page.list;
+            }else{
+
+            }
+            /*if (res.data.code === '401') {
+             this.$alert('账号或密码错误，请重新输入')
+             }*/
+          }).catch(err => { // 请求失败就会捕获报错信息
+            console.log('服务正在维护，请稍后再试！')
+            console.log(err)
+          })
+        },
+      selectRow(row, event, column){
+          console.log(row);
+      },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-        this.tableDataChange = this.tableData.slice((val - 1) * 10, (val - 1) * 10 + 10);
+        //console.log(`当前页: ${val}`);
+        //this.tableData = this.tableData.slice((val - 1) * 10, (val - 1) * 10 + 10);
+        this.whiteDate.id=val.id;
+        this.whiteDate.name=val.name;
+        this.whiteDate.idCard=val.idcard;
       },
-      deleteRow(index, rows) {
-        rows.splice(index, 1);
-      },getRowClass({row, column, rowIndex, columnIndex}) {
+      deleteRow(id,index,rows) {
+          this.$axios({
+          method: 'get',
+          url: '/face/whitelist/delete/'+id,
+          headers: {
+            'Authorization': sessionStorage.getItem('Authorization'),
+          }
+        }).then(res => { // res是返回结果
+          if(res.data.code==200){
+            console.log(res.data)
+            //此处用来处理添加成功信息
+            rows.splice(index, 1);
+          }else{
+
+          }
+        }).catch(err => { // 请求失败就会捕获报错信息
+          console.log('服务正在维护，请稍后再试！')
+          console.log(err)
+        })
+      },
+      getRowClass({row, column, rowIndex, columnIndex}) {
         console.log("rowIndex="+rowIndex);
         if(rowIndex%2==0){
           return "color:white;opacity: 1;background-color: rgba(255,255,255,0.1)!important";
@@ -148,6 +192,85 @@
       },
       getheaderClass({row, column, rowIndex, columnIndex}) {
         return "color:white;opacity: 1;background-color: rgba(255,255,255,0.5)!important";
+      },
+      submitForm (formName,type) {
+          if(type=='add'){
+            this.$refs[formName].validate((valid) => {
+              if (valid) {
+                this.$axios({
+                  method: 'post',
+                  url: '/face/whitelist/save',
+                  data: {
+                    'idcard': this.whiteDate.idCard,
+                    'name': this.whiteDate.name
+                  },
+                  headers: {
+                    'Authorization': sessionStorage.getItem('Authorization')
+                  }
+                }).then(res => { // res是返回结果
+                  if(res.data.msg=="1"){
+                    console.log(res.data)
+                    //此处用来处理添加成功信息
+                    /*this.$alert('添加成功！');*/
+                    this.bmdSuccess=true;
+                    this.bmdFail=false;
+                    this.getBmdList();
+                  }else{
+                    this.bmdSuccess=false;
+                    this.bmdFail=true;
+                  }
+                  /*if (res.data.code === '401') {
+                   this.$alert('账号或密码错误，请重新输入')
+                   }*/
+                }).catch(err => { // 请求失败就会捕获报错信息
+                  console.log('服务正在维护，请稍后再试！')
+                  console.log(err)
+                })
+              } else {
+                console.log('用户信息错误')
+                return false
+              }
+            })
+          }else{
+            this.$refs[formName].validate((valid) => {
+              if (valid) {
+                this.$axios({
+                  method: 'post',
+                  url: '/face/whitelist/update',
+                  data: {
+                      'id':this.whiteDate.id,
+                    'idcard': this.whiteDate.idCard,
+                    'name': this.whiteDate.name
+                  },
+                  headers: {
+                    'Authorization': sessionStorage.getItem('Authorization')
+                  }
+                }).then(res => { // res是返回结果
+                  if(res.data.msg=="1"){
+                    console.log(res.data)
+                    //此处用来处理添加成功信息
+                    /*this.$alert('添加成功！');*/
+                    this.bmdSuccess=true;
+                    this.bmdFail=false;
+                    this.getBmdList();
+                  }else{
+                    this.bmdSuccess=false;
+                    this.bmdFail=true;
+                  }
+                  /*if (res.data.code === '401') {
+                   this.$alert('账号或密码错误，请重新输入')
+                   }*/
+                }).catch(err => { // 请求失败就会捕获报错信息
+                  console.log('服务正在维护，请稍后再试！')
+                  console.log(err)
+                })
+              } else {
+                console.log('用户信息错误')
+                return false
+              }
+            })
+          }
+
       }
     }
   }
@@ -171,19 +294,19 @@
     background-color:rgba(255,255,255,0)!important;
     margin-top:20px;
     position:relative;
-    left:-180px;
+    left:-181px;
   }
   .bmd_inputType{
     width: 80%!important;
   }
   .bmd_inputType input{
-    background-color: rgba(255,255,255,0);
-    border: 2px solid rgba(47,123,165,1);
     color:white;
+    background:rgba(0,46,76,0.42);
+    border:1px solid rgba(47,123,165,1);
+    border-radius:2px;
   }
 .bmd_font{
   color: white;
-  /*font-size: 14px;*/
 }
 .bmd_button{
   width: 120px;
@@ -192,8 +315,6 @@
   border-radius:2px!important;
   color: white!important;
 }
-
-
 
   .el-table--enable-row-hover .el-table__body tr:hover>td{
     background-color: rgba(255,255,255,0.3)!important;
@@ -207,7 +328,6 @@
   }
   .box_card_bmdlist{
     padding-bottom: 50%;
-    /*padding-right: 0px;*/
   }
   .box_card_bmdlist .el-card__body{
       padding-right: 12px;
@@ -216,5 +336,7 @@
   .box_card_bmdform .el-card__body{
     margin-left: 30px;
   }
-
+.el-icon-circle-close-outline:hover{
+  cursor: pointer;
+}
 </style>

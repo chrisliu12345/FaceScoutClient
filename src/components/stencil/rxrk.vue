@@ -256,9 +256,7 @@
     margin:5% 0% 5% 15%;
   }
 
-  label{
-    color:white!important;
-  }
+
   .box-card_rxrk{
     border:0px!important;
     background: transparent;
