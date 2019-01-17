@@ -143,6 +143,7 @@
   }
   .bdbd{
     height: 900px;
+    min-width: 1600px;
     border:0px!important;
     background-image: url(/static/img/bdbd_back.png)!important ;
     background: center 10px  no-repeat;

@@ -42,6 +42,7 @@
           <div align="left">
             <el-table
               ref="singleTable"
+              height="528"
               :data="tableData"
               @current-change="handleCurrentChange"
               :row-style="getRowClass"
@@ -150,16 +151,29 @@
         },
       selectRow(row, event, column){
           console.log(row);
+
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
+        this.pageSize=val;
+        this.getBmdList();
       },
       handleCurrentChange(val) {
         //console.log(`当前页: ${val}`);
         //this.tableData = this.tableData.slice((val - 1) * 10, (val - 1) * 10 + 10);
-        this.whiteDate.id=val.id;
+
+/*        this.whiteDate.id=val.id;
         this.whiteDate.name=val.name;
-        this.whiteDate.idCard=val.idcard;
+        this.whiteDate.idCard=val.idcard;*/
+        if(typeof(val)=='number'){
+          this.currentPage=val;
+          this.getBmdList();
+        }else{
+          this.whiteDate.id=val.id;
+          this.whiteDate.name=val.name;
+          this.whiteDate.idCard=val.idcard;
+        }
+
       },
       deleteRow(id,index,rows) {
           this.$axios({
@@ -173,6 +187,7 @@
             console.log(res.data)
             //此处用来处理添加成功信息
             rows.splice(index, 1);
+            this.getBmdList();
           }else{
 
           }
@@ -280,7 +295,7 @@
 <style>
   .bmd{
     overflow:hidden;
-    min-width: 1200px;
+    min-width: 1600px;
     height: 880px;
     background-image: url(/static/img/bmd_back.png);
     background-repeat: no-repeat;
