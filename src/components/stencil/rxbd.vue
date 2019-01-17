@@ -98,9 +98,9 @@
           <br>
           <div align="left" style="font-size: 15px;margin-left: 5%">
             <el-form>
-              <el-form-item label="类型:">
+              <el-form-item label="类型:" class="type-label">
                 <el-checkbox-group v-model="ruleForm.type">
-                  <el-checkbox v-for="ct in types" :label="ct.value" :key="ct.value" class="rxbd_sxtj">{{ct.label}}</el-checkbox>
+                  <el-checkbox v-for="ct in types" :label="ct.value" :key="ct.value"  class="rxbd_sxtj">{{ct.label}}</el-checkbox>
                 </el-checkbox-group>
               </el-form-item>
             </el-form>
@@ -135,6 +135,7 @@
         sheng:'',
         shi:'',
         qu:'',
+        uploadimg :'',
         ruleForm: {
           agemin: '',
           agemax: '',
@@ -143,7 +144,7 @@
           sex: 1,
           nation: '',
           pcc:'',
-          type: [0],
+          type: ['0'],
           file:'',
           pageSize:8,
           pageNum:1
@@ -196,12 +197,11 @@
         if (res.code == 200) {
         if (res.msg === 0) {
           this.ruleForm.file = res.imgPath
+          this.uploadimg = res.img
           this.imageUrl1 = URL.createObjectURL(file.raw)
           this.imageUrl2 = URL.createObjectURL(file.raw)
-        } else if (res.msg === 1) {
-          this.$message.error('未检测到人脸，请重新上传!');
-        } else if (res.msg === 2) {
-          this.$message.error('检测到多张人脸,请重新上传!');
+        } else {
+          this.$message.error('检测人脸失败,请重新上传!');
         }
       }else{
           this.$message.error('上传失败!');
@@ -245,6 +245,7 @@
         if(this.qu != ''){
           this.ruleForm.pcc = this.sheng['v'] + this.shi['v'] + this.qu['v']
         }
+        var _this= this
         this.$axios({
           method: 'post',
           url: '/face/compare/otn',
@@ -254,9 +255,10 @@
           }
         }).then(res => {
           if(res.data.code === 200){
-
             this.$message.success('查询成功');
-            this.$emit("getsearchdata",res.data.data)
+            this.$store.state.ruleForm=this.ruleForm
+            sessionStorage.setItem("qparams",JSON.stringify(this.$store.state.ruleForm))
+            this.$emit("getsearchdata",res.data.data,_this.uploadimg,_this.ruleForm.file)
             this.$emit("changepage")
           }else{
             this.$message.error('请求失败');
@@ -353,6 +355,9 @@
   .rxbd_sxtj>.el-radio__input>.el-radio__inner{
     background-color: rgba(255,255,255,0) !important;
     border: 1px solid rgba(47,123,165,1);
+    color:white;
+  }
+  .type-label /deep/ .el-form-item__label{
     color:white;
   }
 

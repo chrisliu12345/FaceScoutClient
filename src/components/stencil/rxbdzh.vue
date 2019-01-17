@@ -26,9 +26,10 @@ export default {
           this.myShow=false;
           this.myShow2=true;
       },
-      getsearchdata(data){
+      getsearchdata(data,img,imgName){
         this.datas = data
         this.$children[1].renderdata(data)
+        this.$children[1].puspaginationListhimgdata(img,imgName)
       }
   }
 }
