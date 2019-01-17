@@ -6,7 +6,20 @@ export default new Vuex.Store({
 
   state: {
     // 存储token
-    Authorization: sessionStorage.getItem('Authorization') ? sessionStorage.getItem('Authorization') : ''
+    Authorization: sessionStorage.getItem('Authorization') ? sessionStorage.getItem('Authorization') : '',
+    ruleForm: {
+      agemin: '',
+      agemax: '',
+      per:10,
+      maxcount:20,
+      sex: 1,
+      nation: '',
+      pcc:'',
+      type: [0],
+      file:'',
+      pageSize:8,
+      pageNum:1
+    }
   },
   /* actions: {
    changeLogin(ctx,Authorization){

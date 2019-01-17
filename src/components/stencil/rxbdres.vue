@@ -7,7 +7,7 @@
           <div>
             <el-row>
               <el-col :span="8">
-              <img :src="imageOne" class="img11"><div style="font-size: 14px"><span>原图</span></div>
+              <img :src="imageOne" class="img11"><div style="font-size: 14px;padding-left: 70%;"><span>原图</span></div>
               </el-col>
               <el-col :span="7">
                 <div align="center" style="margin-top: 30%">
@@ -16,24 +16,24 @@
                   <i class="el-icon-d-arrow-left"></i>
                 </div>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="9">
                 <el-upload
                   class="avatar-uploader"
                   action="/face/common/checkPhoto"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload">
-                  <img v-if="imgUpload" :src="imgUpload" class="img11">
+                  <img v-if="imgUpload" :src="imgUpload" class="img12">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
-                <div style="font-size: 10px"><span>支持上传2M以内的图片<br>(最小分辨率360*480)</span></div>
+                <div style="font-size: 10px;padding-right: 45%;"><span>支持上传2M以内的图片<br>(最小分辨率360*480)</span></div>
             </el-col>
             </el-row>
           </div>
           <div style="margin-top: 8px">
             <el-row>
-              <el-col :span="15" :offset="2"> <div align="left" style="font-size: 13px">选择相似度:</div>
-             <el-progress :text-inside="true" :stroke-width="15" :percentage="80"></el-progress>
+              <el-col :span="15" :offset="4"> <div align="left" style="font-size: 13px">选择相似度:</div>
+                <processSlider :min=10 :max=99 v-model = "ruleForm.per"  @tfVue="getsonVue"></processSlider>
               </el-col>
             </el-row>
           </div>
@@ -80,7 +80,7 @@
                 :value="item">
               </el-option>
             </el-select>
-            <el-select v-model="qu" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
+            <el-select v-model="qu" value-key="v" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
               <el-option
                 v-for="item,index in quoptions"
                 :key="index"
@@ -92,49 +92,65 @@
           <br>
           <div align="left" style="font-size: 15px;margin-left: 5%">
             <el-row>
-              <el-col :span="16">
+              <el-col :span="24">
                 <el-form>
                   <el-form-item label="类型:" class="rxbd_sxtj">
                     <el-checkbox-group v-model="ruleForm.type">
-                      <el-checkbox v-for="ct in types" :label="ct.value" :key="ct.value" class="rxbd_sxtj">{{ct.label}}</el-checkbox>
+                      <el-checkbox v-for="ct in types" :label="ct.value" :key="ct.value" class="rxbd_sxtj">
+                        {{ct.label}}</el-checkbox>
                     </el-checkbox-group>
                   </el-form-item>
                 </el-form>
               </el-col>
-              <el-col :span="8" :offset="0">
-                <el-button plain @click="goSearch" class="rxbdres_search">查询{{pageSize}}</el-button>
-              </el-col>
+            </el-row>
+          </div>
+          <div align="left" style="font-size: 15px;margin-left: 5%">
+            <el-row>
+            <el-col :span="24" :offset="0">
+              <el-button  type="primary" class="rxbdres_search" style="font-size:14px;float:right;" @click="goSearch()">
+                查询
+              </el-button>
+            </el-col>
             </el-row>
           </div>
         </el-card>
       </el-col>
     </el-row>
-    <br>
-    <el-row :gutter="24" style="width: 1600px;">
+    <el-row :gutter="24" style="width: 90%;">
       <el-card class="box-card box-card_rxbdres" style="margin-top: 0px;margin-right: 40px;">
        <el-col :span="24">
-           <el-row>
-           <el-col :span="4">普通对比结果（共{{tableSizeSum}}条结果）</el-col>
-           <el-col :span="6" :offset="14" class="rxbdres_bluebutton">(已选择{{checkList.length}}条)
-             <el-button plain @click="cancelCheckedCard" >取消</el-button>
-             <el-button plain>确认导出</el-button>
-           </el-col>
-           </el-row>
+         <el-form  style="padding: 0px 0 0 5px;">
+           <el-form-item>
+               <span style="float:left;font-size:16px; font-family:MicrosoftYaHei; font-weight:400; color:#D8EDFF;" >普通对比结果
+                 <span style="font-size: 14px;color:#D8EDFF;"> ( 共有{{ tableSizeSum }}条结果 )</span>
+               </span>
+               <el-button  type="primary" class="cancel-btn" style="font-size:14px;float:right;" @click="cancelExport()">
+                 取消
+               </el-button>
+               <el-button  type="primary" class="export-btn" style="font-size:14px;float:right;" @click="doExportPerson()">
+                 确认导出
+               </el-button>
+               <span style="float:right;font-size:15px; font-family:MicrosoftYaHei; font-weight:400; color:#FFFFFF;" >(已选择{{idsSize}}条)
+               </span>
+           </el-form-item>
+         </el-form>
        </el-col>
       <el-col :span="24" style="margin-top: 0%">
         <el-row >
-          <el-col :span="6" v-for="it in datas" :key="it.label">
+          <el-checkbox-group v-model="indexs"  class="check-group" style="color: #51A2ED !important;font-size: 16px;" @change="checkedChange">
+          <el-col :span="6" v-for="it,index in datas" :key="it.id">
             <el-card class="box-card box-card_rxbdres box-card_rxbdcard" >
-           <CompareCard :cardData="it" v-on:handleCheckedCard="handleCheckedCard"></CompareCard>
+           <CompareCard :cardData="it" :pageSize="pageSize" :pageNum="currentPage4" :index="index" v-on:handleCheckedCard="handleCheckedCard"></CompareCard>
           </el-card>
           </el-col>
+          </el-checkbox-group>
         </el-row>
       </el-col>
         <el-col :span="12" :offset="11">
           <div align="right"  style="margin-top: 10px">
             <span class="demonstration"></span>
             <el-pagination
-              background="true"
+              background
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
               :current-page="currentPage4"
@@ -158,9 +174,16 @@ import ElRow from "element-ui/packages/row/src/row";
 import ElCol from "element-ui/packages/col/src/col";
 import {StatusData} from "@/basedata/statusData.js"
 import {citydata} from "@/basedata/citydata-debug.js"
+import processSlider from '@/components/stencil/ProcessSlider'
 
 export default {
-    name: "rxbdres",
+  name: "rxbdres",
+  components:{
+    ElCol,
+    ElRow,
+    CompareCard,
+    processSlider
+  },
    data(){
       return {
         prooptions:citydata,
@@ -170,7 +193,10 @@ export default {
         sheng:'',
         shi:'',
         qu:'',
-
+        exportPerson:[],
+        ids:[],
+        indexs:[],
+        idsSize:0,
         pageSize:8,
         currentPage4: 1,
         tableSizeSum:0,
@@ -226,16 +252,17 @@ export default {
 
       }
    },
+  created () {
+
+  },
   methods:{
     handleAvatarSuccess(res, file) {
       if (res.code == 200) {
         if (res.msg === 0) {
           this.ruleForm.file = res.imgPath
           this.imgUpload = URL.createObjectURL(file.raw)
-        } else if (res.msg === 1) {
-          this.$message.error('未检测到人脸，请重新上传!');
-        } else if (res.msg === 2) {
-          this.$message.error('检测到多张人脸,请重新上传!');
+        } else {
+          this.$message.error('检测人脸失败,请重新上传!');
         }
       }else{
         this.$message.error('上传失败!');
@@ -268,12 +295,15 @@ export default {
     },
     //更改每页显示条数时出发
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.ruleForm.pageSize = val
+      this.pageSize = val;
+      this.goSearch();
     },
     //更换当前显示页时触发
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.fetchData(val, this.pageSize);
+      this.ruleForm.pageNum = val
+      this.currentPage4 = val;
+      this.goSearch();
     },
     fetchData(val,pageSize){ //获取数据
       this.tableData=[];
@@ -291,11 +321,69 @@ export default {
       this.qu = ''
       this.quoptions = this.shi['c']
     },
+    getsonVue(data){
+      this.per = data;
+    },
     renderdata(data){
+      if (sessionStorage.getItem("qparams") ) {
+        // this.$store.replaceState(Object.assign({}, this.$store.state.fqParams,JSON.parse(sessionStorage.getItem("fqParams"))))
+        this.$store.state.ruleForm = JSON.parse(sessionStorage.getItem("qparams"))
+        this.ruleForm = this.$store.state.ruleForm
+      }
       this.tableSizeSum = data.totalCount
       this.pageSize = data.pageSize
       this.currentPage4 = data.currPage
       this.datas = data.list
+    },
+    pushdata(data,imageName,sheng,shi,qu){
+      this.imageOne = "data:image/png;base64,"+data;
+      this.ruleForm.file = imageName
+      if(sheng != '') {
+        this.sheng = sheng
+        this.selectPro()
+      }
+      if(shi != '') {
+        this.shi = shi
+        this.selectShi()
+      }
+      this.qu = qu
+    },
+    checkedChange(){
+      this.idsSize = this.indexs.length
+    },
+    doExportPerson(){
+      //
+      if(this.indexs.length == 0)
+        return this.$message.warning('请选择导出人员')
+      this.ids = []
+      for(let idsIndex of this.indexs){
+        this.ids.push(this.datas[idsIndex]['idcard'])
+        this.exportPerson.push(this.datas[idsIndex])
+      }
+      this.$axios({
+        method: 'post',
+        url: '/face/compare/export',
+        data: this.exportPerson,
+        headers: {
+          'Authorization': sessionStorage.getItem('Authorization')
+        }
+      }).then(res => {
+        let fileName = "比对结果人员信息.xls"
+        // 获取文件名// 文件地址
+        const link = document.createElement('a')
+        link.download = fileName
+        console.log(res.data.data);
+        let returnUrl = "" + res.data.data;
+        link.href =  res.data.path
+        console.log(link.href );
+        link.click()
+      })
+    },
+    cancelExport(){
+      this.exportPerson = []
+      this.ids = []
+      this.indexs = []
+      this.idsSize = 0
     },
     goSearch(){
       if(this.sheng != ''){
@@ -326,12 +414,6 @@ export default {
         }
       })
     }
-  },
-
-  components:{
-    ElCol,
-    ElRow,
-    CompareCard
   }
 
 }
@@ -339,8 +421,14 @@ export default {
 
 <style>
 .img11{
-  width: 80px;
-  height: 104px;
+  width: 100px;
+  padding-left: 60%;
+}
+.img12{
+  width: 100px;
+}
+.avatar-uploader{
+  padding-right: 50%;
 }
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
@@ -348,7 +436,7 @@ export default {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  width: 80px;
+  width: 100px;
   height: 104px;
 }
 .avatar-uploader .el-upload:hover {
@@ -370,7 +458,7 @@ export default {
 
 .rxbdres{
   overflow:hidden;
-  min-width: 1200px;
+  min-width: 1600px;
   height: 1023px;
   background-image: url(/static/img/rxbdres_back.png);
   background-repeat: no-repeat;
@@ -414,21 +502,35 @@ export default {
     color:rgba(216,237,255,1);
   }
   .rxbdres_search{
-    margin-top: 30px;
+    width: 100px;
+    height:40px;
+    margin-right: 25%;
     background:rgba(93,148,56,1);
     border:1px solid rgba(165,215,131,1);
     border-radius:2px;
     color: rgba(255,255,255,1);
-
   }
   .box-card_rxbdres>.el-card__body{
     position: relative;
     top:-20px;
     left:-15px;
+    padding-top: 20px;
   }
   .avatar-uploader-icon{
     width: 82px;
     height: 106px;
   }
-
+.export-btn{
+  width: 103px;
+  height:40px;
+  margin-right: 10px;
+}
+.cancel-btn{
+  width: 100px;
+  height:40px;
+  margin-right: 3%;
+}
+  .el-form-item{
+    margin-bottom: 5px;
+  }
 </style>

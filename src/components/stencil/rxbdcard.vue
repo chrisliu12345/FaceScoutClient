@@ -1,12 +1,14 @@
 <template>
     <div>
-
     <el-row>
       <el-col>
         <!--<div  style="font-size: 9px" class="personID">{{cardData.id}}</div>-->
         <el-row>
-          <el-col :span="4" style="font-size: 9px" class="personID">{{cardData.id}}</el-col>
-          <el-col :span="3" :offset="17"><el-checkbox v-model="cardData.select" @change="$emit('handleCheckedCard',cardData.id,cardData.select)" class="cardCheckBox"></el-checkbox></el-col>
+          <div style=" float:left; font-size: 12px; width: 14px; height:14px;background:#3496A4; margin: 0px 5px 7px 5px;color: #ffffff" >
+            {{(pageSize*(pageNum-1)+(index + 1))}}</div>
+          <el-col :span="3" :offset="17">
+            <el-checkbox :label="index" style="float: right;margin: 5px 0 5px 0" ><span></span></el-checkbox>
+          </el-col>
         </el-row>
       </el-col>
       <el-col>
@@ -43,10 +45,10 @@
   import {IceIdcard} from '@/utils/IceIdcard.js' //注意路径
    export default {
     name: "rxbdcard",
-    props:['cardData'],
-     dataimg : "data:image/png;base64,",
+    props:['cardData','pageSize','pageNum','index'],
     data(){
       return {
+        dataimg : "data:image/png;base64,",
         formCard: {
           name: '',
           region: '',
