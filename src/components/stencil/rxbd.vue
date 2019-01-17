@@ -8,8 +8,8 @@
             <div>
               <img :src="imageUrl1" class="img1">
               <div style="padding: 14px;">
-                <span style="font-size: 12px">请上传单人图片</span>
-                <div style="margin-top: 10%">
+                <span style="font-size: 12px;">请上传单人图片</span>
+                <div style="margin-top: 40px">
                   <el-upload
                     class="upload-demo"
                     action="/face/common/checkPhoto"
@@ -18,7 +18,7 @@
                     :show-file-list="false"
                     :on-success="handleAvatarSuccess2"
                     :before-upload="beforeAvatarUpload">
-                    <el-button type="primary" style="width: 150px; margin-top: 20%;margin-bottom: 50%">浏览图片</el-button>
+                    <el-button type="primary" style="width: 150px; margin-top: 20%;margin-bottom: 50%;font-size: 16px;">浏览图片</el-button>
                   </el-upload>
                 </div>
               </div>
@@ -44,7 +44,7 @@
             <el-radio :label="2"  class="rxbd_sxtj">女</el-radio>
           </el-radio-group>
             民族:&nbsp;&nbsp;
-            <el-select v-model="ruleForm.nation" placeholder="请选择" style="width: 95px" class="rxbd_sxtj">
+            <el-select v-model="ruleForm.nation" placeholder="请选择民族" style="width: 135px" class="rxbd_sxtj">
               <el-option
                 v-for="item in mzoptions"
                 :key="item.v"
@@ -70,7 +70,7 @@
           <br>
           <div align="left" style="font-size: 15px;margin-left: 5%">
             籍贯:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <el-select v-model="sheng" value-key="v" @change="selectPro" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
+            <el-select v-model="sheng" value-key="v" @change="selectPro" placeholder="请选择省" style="width: 150px" class="rxbd_sxtj">
             <el-option
               v-for="item,index in prooptions"
               :key="index"
@@ -78,7 +78,7 @@
               :value="item">
             </el-option>
           </el-select>
-            <el-select v-model="shi" value-key="v" @change="selectShi" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
+            <el-select v-model="shi" value-key="v" @change="selectShi" placeholder="请选择市" style="width: 150px" class="rxbd_sxtj">
               <el-option
                 v-for="item in shioptions"
                 :key="item.v"
@@ -86,7 +86,7 @@
                 :value="item">
               </el-option>
             </el-select>
-            <el-select v-model="qu" value-key="v"  placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
+            <el-select v-model="qu" value-key="v"  placeholder="请选择区" style="width: 150px" class="rxbd_sxtj">
               <el-option
                 v-for="item in quoptions"
                 :key="item.v"
@@ -258,7 +258,7 @@
             this.$message.success('查询成功');
             this.$store.state.ruleForm=this.ruleForm
             sessionStorage.setItem("qparams",JSON.stringify(this.$store.state.ruleForm))
-            this.$emit("getsearchdata",res.data.data,_this.uploadimg,_this.ruleForm.file)
+            this.$emit("getsearchdata",res.data.data,_this.uploadimg,_this.ruleForm.file,_this.sheng,_this.shi,_this.qu)
             this.$emit("changepage")
           }else{
             this.$message.error('请求失败');
@@ -291,8 +291,7 @@
     border-bottom-left-radius: 0.5em;
     margin-left: 25%;
     margin-top: 20%;
-    width: 220px;
-    height: 220px;
+    width: 50%;
     display: block;
   }
 
@@ -304,10 +303,9 @@
     border-top-right-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
     border-bottom-left-radius: 0.5em;
-    margin-top: 5%;
+    margin-top: 3%;
     margin-bottom: 3%;
     width: 100px;
-    height: 100px;
     display: block;
   }
   .notdisplay{
@@ -326,7 +324,7 @@
   }
   .tjbutton{
     width: 200px;
-    margin-top:50px;
+    margin-top:70px;
     background-color:rgba(93,148,56,1) !important;
     border-color: rgba(165,215,131,1)!important;
     z-index: 333;

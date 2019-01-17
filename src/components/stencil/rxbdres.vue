@@ -7,7 +7,7 @@
           <div>
             <el-row>
               <el-col :span="8">
-              <img :src="imageOne" class="img11"><div style="font-size: 14px"><span>原图</span></div>
+              <img :src="imageOne" class="img11"><div style="font-size: 14px;padding-left: 70%;"><span>原图</span></div>
               </el-col>
               <el-col :span="7">
                 <div align="center" style="margin-top: 30%">
@@ -16,23 +16,23 @@
                   <i class="el-icon-d-arrow-left"></i>
                 </div>
               </el-col>
-              <el-col :span="8">
+              <el-col :span="9">
                 <el-upload
                   class="avatar-uploader"
                   action="/face/common/checkPhoto"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload">
-                  <img v-if="imgUpload" :src="imgUpload" class="img11">
+                  <img v-if="imgUpload" :src="imgUpload" class="img12">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
-                <div style="font-size: 10px"><span>支持上传2M以内的图片<br>(最小分辨率360*480)</span></div>
+                <div style="font-size: 10px;padding-right: 45%;"><span>支持上传2M以内的图片<br>(最小分辨率360*480)</span></div>
             </el-col>
             </el-row>
           </div>
           <div style="margin-top: 8px">
             <el-row>
-              <el-col :span="15" :offset="2"> <div align="left" style="font-size: 13px">选择相似度:</div>
+              <el-col :span="15" :offset="4"> <div align="left" style="font-size: 13px">选择相似度:</div>
                 <processSlider :min=10 :max=99 v-model = "ruleForm.per"  @tfVue="getsonVue"></processSlider>
               </el-col>
             </el-row>
@@ -80,7 +80,7 @@
                 :value="item">
               </el-option>
             </el-select>
-            <el-select v-model="qu" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
+            <el-select v-model="qu" value-key="v" placeholder="请选择" style="width: 150px" class="rxbd_sxtj">
               <el-option
                 v-for="item,index in quoptions"
                 :key="index"
@@ -92,7 +92,7 @@
           <br>
           <div align="left" style="font-size: 15px;margin-left: 5%">
             <el-row>
-              <el-col :span="16">
+              <el-col :span="24">
                 <el-form>
                   <el-form-item label="类型:" class="rxbd_sxtj">
                     <el-checkbox-group v-model="ruleForm.type">
@@ -102,15 +102,20 @@
                   </el-form-item>
                 </el-form>
               </el-col>
-              <el-col :span="8" :offset="0">
-                <el-button plain @click="goSearch" class="rxbdres_search">查询</el-button>
-              </el-col>
+            </el-row>
+          </div>
+          <div align="left" style="font-size: 15px;margin-left: 5%">
+            <el-row>
+            <el-col :span="24" :offset="0">
+              <el-button  type="primary" class="rxbdres_search" style="font-size:14px;float:right;" @click="goSearch()">
+                查询
+              </el-button>
+            </el-col>
             </el-row>
           </div>
         </el-card>
       </el-col>
     </el-row>
-    <br>
     <el-row :gutter="24" style="width: 90%;">
       <el-card class="box-card box-card_rxbdres" style="margin-top: 0px;margin-right: 40px;">
        <el-col :span="24">
@@ -247,6 +252,9 @@ export default {
 
       }
    },
+  created () {
+
+  },
   methods:{
     handleAvatarSuccess(res, file) {
       if (res.code == 200) {
@@ -287,12 +295,15 @@ export default {
     },
     //更改每页显示条数时出发
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.ruleForm.pageSize = val
+      this.pageSize = val;
+      this.goSearch();
     },
     //更换当前显示页时触发
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-      this.fetchData(val, this.pageSize);
+      this.ruleForm.pageNum = val
+      this.currentPage4 = val;
+      this.goSearch();
     },
     fetchData(val,pageSize){ //获取数据
       this.tableData=[];
@@ -324,9 +335,18 @@ export default {
       this.currentPage4 = data.currPage
       this.datas = data.list
     },
-    pushimgdata(data,imageName){
+    pushdata(data,imageName,sheng,shi,qu){
       this.imageOne = "data:image/png;base64,"+data;
       this.ruleForm.file = imageName
+      if(sheng != '') {
+        this.sheng = sheng
+        this.selectPro()
+      }
+      if(shi != '') {
+        this.shi = shi
+        this.selectShi()
+      }
+      this.qu = qu
     },
     checkedChange(){
       this.idsSize = this.indexs.length
@@ -401,8 +421,14 @@ export default {
 
 <style>
 .img11{
-  width: 80px;
-  height: 104px;
+  width: 100px;
+  padding-left: 60%;
+}
+.img12{
+  width: 100px;
+}
+.avatar-uploader{
+  padding-right: 50%;
 }
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
@@ -410,7 +436,7 @@ export default {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  width: 80px;
+  width: 100px;
   height: 104px;
 }
 .avatar-uploader .el-upload:hover {
@@ -476,12 +502,13 @@ export default {
     color:rgba(216,237,255,1);
   }
   .rxbdres_search{
-    margin-top: 30px;
+    width: 100px;
+    height:40px;
+    margin-right: 25%;
     background:rgba(93,148,56,1);
     border:1px solid rgba(165,215,131,1);
     border-radius:2px;
     color: rgba(255,255,255,1);
-
   }
   .box-card_rxbdres>.el-card__body{
     position: relative;
@@ -499,8 +526,11 @@ export default {
   margin-right: 10px;
 }
 .cancel-btn{
-  width: 80px;
+  width: 100px;
   height:40px;
-  margin-right: 10px;
+  margin-right: 3%;
 }
+  .el-form-item{
+    margin-bottom: 5px;
+  }
 </style>
