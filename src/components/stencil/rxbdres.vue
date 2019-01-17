@@ -432,7 +432,7 @@ export default {
 
 .rxbdres{
   overflow:hidden;
-  min-width: 1200px;
+  min-width: 1600px;
   height: 1023px;
   background-image: url(/static/img/rxbdres_back.png);
   background-repeat: no-repeat;

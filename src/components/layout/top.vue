@@ -361,4 +361,7 @@ export default {
     width: 174px;
     height: 73px;
   }
+  label{
+    color:white!important;
+  }
 </style>

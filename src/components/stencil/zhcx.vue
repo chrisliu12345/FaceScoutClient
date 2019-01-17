@@ -316,7 +316,7 @@
 <style >
 .zhcx{
   overflow:hidden;
-  min-width: 1200px;
+  min-width: 1600px;
   height: 880px;
   background-image: url(/static/img/zhcx_back.png);
   background-repeat: no-repeat;

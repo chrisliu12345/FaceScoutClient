@@ -174,9 +174,17 @@
     },
     methods: {
       handleAvatarSuccess1(res, file) {
-        this.imageUrl1 = URL.createObjectURL(file.raw);
-        this.effectivImageUrl="data:image/jpeg;base64,"+res.img;
-        this.imgageName=res.imgPath;
+          if(res.msg='1'){
+            this.$message.error('照片中未检测到人像！');
+          }else if(res.msg='2'){
+            this.$message.error('照片中检测到多个人像！');
+          }else{
+              this.$message('单人照片上传成功');
+            this.imageUrl1 = URL.createObjectURL(file.raw);
+            this.effectivImageUrl="data:image/jpeg;base64,"+res.img;
+            this.imgageName=res.imgPath;
+          }
+
       },
       beforeAvatarUpload(file) {
 
@@ -192,6 +200,9 @@
         return isJPG && isLt2M;
       },
       submitForm (formName) {
+          if(this.imgageName==''){
+            this.$message.error('请先上传人脸照片');
+          }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios({
@@ -216,9 +227,11 @@
               if(res.data.msg=="1"){
                 console.log(res.data)
                 //此处用来处理添加成功信息
-                this.$alert('提交成功！');
+                //this.$alert('提交成功！');
+                this.$message('提交成功');
               }else{
-                this.$alert('提交失败！')
+                //this.$alert('提交失败！');
+                this.$message.error('提交失败');
               }
               /*if (res.data.code === '401') {
                 this.$alert('账号或密码错误，请重新输入')
@@ -246,7 +259,7 @@
 <style>
   .rxrk{
     overflow:hidden;
-    min-width: 1200px;
+    min-width: 1600px;
     height: 880px;
     background-image: url(/static/img/rxrk_back.png);
     background-repeat: no-repeat;
@@ -256,9 +269,7 @@
     margin:5% 0% 5% 15%;
   }
 
-  label{
-    color:white!important;
-  }
+
   .box-card_rxrk{
     border:0px!important;
     background: transparent;
