@@ -129,7 +129,7 @@ export default {
     open7 (data) {
       this.$notify.success({
         title: '登录提示',
-        message: '欢迎：' + data + ' 使用！',
+        message: '欢迎使用航天长峰人脸侦察平台！',
         offset: 80,
         showClose: true
       })
