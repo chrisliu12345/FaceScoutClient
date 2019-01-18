@@ -120,14 +120,13 @@
     },
     methods: {
         getBmdList(){
-            var param = {};
-            param.pageNum=this.currentPage;
-            param.pageSize=this.pageSize;
-            var paramJson = JSON.stringify(param);
           this.$axios({
             method: 'post',
             url: '/face/whitelist/list',
-            data: paramJson,
+            data: {
+              pageNum:this.currentPage,
+              pageSize:this.pageSize
+            },
             headers: {
               'Authorization': sessionStorage.getItem('Authorization'),
               'content-Type':'application/json'

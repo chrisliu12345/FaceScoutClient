@@ -69,15 +69,35 @@
               </el-date-picker>
             </el-form-item>
             <el-form-item label="籍贯:" style="margin-left: 20px;margin-bottom:10px;" prop="nativePlace">
-              <el-select v-model="baseInfoForm.nativePlace" placeholder="请选择籍贯" style="width:265px;" class="rxrkSelect">
+
+              <el-select v-model="baseInfoForm.sheng" value-key="v" @change="selectPro" placeholder="请选择" style="width: 85px" class="rxrkSelect">
                 <el-option
-                  v-for="(item,index) in navtivePlaces"
+                  v-for="item,index in prooptions"
                   :key="index"
                   :label="item.n"
-                  :value="item.v">
+                  :value="item">
+                </el-option>
+              </el-select>
+              <el-select v-model="baseInfoForm.shi" value-key="v" @change="selectShi" placeholder="请选择" style="width: 85px" class="rxrkSelect">
+                <el-option
+                  v-for="item in shioptions"
+                  :key="item.v"
+                  :label="item.n"
+                  :value="item">
+                </el-option>
+              </el-select>
+              <el-select v-model="baseInfoForm.qu" value-key="v"  placeholder="请选择" style="width: 85px" class="rxrkSelect">
+                <el-option
+                  v-for="item in quoptions"
+                  :key="item.v"
+                  :label="item.n"
+                  :value="item">
                 </el-option>
               </el-select>
             </el-form-item>
+
+
+
             <el-form-item label="民族:" style="margin-left: 20px;margin-bottom: 10px;" prop="nation">
               <el-select v-model="baseInfoForm.nation" placeholder="请选择民族" style="width:265px;" class="rxrkSelect">
                 <el-option
@@ -108,7 +128,7 @@
                 ></el-option>
               </el-select>
             </el-form-item>
-          </el-form>0
+          </el-form>
         </el-row>
 
         <el-row>
@@ -138,6 +158,7 @@
   import ElCol from "element-ui/packages/col/src/col";
   import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
   import {StatusData} from "@/basedata/statusData.js"
+  import {citydata} from "@/basedata/citydata-debug.js"
 
   export default {
     name: "rxrk",
@@ -148,6 +169,9 @@
           myHeaders:{
             Authorization:sessionStorage.getItem('Authorization')
           },
+        prooptions:citydata,
+        shioptions:[],
+        quoptions:[],
           imgageName:'',
         whcdoptions:StatusData['Culturallv'],
         navtivePlaces:StatusData['Nativeplace'],
@@ -162,10 +186,12 @@
           name: '',
           gender: '',
           birthday: '',
-          nativePlace:'',
           nation: '',
           faith: '',
-          educationDegree:''
+          educationDegree:'',
+          sheng:'',
+          shi:'',
+          qu:''
         }
       }
     },
@@ -199,6 +225,16 @@
         }
         return isJPG && isLt2M;
       },
+      selectPro(){
+        this.baseInfoForm.shi = ''
+        this.baseInfoForm.qu = ''
+        this.shioptions = this.baseInfoForm.sheng['c']
+        this.quoptions = []
+      },
+      selectShi(){
+        this.baseInfoForm.qu = ''
+        this.quoptions = this.baseInfoForm.shi['c']
+      },
       submitForm (formName) {
           if(this.imgageName==''){
             this.$message.error('请先上传人脸照片');
@@ -214,11 +250,12 @@
                 'tName': this.baseInfoForm.name,
                 'sex': this.baseInfoForm.gender,
                 /*birthday: this.baseInfoForm.birthday,*/
-                'pcc':this.baseInfoForm.nativePlace,
+                'pcc':this.baseInfoForm.sheng+this.baseInfoForm.shi+this.baseInfoForm.qu,
                 'nation': this.baseInfoForm.nation,
                 'rcb': this.baseInfoForm.faith,
                 'ccb':this.baseInfoForm.educationDegree,
-                'file':this.imgageName
+                'file':this.imgageName,
+                'np':this.baseInfoForm.sfID.substr(0,6)
               },
               headers: {
                 'Authorization': sessionStorage.getItem('Authorization')

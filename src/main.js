@@ -31,7 +31,7 @@ new Vue({
 // 异步请求前在header里加入token
 axios.interceptors.request.use(
   config => {
-    if (config.url === '/jwt/login' || config.url === '/jwt') { // 如果是登录和注册操作，则不需要携带header里面的token
+    if (config.url === '/login' || config.url === '/jwt') { // 如果是登录和注册操作，则不需要携带header里面的token
     } else {
       if (sessionStorage.getItem('Authorization')) {
         config.headers.Authorization = sessionStorage.getItem('Authorization')
