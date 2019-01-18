@@ -374,4 +374,7 @@ export default {
     width: 174px;
     height: 73px;
   }
+  .el-form-item__label{
+    color: white;
+  }
 </style>

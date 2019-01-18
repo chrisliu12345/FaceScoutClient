@@ -138,7 +138,22 @@ export default {
       }, {
         value: '3',
         label: '黄赌毒'
-      }],
+      },{
+        value: '9',
+        label: '扒窃入口'
+      }, {
+        value: '4',
+        label: '诈骗犯'
+      }, {
+          value: '7',
+          label: '非法集资'
+        },{
+          value: '8',
+          label: '外地飞抢'
+        }, {
+          value: '6',
+          label: '出所'
+        }],
       sheng: '',
       shi: '',
       qu: '',
