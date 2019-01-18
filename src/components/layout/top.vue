@@ -10,7 +10,7 @@
     </el-col>
     <el-col :span="20">
      <el-menu
-      :default-active="activeIndex2"
+      :default-active="activeIndex"
         mode="horizontal"
       class="el-menu-demo"
         @select="handleSelect"
@@ -73,7 +73,6 @@ export default {
         {title: '户籍查重', count: 3, locked: false, id: '6', idname:'census',router: '/hjcc',dis:true}
       ],
       activeIndex: '1',
-      activeIndex2: '1',
       search: '',
       state2: '',
       restaurants: [],
@@ -84,9 +83,23 @@ export default {
     }
   },
   mounted: function () {
-    this.restaurants = this.loadAll()
-    this.selectPicture()
-    this.isSelect=1
+    this.restaurants = this.loadAll();
+    this.selectPicture();
+    this.isSelect=1;
+    console.log(this.$route.path);
+    if(this.$route.path=='/rxbdzh'){
+        this.activeIndex=2;
+    }else if(this.$route.path=='/bmd'){
+      this.activeIndex=3;
+    }else if(this.$route.path=='/bdbd'){
+      this.activeIndex=4;
+    }else if(this.$route.path=='/zhcx'){
+      this.activeIndex=5;
+    }else if(this.$route.path=='/hjcc'){
+      this.activeIndex=6;
+    }else{
+      this.activeIndex=1;
+    }
   },
   methods: {
     onLogout () {
@@ -360,8 +373,5 @@ export default {
     background:rgba(0,109,171,1);
     width: 174px;
     height: 73px;
-  }
-  label{
-    color:white!important;
   }
 </style>
