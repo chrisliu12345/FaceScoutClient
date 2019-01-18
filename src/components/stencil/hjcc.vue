@@ -163,6 +163,10 @@ export default {
       if (res.data.code === 200) {
         this.tableSizeSum = res.data.page.totalCount
         this.tableData = res.data.page.list
+        this.tableData.forEach(d =>{
+          d.time= new Date(parseInt(d.time)).toLocaleString('chinese',{hour12:false});
+
+        })
       } else {
         this.$message.error('请求失败')
       }
@@ -242,6 +246,9 @@ export default {
           this.$message.success('查询成功')
           this.tableSizeSum = res.data.page.totalCount
           this.tableData = res.data.page.list
+          this.tableData.forEach(d =>{
+            d.time= new Date(parseInt(d.time)).toLocaleString('chinese',{hour12:false});
+          })
         } else {
           this.$message.error('请求失败')
         }
@@ -263,20 +270,15 @@ export default {
         method: 'post',
         url: '/face/repeat/export',
         data: {ids: this.selectResult},
-        responseType: 'arraybuffer'
       }).then(res => {
         console.log(res)
         if (res.status === 200) {
-          this.$message.success('导出成功')
-          var blob = new Blob([res.data], {type: 'application/vnd.ms-excel;charset=utf-8'})
-          var downloadElement = document.createElement('a')
-          var href = window.URL.createObjectURL(blob) //创建下载的链接
-          downloadElement.href = href
-          downloadElement.download = '导出文件.xls' //下载后文件名
-          document.body.appendChild(downloadElement)
-          downloadElement.click() //点击下载
-          document.body.removeChild(downloadElement) //下载完成移除元素
-          window.URL.revokeObjectURL(href) //释放掉blob对象
+          this.$message.success('导出成功');
+          let fileName = "户籍查重结果.xls";
+          const link = document.createElement('a')
+          link.download = fileName
+          link.href =  res.data.path;
+          link.click();
         } else {
           this.$message.error('请求失败')
         }
