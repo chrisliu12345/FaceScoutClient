@@ -293,8 +293,8 @@
 
 <style>
   .bmd{
-    overflow:hidden;
-    min-width: 1600px;
+    /*overflow:hidden;*/
+    min-width: 1400px;
     height: 880px;
     background-image: url(/static/img/bmd_back.png);
     background-repeat: no-repeat;
