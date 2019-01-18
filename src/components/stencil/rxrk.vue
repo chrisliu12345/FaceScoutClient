@@ -9,13 +9,13 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="11" :offset="3" >
-            <img :src="imageUrl1" class="image_rxrk avatar">
+          <el-col :span="11" :offset="2" >
+            <img :src="imageUrl1" class="image_rxrk">
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="11" :offset="7" >
-            <p>请上传单人图片!</p>
+          <el-col :span="11" :offset="6" >
+            <p style="font-size: 13px">请上传单人图片!</p>
           </el-col>
         </el-row>
 
@@ -45,8 +45,12 @@
           <el-form ref="baseInfoForm" :label-position="labelPosition" :model="baseInfoForm" label-width="80px" style="color:white;">
             <el-form-item label="入库类型:" style="margin-left: 20px;margin-top:5%;margin-bottom: 10px;" prop="rktype">
               <el-select v-model="baseInfoForm.rktype" placeholder="请选择类型" style="width:265px;height:36px;" class="rxrkSelect">
-                <el-option label="常住人口" value="1"></el-option>
-                <el-option label="流动人口" value="2"></el-option>
+                <el-option
+                  v-for="item in rkType"
+                  :key="item.v"
+                  :label="item.n"
+                  :value="item">
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item :label-position="labelPosition" label="身份证号码:" label-width="100px" style="margin-bottom: 10px;" prop="sfID">
@@ -70,7 +74,7 @@
             </el-form-item>
             <el-form-item label="籍贯:" style="margin-left: 20px;margin-bottom:10px;" prop="nativePlace">
 
-              <el-select v-model="baseInfoForm.sheng" value-key="v" @change="selectPro" placeholder="请选择" style="width: 85px" class="rxrkSelect">
+              <el-select v-model="baseInfoForm.sheng" value-key="v" @change="selectPro" placeholder="请选择"  class="rxrkSelect jgSelect">
                 <el-option
                   v-for="item,index in prooptions"
                   :key="index"
@@ -78,7 +82,7 @@
                   :value="item">
                 </el-option>
               </el-select>
-              <el-select v-model="baseInfoForm.shi" value-key="v" @change="selectShi" placeholder="请选择" style="width: 85px" class="rxrkSelect">
+              <el-select v-model="baseInfoForm.shi" value-key="v" @change="selectShi" placeholder="请选择"  class="rxrkSelect jgSelect">
                 <el-option
                   v-for="item in shioptions"
                   :key="item.v"
@@ -86,7 +90,7 @@
                   :value="item">
                 </el-option>
               </el-select>
-              <el-select v-model="baseInfoForm.qu" value-key="v"  placeholder="请选择" style="width: 85px" class="rxrkSelect">
+              <el-select v-model="baseInfoForm.qu" value-key="v"  placeholder="请选择" class="rxrkSelect jgSelect">
                 <el-option
                   v-for="item in quoptions"
                   :key="item.v"
@@ -177,6 +181,7 @@
         navtivePlaces:StatusData['Nativeplace'],
         mzoptions:StatusData['Nationality'],
         zjoptions:StatusData['Religiousbl'],
+        rkType:StatusData['RKType'],
         effectivImageUrl:'/static/img/people.jpg',
         imageUrl1:'/static/img/people.jpg',
         labelPosition: 'right',
@@ -284,7 +289,14 @@
         })
       },
       pdcsny(){
-          console.log("aaaaaaaaaaaaaaaaaaaaaaaaaa");
+        var sfzh = this.baseInfoForm.sfID;
+        var reg = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if(reg.test(sfzh)==false){
+            this.$message.error("身份证格式输入有误!");
+            return;
+        }
+        var birthdate = sfzh.substring(6,10)+'-'+sfzh.substring(10,12)+'-'+sfzh.substring(12,14);
+        this.baseInfoForm.birthday=birthdate;
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
@@ -339,6 +351,12 @@
     border: 2px solid rgba(47,123,165,1);
     color:white;
   }
+  .jgSelect{
+    width: 85px;
+  }
+  .jgSelect>.el-input--suffix>.el-input__inner{
+    font-size: 12px;
+  }
   .rxrkDate>.el-input__inner{
     background-color: rgba(255,255,255,0);
     border: 2px solid rgba(47,123,165,1);
@@ -361,9 +379,10 @@
   .rxrk_radio .el-radio__input>.el-radio__inner{
     background-color: rgba(255,255,255,0) !important;
     border: 1px solid rgba(47,123,165,1);
-    color:white;
   }
-
+  .rxrk_radio  .el-radio__label{
+    color: white;
+  }
   .el-message-box{
     background:rgba(5,22,30,1);
     opacity:0.9;
@@ -377,6 +396,4 @@
     font-weight:300;
     color:rgba(255,255,255,1);
   }
-
-
 </style>
