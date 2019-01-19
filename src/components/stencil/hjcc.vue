@@ -66,7 +66,7 @@
         </el-select>
           <label>点更新特征</label>
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <el-button type="primary" plain size="small" @click="toggleSelection()">修改</el-button>
+          <el-button type="primary" plain size="small" @click="updateTime">修改</el-button>
           <el-button type="primary" plain size="small" @click="updatedoNow">立即更新</el-button>
         </div>
         <el-table
@@ -177,6 +177,7 @@ export default {
       tableSizeSum: 50,
       multipleSelection: [],
       selectResult:[],
+      modId:'',//特征ID
       timeH:'',
       timeOptions:[],
       dateH:'',
@@ -213,16 +214,17 @@ export default {
         method: 'get',
         url: '/face/update/getConfig',
       }).then(res => {
-        console.log(res);
+        this.dateH = res.data.data.daysSum;
+        this.timeH=res.data.data.setHour;
+         this.modId=res.data.data.id;
       });
       for(var i=0;i<24;i++){
         this.timeOptions.push(i);
       }
-      for(var j=1;j<=365;j++){
+      for(var j=1;j<=5;j++){
         this.dateOptions.push(j);
       }
-      this.dateH = this.dateOptions[0];
-      this.timeH=this.timeOptions[0];
+
     },
     //表格选择checkbox时，获取选中行数据对象，val为选中的行数据对象
     handleSelectionChange (val) {
@@ -339,6 +341,24 @@ export default {
         this.$message.error('请选择导出的数据行');
       }
     },
+    //修改特征时间按钮
+    updateTime(){
+      this.$axios({
+        method: 'post',
+        url: '/face/update/config',
+        data:{
+          id:this.modId,
+          daysSum:this.dateH,
+          setHour:this.timeH
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.$message.success('修改成功')
+        } else {
+          this.$message.error('请求失败')
+        }
+      })
+    },
     //立即更新
     updatedoNow(){
       this.$axios({
@@ -349,7 +369,7 @@ export default {
         if (res.data.code === 200) {
           this.$message.success('更新成功')
         } else {
-          this.$message.error('请求失败')
+          this.$message.error('更新失败，后端服务未启动')
         }
       })
     },

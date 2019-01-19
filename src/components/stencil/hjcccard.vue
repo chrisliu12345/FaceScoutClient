@@ -1,7 +1,8 @@
 <template>
 
       <el-dialog title="更正信息" :visible.sync="dialogFormVisible" status-icon :show-close="closeModel" :close-on-click-modal="closeOnClick"
-                 :close-on-press-escape="closeEscape" width="30%">
+                 :close-on-press-escape="closeEscape"
+                 width="30%">
         <div v-show="resultMessage">
           <el-alert
             title="更正成功！"
@@ -26,8 +27,8 @@
             <label>身份证号B:</label> <el-input v-model="dataList.codeb" disabled style="width: 200px"></el-input>
           </el-form-item>
           <el-form-item>
-            <label>相似度:</label> <el-input v-model="dataList.resemblep" disabled style="width: 160px"></el-input>
-            <label>时间:</label> <el-input v-model="dataList.time" disabled style="width: 200px"></el-input>
+            <label>相似度:</label> <el-input v-model="dataList.resemblep" disabled style="width: 155px"></el-input>&nbsp;&nbsp;
+            <label style="margin-left: 38px">时间:</label> <el-input v-model="dataList.time" disabled style="width: 200px"></el-input>
           </el-form-item>
           <el-form-item>
             <label>类型:</label> <el-select v-model="type" placeholder="请选择类型"  style="width: 80%">
@@ -43,8 +44,10 @@
             <label>备注:</label>  <el-input type="textarea" v-model="remark" style="width: 80%"></el-input>
           </el-form-item>
         </el-form>
-        <el-button type="primary" @click="onSubmit">更正</el-button>
+        <div v-if="beforeUpdata===true"> <el-button type="primary" @click="onSubmit">更正</el-button>
         <el-button @click="cancel">取消</el-button>
+        </div>
+        <div v-else><el-button @click="cancel">关闭</el-button></div>
       </el-dialog>
 
 </template>
@@ -63,8 +66,7 @@ export default {
       closeModel: false, // 隐藏右上角的关闭按钮
       closeOnClick: false, // 禁止点击modal关闭模态框
       closeEscape: false, // 禁止ESC关闭模态框
-      resultMessage: false, // 修改成功返回结果
-      errorMessage: false, // 修改失败返回结果
+      beforeUpdata:true, //切换显示下方按钮组
       dataList:{},
       type:'',
       remark:'',
@@ -85,17 +87,19 @@ export default {
     }
   },
   methods:{
+    //取消按钮
     cancel () {
       this.dialogFormVisible = false
       this.$router.go(-1)
     },
+    //更正按钮
     onSubmit(){
       if(this.type=''){
         this.$message.error('请选择更正的类型！');
       }else{
       this.$axios({
         method: 'post',
-        url: '/face/repeat/update',
+        url: '/face/repeat/mod',
         data: {
           id:this.dataList.id,
           state:this.type,
@@ -103,10 +107,11 @@ export default {
         }
       }).then(res => { // res是返回结果
         console.log(res);
-        if (res.data === 1) {
-          this.resultMessage = true
+        if (res.data.code === 200) {
+          this.$message.success('更新成功')
+          this.beforeUpdata=false;
         } else {
-          this.errorMessage = true
+          this.$message.error('请求失败')
         }
       }).catch(err => { // 请求失败就会捕获报错信息
         console.log(err)
