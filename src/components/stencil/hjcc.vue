@@ -139,13 +139,16 @@
         </div>
       </el-col>
     </el-row>
+    <div v-if="dialogFormVisible===true">
+    <Hjcccard :hjdata="Myind" v-on:myEvent="dialogFormVisible=false"></Hjcccard>
+    </div>
   </div>
 </template>
 
 <script>
 import {StatusData} from '@/basedata/statusData.js'
 import {citydata} from '@/basedata/citydata-debug.js'
-
+import Hjcccard from  '@/components/stencil/hjcccard'
 export default {
   name: 'hjcc',
   data () {
@@ -153,6 +156,8 @@ export default {
       prooptions: citydata,
       shioptions: [],
       quoptions: [],
+      Myind:[],
+      dialogFormVisible:false,
       mzoptions: StatusData['Nationality'],
       types: [{
         value: 0,
@@ -183,6 +188,9 @@ export default {
       dateH:'',
       dateOptions:[]
     }
+  },
+  components:{
+    Hjcccard
   },
   mounted: function () {
     this.updateTraitData();
@@ -375,7 +383,11 @@ export default {
     },
     //表格中的“操作”按钮
     updatehjcc(data){
-      this.$router.push({name: 'hjcccard',params:{dd:data}});
+      console.log("jinrucaozuo");
+      //this.$router.push({name: 'hjcccard',params:{dd:data}});
+      this.dialogFormVisible=true;
+      this.Myind=data;
+
     }
   }
 }

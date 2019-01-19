@@ -1,22 +1,8 @@
 <template>
 
-      <el-dialog title="更正信息" :visible.sync="dialogFormVisible" status-icon :show-close="closeModel" :close-on-click-modal="closeOnClick"
+      <el-dialog title="更正信息" :visible.sync="dialogFormVisible1" status-icon :show-close="closeModel" :close-on-click-modal="closeOnClick"
                  :close-on-press-escape="closeEscape"
                  width="30%" class="hjcccard">
-        <div v-show="resultMessage">
-          <el-alert
-            title="更正成功！"
-            type="success"
-            show-icon>
-          </el-alert>
-        </div>
-        <div v-show="errorMessage">
-          <el-alert
-            title="信息提交失败！"
-            type="error"
-            show-icon>
-          </el-alert>
-        </div>
         <el-form align="left">
           <el-form-item>
            <label>姓名A:</label> <el-input v-model="dataList.namea" disabled style="width: 160px" class="hjcccard_input"></el-input>&nbsp;&nbsp;
@@ -55,20 +41,24 @@
 <script>
 export default {
   name: 'hjcccard',
-  created(){
-    this.dataList=this.$route.params.dd;
+  props:['hjdata'],
+/*  created(){
+
+  },*/
+  mounted:function(){
+    this.dataList=this.hjdata;/*this.$route.params.dd;*/
     console.log(this.dataList);
-    this.dialogFormVisible=true;
+    this.dialogFormVisible1 = true;
   },
   data(){
     return {
-      dialogFormVisible: false,
+      dialogFormVisible1: true,
       closeModel: false, // 隐藏右上角的关闭按钮
       closeOnClick: false, // 禁止点击modal关闭模态框
       closeEscape: false, // 禁止ESC关闭模态框
       beforeUpdata:true, //切换显示下方按钮组
       dataList:{},
-      type:'',
+      type:null,
       remark:'',
       types: [{
         value: 0,
@@ -89,12 +79,13 @@ export default {
   methods:{
     //取消按钮
     cancel () {
-      this.dialogFormVisible = false
-      this.$router.go(-1)
+      this.dialogFormVisible1 = false
+      /*this.$router.go(-1)*/
+      this.$emit('myEvent');
     },
     //更正按钮
     onSubmit(){
-      if(this.type=''){
+      if(this.type===null){
         this.$message.error('请选择更正的类型！');
       }else{
       this.$axios({
@@ -124,7 +115,7 @@ export default {
 
 <style>
 .hjcccard .el-dialog{
-  background:rgba(47, 123, 165, 0.5);
+  background:rgba(47, 123, 165,1);
   font-color: white;
 }
 
