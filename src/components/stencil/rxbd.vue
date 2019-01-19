@@ -4,7 +4,7 @@
       <el-col :span="7" :offset="0">
         <div>
           <el-card class="box-card box_card_rxbd">
-            <div align="center"><span>请选择对比图像</span></div>
+            <div align="center" class="highLine_rxbd"><span>请选择对比图像</span></div>
             <div>
               <img :src="imageUrl1" class="img1">
               <div style="padding: 14px;">
@@ -28,7 +28,10 @@
       </el-col>
       <el-col :span="11" :offset="2">
         <el-card class="box-card box_card_rxbd ">
-          <div align="center"><span>人脸图像</span><br>
+          <div align="center" class="highLine_rxbd"><span >人脸图像</span><br>
+
+          </div>
+          <div align="center">
             <img :src="imageUrl2" class="img2">
           </div>
         </el-card>
@@ -283,7 +286,6 @@
   }
   .img1 {
     vertical-align: middle;
-    /* display: inline-block;*/
     transform: translateY(4px);
     border-top-left-radius: 0.5em;
     border-top-right-radius: 0.5em;
@@ -358,5 +360,10 @@
   .type-label /deep/ .el-form-item__label{
     color:white;
   }
-
+  .highLine_rxbd {
+    background:url(/static/img/highLine.png) no-repeat center top;
+    z-index: 2;
+    height: 36px;
+    background-position-y: bottom;
+  }
 </style>

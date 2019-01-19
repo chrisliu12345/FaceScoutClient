@@ -341,7 +341,7 @@
   .highLine {
     background-image: url(/static/img/highLine.png);
     background-repeat: no-repeat;
-    z-index: 2;
+   z-index: 2;
     padding-left: 75px;
     height: 36px;
     background-position-y: bottom;
