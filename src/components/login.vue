@@ -139,10 +139,10 @@ export default {
 </script>
 <!--QQ登录-->
 
-<style >
+<style scoped>
 #login{
   height: 1080px;
-  background-image: url(/static/img/login.png);
+  background-image: url('/static/img/login.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   color: azure;
