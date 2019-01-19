@@ -360,6 +360,7 @@ export default {
         this.ids.push(this.datas[idsIndex]['idcard'])
         this.exportPerson.push(this.datas[idsIndex])
       }
+      console.log(this.exportPerson);
       this.$axios({
         method: 'post',
         url: '/face/compare/export',

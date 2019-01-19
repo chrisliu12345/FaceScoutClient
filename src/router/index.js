@@ -15,6 +15,7 @@ import Home from '@/components/home'
 import ProductAdd from '@/components/stencil/resource/productAdd'
 import InterfaceAdd from '@/components/stencil/resource/interfaceAdd'
 import Hjcc from '@/components/stencil/hjcc'
+import HjccCard from '@/components/stencil/hjcccard'
 Vue.use(Router)
 
 const router = new Router({
@@ -127,6 +128,14 @@ const router = new Router({
             requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
           },
           component: Hjcc
+        },
+        {
+          path: '/hjcccard',
+          name: 'hjcccard',
+          meta: {
+            requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+          },
+          component: HjccCard
         }
 
       ]

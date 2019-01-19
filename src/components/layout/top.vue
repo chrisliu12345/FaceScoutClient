@@ -88,15 +88,15 @@ export default {
     this.isSelect=1;
     console.log(this.$route.path);
     if(this.$route.path=='/rxbdzh'){
-        this.activeIndex=2;
+        this.activeIndex='2';
     }else if(this.$route.path=='/bmd'){
-      this.activeIndex=3;
+      this.activeIndex='3';
     }else if(this.$route.path=='/bdbd'){
-      this.activeIndex=4;
+      this.activeIndex='4';
     }else if(this.$route.path=='/zhcx'){
-      this.activeIndex=5;
+      this.activeIndex='5';
     }else if(this.$route.path=='/hjcc'){
-      this.activeIndex=6;
+      this.activeIndex='6';
     }else{
       this.activeIndex=1;
     }
