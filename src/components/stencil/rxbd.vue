@@ -291,7 +291,8 @@
     border-bottom-left-radius: 0.5em;
     margin-left: 25%;
     margin-top: 20%;
-    width: 50%;
+    width: 207px;
+    height: 290px;
     display: block;
   }
 
@@ -305,7 +306,8 @@
     border-bottom-left-radius: 0.5em;
     margin-top: 3%;
     margin-bottom: 3%;
-    width: 100px;
+    width: 75px;
+    height: 105px;
     display: block;
   }
   .notdisplay{

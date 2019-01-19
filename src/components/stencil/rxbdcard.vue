@@ -14,24 +14,24 @@
       <el-col>
         <el-row>
           <el-col :span="3" :offset="2"> <img :src="dataimg+cardData.photo" class="imgCard"></el-col>
-          <el-col :span="14" :offset="5" style="font-size: 10px;margin-left: 40px;">
+          <el-col :span="14" :offset="5" style="font-size: 10px;margin-left: 40px;" class="info-col">
             <div align="left">
-              <el-row>相似度:&nbsp;&nbsp;{{cardData.resemblep}}</el-row>
-              <el-row>姓&nbsp;&nbsp;&nbsp;名:&nbsp;&nbsp;{{cardData.tName}}</el-row>
-              <el-row>性&nbsp;&nbsp;&nbsp;别:&nbsp;&nbsp;{{cardData.sex == 1 ? '男':'女'}}</el-row>
-              <el-row>类&nbsp;&nbsp;&nbsp;型:&nbsp;&nbsp;{{cardData.type}}</el-row>
-              <el-row>身份证号:&nbsp;{{cardData.idcard}}</el-row>
+              <el-row>相&nbsp;似&nbsp;&nbsp;度&nbsp;:&nbsp;&nbsp;{{cardData.resemblep}}</el-row>
+              <el-row>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名&nbsp;:&nbsp;&nbsp;{{cardData.tName}}</el-row>
+              <el-row>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别&nbsp;:&nbsp;&nbsp;{{cardData.sex == 1 ? '男':'女'}}</el-row>
+              <el-row>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型&nbsp;:&nbsp;&nbsp;{{getType(cardData.type)}}</el-row>
+              <el-row>身份证号&nbsp;:&nbsp;{{cardData.idcard}}</el-row>
             </div>
       </el-col>
         </el-row>
       </el-col>
-      <el-col>
-        <div align="left" style="font-size: 14px"><br>
+      <el-col class="info-col">
+        <div align="left" style="font-size: 12px"><br>
         <el-row>
-          <el-col :offset="2">籍贯:&nbsp;&nbsp;{{getAddr(cardData.np)}}</el-col>
+          <el-col :offset="2">籍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;贯&nbsp;:&nbsp;&nbsp;{{getAddr(cardData.np)}}</el-col>
         </el-row>
           <el-row>
-          <el-col :offset="2">户籍地:&nbsp;&nbsp;{{getAddr(cardData.pcc)}}</el-col>
+          <el-col :offset="2">户&nbsp;籍&nbsp;&nbsp;地&nbsp;:&nbsp;&nbsp;{{getAddr(cardData.pcc)}}</el-col>
           </el-row>
           </div>
       </el-col>
@@ -43,6 +43,8 @@
 <script>
 
   import {IceIdcard} from '@/utils/IceIdcard.js' //注意路径
+  import {TypeData} from '@/utils/TypeData.js' //注意路径
+
    export default {
     name: "rxbdcard",
     props:['cardData','pageSize','pageNum','index'],
@@ -68,6 +70,13 @@
       }catch(e){
         return '未知地区 (' + code + ')';
       }
+    },
+    getType:function(code){
+      try{
+        return TypeData.getTypeBycode(code.toString());
+      }catch(e){
+        return '未知类型 (' + code + ')';
+      }
     }
   }
 }
@@ -92,4 +101,7 @@
 /*  margin-right: 5px;*/
   margin-top: 5px;
 }
+  .info-col /deep/ .el-row{
+    padding-top: 3px;
+  }
 </style>

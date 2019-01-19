@@ -8,6 +8,8 @@
       <el-col :span="12" :offset="6" v-show="resempFlag" class="notice-col" >
         <div  style="color:#FFC23F"><img src="/static/img/bdcgtag.png" style="height: 47px;vertical-align:middle;"/>  比对成功,两张图像的相似率为{{resemp}}%</div>
       </el-col>
+      <el-col :span="12" :offset="6" v-show="emptyflag" class="empty-col" >
+      </el-col>
     </el-row>
     <el-row :gutter="24">
       <el-col :span="7" :offset="1">
@@ -31,7 +33,7 @@
         </div>
       </el-col>
       <el-col :span="7" ><div style="border-color: #0074D9">
-        <div style="margin-bottom: 5%;margin-top: 11%">
+        <div style="margin-bottom: 5%;margin-top: 8%">
           <span>人脸图像A</span>
         </div>
         <div ><img :src="localImgUrl1" class="image2 avatar"></div>
@@ -80,6 +82,7 @@
         warnInfo:'比对失败，请检查系统服务是否开启',
         resempFlag:false,
         noticeFlag:false,
+        emptyflag:true,
         resemp:0,
         queryForm:{
           filea:'',
@@ -111,9 +114,11 @@
           if(res.data.code === 200){
             this.resemp = res.data.data
             this.noticeFlag = false
+            this.emptyflag=false
             this.resempFlag = true
           }else{
             this.resempFlag = false
+            this.emptyflag=false
             this.noticeFlag = true
           }
         })
@@ -121,6 +126,7 @@
       handleAvatarSuccess1(res, file) {
         this.resempFlag = false
         this.noticeFlag = false
+        this.emptyflag=true
         if (res.code == 200) {
           if (res.msg === 0) {
             this.queryForm.filea = res.imgPath
@@ -174,13 +180,13 @@
     margin-right: 15px;
   }
   .image {
-    margin-left: 30%;
+    margin-left: 33%;
     width: 171px;
     height: 240px;
     display: block;
   }
   .image2 {
-    margin-left: 34%;
+    margin-left: 38%;
     width: 128px;
     height: 180px;
     display: block;
@@ -220,5 +226,9 @@
     line-height: 50px;
     border-radius:8px;
     opacity:0.9;
+  }
+  .empty-col{
+    margin-top: 20px;
+    height: 50px;
   }
 </style>

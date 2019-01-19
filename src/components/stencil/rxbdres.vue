@@ -1,13 +1,13 @@
 <template>
   <div class="rxbdres">
     <el-row :gutter="24">
-      <el-col :span="8">
+      <el-col :span="7">
         <el-card class="box-card box-card_rxbdres" >
           <div align="center"><span>上传原图</span><br><br><br></div>
           <div>
             <el-row>
               <el-col :span="8">
-              <img :src="imageOne" class="img11"><div style="font-size: 14px;padding-left: 70%;"><span>原图</span></div>
+              <img :src="imageOne" class="img11"><div style="font-size: 14px;padding-left: 60%;"><span>原图</span></div>
               </el-col>
               <el-col :span="7">
                 <div align="center" style="margin-top: 30%">
@@ -26,20 +26,22 @@
                   <img v-if="imgUpload" :src="imgUpload" class="img12">
                   <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                 </el-upload>
-                <div style="font-size: 10px;padding-right: 45%;"><span>支持上传2M以内的图片<br>(最小分辨率360*480)</span></div>
+                <div style="font-size: 10px;padding-right: 26%;"><span>支持上传2M以内的图片<br>(最小分辨率360*480)</span></div>
             </el-col>
             </el-row>
           </div>
           <div style="margin-top: 8px">
             <el-row>
-              <el-col :span="15" :offset="4"> <div align="left" style="font-size: 13px">选择相似度:</div>
+              <el-col :span="5" :offset="3"> <div align="left" style="font-size: 13px;line-height: 50px;">选择相似度:</div>
+              </el-col>
+              <el-col :span="15">
                 <processSlider :min=10 :max=99 v-model = "ruleForm.per"  @tfVue="getsonVue"></processSlider>
               </el-col>
             </el-row>
           </div>
         </el-card>
       </el-col>
-      <el-col :span="16">
+      <el-col :span="17">
         <el-card class="box-card box-card_rxbdres" style="font-size: 10px">
           <div ><span style="font-size: 16px;margin-right: 30%;">高级筛选</span><br><br></div>
           <div align="left" style="margin-left: 5%">
@@ -155,7 +157,7 @@
               @current-change="handleCurrentChange"
               :current-page="currentPage4"
               :page-sizes="[4, 8, 16, 32]"
-              :pager-size="pageSize"
+              :page-size="pageSize"
               layout="total, sizes, prev, pager, next, jumper"
               :total="tableSizeSum">
             </el-pagination>
@@ -421,14 +423,16 @@ export default {
 
 <style>
 .img11{
-  width: 100px;
-  padding-left: 60%;
+  width: 86pxpx;
+  height: 120px;
+  padding-left: 50%;
 }
 .img12{
-  width: 100px;
+  width: 86pxpx;
+  height: 120px;
 }
 .avatar-uploader{
-  padding-right: 50%;
+  padding-right: 40%;
 }
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
@@ -436,8 +440,8 @@ export default {
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  width: 100px;
-  height: 104px;
+  width: 86pxpx;
+  height: 120px;
 }
 .avatar-uploader .el-upload:hover {
   border-color: #409EFF;
