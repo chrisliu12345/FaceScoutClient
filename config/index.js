@@ -14,7 +14,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       /*'*':'http://192.168.5.213:8050/'*/
-      '*':'http://192.168.5.242:8801/'
+      '*':'http://192.168.5.242:8801'
     },
 
     // Various Dev Server settings

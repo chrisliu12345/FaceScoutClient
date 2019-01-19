@@ -115,7 +115,7 @@ export default {
 
 <style>
 .hjcccard .el-dialog{
-  background:rgba(47, 123, 165,1);
+  background:RGBA(16, 127, 169, 0.9);
   font-color: white;
 }
 

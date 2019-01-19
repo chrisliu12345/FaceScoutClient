@@ -184,33 +184,33 @@ export default {
 </script>
 <style>
   .Underline {
-    text-decoration: none
+    text-decoration: none!important;
   }
 
   .el-dropdown {
-    vertical-align: top;
+    vertical-align: top!important;
   }
 
   .el-dropdown + .el-dropdown {
-    margin-left: 15px;
+    margin-left: 15px!important;
   }
 
   .el-icon-arrow-down {
-    font-size: 12px;
+    font-size: 12px!important;
   }
 
   .el-dropdown-link {
-    cursor: pointer;
-    color: #409EFF;
+    cursor: pointer!important;
+    color: #409EFF!important;
 
   }
   .el-menu-demo{
     border-bottom-width: 0px!important;
-    background-color:transparent;
+    background-color:transparent!important;
   }
   .ele-menu-item-font{
     font-size:18px!important;
-    font-family:hyling;
+    font-family:hyling!important;
     font-weight:400!important;
     color:rgba(46,90,121,1)!important;
   }
@@ -219,48 +219,48 @@ export default {
 
   }
   #rxrk > .ele-menu-item-font:before{
-    -webkit-mask: url(/static/img/rxrk.svg) no-repeat 50% 50%;
-    mask: url(/static/img/rxrk.svg) no-repeat 50% 50%;
-    display: inline-block;
-    content:'';
-    mask-size: cover;
-    width: 25px;
-    height: 25px;
-    background-color:#305A79;
-    vertical-align: middle;
+    -webkit-mask: url(/static/img/rxrk.svg) no-repeat 50% 50%!important;
+    mask: url(/static/img/rxrk.svg) no-repeat 50% 50%!important;
+    display: inline-block!important;
+    content:''!important;
+    mask-size: cover!important;
+    width: 25px!important;
+    height: 25px!important;
+    background-color:#305A79!important;
+    vertical-align: middle!important;
   }
   #rxrk > .router-link-active:before{
-    -webkit-mask: url(/static/img/rxrk.svg) no-repeat 50% 50%;
-    mask: url(/static/img/rxrk.svg) no-repeat 50% 50%;
-    display: inline-block;
-    content:'';
-    mask-size: cover;
-    width: 25px;
-    height: 25px;
-    background-color:#ffffff;
-    vertical-align: middle;
+    -webkit-mask: url(/static/img/rxrk.svg) no-repeat 50% 50%!important;
+    mask: url(/static/img/rxrk.svg) no-repeat 50% 50%!important;
+    display: inline-block!important;
+    content:''!important;
+    mask-size: cover!important;
+    width: 25px!important;
+    height: 25px!important;
+    background-color:#ffffff!important;
+    vertical-align: middle!important;
   }
   #rxbd > .ele-menu-item-font:before{
-    -webkit-mask: url(/static/img/rxbd.svg) no-repeat 50% 50%;
-    mask: url(/static/img/rxbd.svg) no-repeat 50% 50%;
-    display: inline-block;
-    content:'';
-    mask-size: cover;
-    width: 25px;
-    height: 25px;
-    background-color:#305A79;
-    vertical-align: middle;
+    -webkit-mask: url(/static/img/rxbd.svg) no-repeat 50% 50%!important;
+    mask: url(/static/img/rxbd.svg) no-repeat 50% 50%!important;
+    display: inline-block!important;
+    content:''!important;
+    mask-size: cover!important;
+    width: 25px!important;
+    height: 25px!important;
+    background-color:#305A79!important;
+    vertical-align: middle!important;
   }
   #rxbd > .router-link-active:before{
-    -webkit-mask: url(/static/img/rxbd.svg) no-repeat 50% 50%;
-    mask: url(/static/img/rxbd.svg) no-repeat 50% 50%;
-    display: inline-block;
-    content:'';
-    mask-size: cover;
-    width: 25px;
-    height: 25px;
-    background-color:#ffffff;
-    vertical-align: middle;
+    -webkit-mask: url(/static/img/rxbd.svg) no-repeat 50% 50%!important;
+    mask: url(/static/img/rxbd.svg) no-repeat 50% 50%!important;
+    display: inline-block!important;
+    content:''!important;
+    mask-size: cover!important;
+    width: 25px!important;
+    height: 25px!important;
+    background-color:#ffffff!important;
+    vertical-align: middle!important;
   }
   #bmd > .ele-menu-item-font:before{
     -webkit-mask: url(/static/img/bmd.svg) no-repeat 50% 50%;
@@ -351,30 +351,30 @@ export default {
     vertical-align: middle;
   }
   .el-menu--horizontal>.el-menu-item:not(.is-disabled):hover{
-    background-color:#007AB4;
-    width: 174px;
-    height: 73px;
+    background-color:#007AB4!important;
+    width: 174px!important;
+    height: 73px!important;
   }
 
   .picture1 {
-    width: 38px;
-    height: 50px;
+    width: 38px!important;
+    height: 50px!important;
     /*display: block;*/
-    vertical-align: middle;
-    display: inline-block;
-    transform: translateY(2px);
-    border-top-left-radius: 2em;
-    border-top-right-radius: 2em;
-    border-bottom-right-radius: 2em;
-    border-bottom-left-radius: 2em;
+    vertical-align: middle!important;
+    display: inline-block!important;
+    transform: translateY(2px)!important;
+    border-top-left-radius: 2em!important;
+    border-top-right-radius: 2em!important;
+    border-bottom-right-radius: 2em!important;
+    border-bottom-left-radius: 2em!important;
   }
   .el-menu--horizontal>.el-menu-item.is-active{
-    border:0px;
-    background:rgba(0,109,171,1);
-    width: 174px;
-    height: 73px;
+    border:0px!important;
+    background:rgba(0,109,171,1)!important;
+    width: 174px!important;
+    height: 73px!important;
   }
   .el-form-item__label{
-    color: white;
+    color: white!important;
   }
 </style>

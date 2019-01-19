@@ -139,7 +139,7 @@ export default {
 </script>
 <!--QQ登录-->
 
-<style>
+<style >
 #login{
   height: 1080px;
   background-image: url(/static/img/login.png);

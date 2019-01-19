@@ -185,7 +185,6 @@
           if(res.data.code==200){
             console.log(res.data)
             //此处用来处理添加成功信息
-            rows.splice(index, 1);
             this.getBmdList();
           }else{
 
@@ -208,6 +207,12 @@
         return "color:white;opacity: 1;background-color: rgba(255,255,255,0.5)!important";
       },
       submitForm (formName,type) {
+        var sfzh = this.whiteDate.idCard;
+        var reg = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if(reg.test(sfzh)==false){
+          this.$message.error("身份证格式输入有误!");
+          return;
+        }
           if(type=='add'){
             this.$refs[formName].validate((valid) => {
               if (valid) {

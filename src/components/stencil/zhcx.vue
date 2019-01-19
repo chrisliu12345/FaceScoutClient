@@ -320,7 +320,7 @@
 
         this.$axios({
           method: 'post',
-          url: '/face/facePersonInfo/list',
+          url: '/ma/face/facePersonInfo/list',
           data: postdata,
           headers: {
             'Authorization': sessionStorage.getItem('Authorization')

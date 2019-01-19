@@ -34,7 +34,7 @@
             </el-option>
           </el-select>
           &nbsp;&nbsp;类型:
-          <el-select v-model="type" placeholder="请选择类型" class="hjinput_inner" style="width: 120px">
+          <el-select v-model="type" placeholder="请选择类型" class="hjinput_inner" style="width: 180px">
             <el-option
               v-for="item in types"
               :key="item.value"

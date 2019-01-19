@@ -49,10 +49,10 @@
             <el-form-item label="入库类型:" style="margin-left: 20px;margin-top:5%;margin-bottom: 10px;" prop="rktype">
               <el-select v-model="baseInfoForm.rktype" placeholder="请选择类型" style="width:265px;height:36px;" class="rxrkSelect">
                 <el-option
-                  v-for="item in rkType"
-                  :key="item.v"
+                  v-for="(item,index) in rkType"
+                  :key="index"
                   :label="item.n"
-                  :value="item">
+                  :value="item.v">
                 </el-option>
               </el-select>
             </el-form-item>
@@ -244,27 +244,27 @@
         this.quoptions = this.baseInfoForm.shi['c']
       },
       submitForm (formName) {
-          /*if(this.imgageName==''){
+          if(this.imgageName==''){
             this.$message.error('请先上传人脸照片');
             return;
-          }*/
+          }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios({
               method: 'post',
               url: '/face/add/putin',
               data: {
-                'type': this.baseInfoForm.rktype,
-                'idcard': this.baseInfoForm.sfID,
-                'tName': this.baseInfoForm.name,
-                'sex': this.baseInfoForm.gender,
+                type: this.baseInfoForm.rktype,
+                idcard: this.baseInfoForm.sfID,
+                tName: this.baseInfoForm.name,
+                sex: this.baseInfoForm.gender,
                 /*birthday: this.baseInfoForm.birthday,*/
-                'pcc':this.baseInfoForm.sheng+this.baseInfoForm.shi+this.baseInfoForm.qu,
-                'nation': this.baseInfoForm.nation,
-                'rcb': this.baseInfoForm.faith,
-                'ccb':this.baseInfoForm.educationDegree,
-                'file':this.imgageName,
-                'np':this.baseInfoForm.sfID.substr(0,6)
+                pcc:(this.baseInfoForm.sheng==''?'':this.baseInfoForm.sheng.v)+(this.baseInfoForm.shi==''?'':this.baseInfoForm.shi.v)+(this.baseInfoForm.qu==''?'':this.baseInfoForm.qu.v),
+                nation: this.baseInfoForm.nation,
+                rcb: this.baseInfoForm.faith,
+                ccb:this.baseInfoForm.educationDegree,
+                file:this.imgageName,
+                np:this.baseInfoForm.sfID.substr(0,6)
               },
               headers: {
                 'Authorization': sessionStorage.getItem('Authorization')
@@ -311,32 +311,32 @@
 </script>
 <style>
   .rxrk{
-    overflow:hidden;
-    min-width: 1600px;
-    height: 880px;
-    background-image: url(/static/img/rxrk_back.png);
-    background-repeat: no-repeat;
-    background-size: 85% 85%;
-    color: azure;
-    z-index: 9;
-    margin:5% 0% 5% 15%;
+    overflow:hidden!important;
+    min-width: 1600px!important;
+    height: 880px!important;
+    background-image: url(/static/img/rxrk_back.png)!important;
+    background-repeat: no-repeat!important;
+    background-size: 85% 85%!important;
+    color: azure!important;
+    z-index: 9!important;
+    margin:5% 0% 5% 15%!important;
   }
 
 
   .box-card_rxrk{
     border:0px!important;
-    background: transparent;
-    margin: 20px 50px 20px 50px;
-    padding-bottom: 7%;
-    color: white;
+    background: transparent!important;
+    margin: 20px 50px 20px 50px!important;
+    padding-bottom: 7%!important!important;
+    color: white!important;
     /*z-index: 99;*/
   }
   .image_rxrk{
-    margin-left: 10%;
-    margin-top: 40%;
-    width: 250px;
-    height: 250px;
-    display: block;
+    margin-left: 10%!important;
+    margin-top: 40%!important;
+    width: 250px!important;
+    height: 250px!important;
+    display: block!important;
     border-top-left-radius: 0.5em;
     border-top-right-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
