@@ -208,9 +208,9 @@
     },
     methods: {
       handleAvatarSuccess1(res, file) {
-          if(res.msg='1'){
+          if(res.msg=='1'){
             this.$message.error('照片中未检测到人像！');
-          }else if(res.msg='2'){
+          }else if(res.msg=='2'){
             this.$message.error('照片中检测到多个人像！');
           }else{
               this.$message('单人照片上传成功');
@@ -378,11 +378,11 @@
     border-radius:0.5em;
     margin: auto;
   }
-  .rxrk_radio .el-radio__input>.el-radio__inner{
+  .rxrk_radio > .el-radio__input>.el-radio__inner{
     background-color: rgba(255,255,255,0) !important;
-    border: 1px solid rgba(47,123,165,1);
+    border: 1px solid rgba(47,123,165,1)!important;
   }
-  .rxrk_radio  .el-radio__label{
+  .rxrk_radio > .el-radio__label{
     color: white;
   }
   .el-message-box{

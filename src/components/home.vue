@@ -126,6 +126,6 @@ export default {
     color: white !important;
   }
   .el-pagination__jump{
-    color: white;
+    color: white!important;
   }
 </style>

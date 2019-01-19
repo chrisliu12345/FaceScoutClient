@@ -161,5 +161,7 @@ export default {
   background-repeat: no-repeat;
   background-position: right center;
 }
-
+.bg-purple{
+  background: transparent!important;
+}
 </style>

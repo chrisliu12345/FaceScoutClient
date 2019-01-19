@@ -5,7 +5,7 @@
         <el-card class="box-card box-card_zhcx">
           <div class="highLine_zhcx"><span>模糊/精确查询</span></div>
           <div align="left" style="font-size: 14px"><br>
-            <el-row>
+            <el-row class="zhcx_xm">
               <el-col :span="14" :offset="2">
                 <el-input v-model="sums.name"  placeholder="请输入姓名" style="width: 90%;" class="zhcx_input"></el-input>
               </el-col>
@@ -383,73 +383,79 @@
 
 <style >
 .zhcx{
-  overflow:hidden;
-  min-width: 1600px;
-  height: 880px;
-  background-image: url(/static/img/zhcx_back.png);
-  background-repeat: no-repeat;
-  background-size: 90% 90%;
-  color: azure;
-  z-index: 9;
-  margin:5% 0% 5% 10%;
+  overflow:hidden!important;
+  min-width: 1600px!important;
+  height: 880px!important;
+  background-image: url(/static/img/zhcx_back.png)!important;
+  background-repeat: no-repeat!important;
+  background-size: 90% 90%!important;
+  color: azure!important;
+  z-index: 9!important;
+  margin:5% 0% 5% 10%!important;
 }
  .box-card_zhcx{
    border:0px!important;
-   background: transparent;
-   margin: 0px 50px 00px 0px;
-   padding-bottom: 7%;
-   color: white;
+   background: transparent!important;
+   margin: 0px 50px 00px 0px!important;
+   padding-bottom: 7%!important;
+   color: white!important;
  }
 .zhcx_input > .el-input__inner{
-  height:34px;
-  background:rgba(39,138,194,1);
-  border-radius:5px;
-  border: 0px;
+  height:34px!important;
+  background:rgba(39,138,194,1)!important;
+  border-radius:5px!important;
+  border: 0px!important;
   color:white;
 }
-  .zhcxSelect .el-input--suffix .el-input__inner{
-    width: 150px;
-    background-color: rgba(255,255,255,0);
-    border: 2px solid rgba(47,123,165,1);
-    color:white;
+  .zhcxSelect> .el-input--suffix .el-input__inner{
+    width: 150px!important;
+    background-color: rgba(255,255,255,0)!important;
+    border: 2px solid rgba(47,123,165,1)!important;
+    color:white!important;
   }
 .zhcx_radio>.el-radio__input>.el-radio__inner{
   background-color: rgba(255,255,255,0) !important;
-  border: 1px solid rgba(47,123,165,1);
+  border: 1px solid rgba(47,123,165,1)!important;
   color:white;
 }
+.zhcx_radio>.el-radio__label{
+  color: white!important;
+}
 .zhcx_input > .el-input__inner::-webkit-input-placeholder{
-  color:rgba(204,232,255,1);
+  color:rgba(204,232,255,1)!important;
 }
 .box-card_zhcxlist{
-  position: relative;
-  left:-32px;
-  top:-50px;
+  position: relative!important;
+  left:-32px!important;
+  top:-50px!important;
 }
   .box-card_zhcx .box-card_body{
-    padding-top: 0px;
-    padding-left: 20px;
-    padding-right: 10px;
+    padding-top: 0px!important;
+    padding-left: 20px!important;
+    padding-right: 10px!important;
   }
 .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: rgba(255,255,255,0.3)!important;
 }
 
 .el-table, .el-table__expanded-cell{
-  background-color: transparent;
+  background-color: transparent!important;
 }
 .el-table th, .el-table tr{
-  background-color: transparent;
+  background-color: transparent!important;
 }
 
 .zhcx_checkbox .el-checkbox__inner{
-  background-color:rgba(87,154,255,1);
-  border-color: rgba(87,154,255,1);
+  background-color:rgba(87,154,255,1)!important;
+  border-color: rgba(87,154,255,1)!important;
 }
 .highLine_zhcx {
-  background:url(/static/img/highLine.png) no-repeat center top;
-  z-index: 2;
-  height: 36px;
-  background-position-y: bottom;
+  background:url(/static/img/highLine.png) no-repeat center top!important;
+  z-index: 2!important;
+  height: 36px!important;
+  background-position-y: bottom!important;
+}
+.zhcx_xm{
+  margin-bottom: 0px!important;
 }
 </style>

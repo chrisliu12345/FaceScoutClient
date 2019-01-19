@@ -414,8 +414,8 @@ export default {
   }
 
   .el-button--primary.is-plain {
-    background-color: rgba(51, 135, 221, 0.49);
-    color: white;
+    background-color: rgba(51, 135, 221, 0.49)!important;
+    color: white!important;
   }
 
   .census {

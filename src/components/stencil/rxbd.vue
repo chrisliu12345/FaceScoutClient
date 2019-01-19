@@ -274,15 +274,15 @@
 
 <style>
   .rxbd{
-    overflow:hidden;
-    min-width: 1600px;
-    height: 880px;
-    background-image: url(/static/img/rxbd_back.png);
-    background-repeat: no-repeat;
-    background-size: 85% 85%;
-    color: azure;
-    z-index: 9;
-    margin:5% 0% 5% 15%;
+    overflow:hidden!important;
+    min-width: 1600px!important;
+    height: 880px!important;
+    background-image: url(/static/img/rxbd_back.png)!important;
+    background-repeat: no-repeat!important;
+    background-size: 85% 85%!important;
+    color: azure!important;
+    z-index: 9!important;
+    margin:5% 0% 5% 15%!important;
   }
   .img1 {
     vertical-align: middle;
@@ -317,9 +317,9 @@
   }
   .box_card_rxbd{
     border:0px!important;
-    background: transparent;
-    color: white;
-    margin-top:20px;
+    background: transparent!important;
+    color: white!important;
+    margin-top:20px!important;
   }
   .sctpwc{
     margin-bottom: 1%;
@@ -328,7 +328,7 @@
   }
   .tjbutton{
     width: 200px;
-    margin-top:70px;
+    margin-top:70px!important;
     background-color:rgba(93,148,56,1) !important;
     border-color: rgba(165,215,131,1)!important;
     z-index: 333;
@@ -357,7 +357,7 @@
   .rxbd_sxtj>.el-radio__input>.el-radio__inner{
     background-color: rgba(255,255,255,0) !important;
     border: 1px solid rgba(47,123,165,1);
-    color:white;
+    color:white!important;
   }
   .type-label /deep/ .el-form-item__label{
     color:white;
@@ -368,4 +368,6 @@
     height: 36px;
     background-position-y: bottom;
   }
+
+
 </style>

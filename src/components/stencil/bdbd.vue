@@ -1,6 +1,6 @@
 <template>
 <div class="bdbd">
-  <el-card class="box-card box-card_bddb" style="">
+  <el-card class="box-card box-card_bddb" >
     <el-row class="notice-row">
       <el-col :span="12" :offset="6" v-show="noticeFlag" class="notice-col">
         <div  style="color:#C22037"><img src="/static/img/warntag.png" style="height: 47px;vertical-align:middle;"/>  {{warnInfo}}</div>
@@ -11,7 +11,7 @@
       <el-col :span="12" :offset="6" v-show="emptyflag" class="empty-col" >
       </el-col>
     </el-row>
-    <el-row :gutter="24">
+    <el-row :gutter="24" class="bdbd_row">
       <el-col :span="7" :offset="1">
         <div style="margin-bottom: 13%;margin-top: 23%">
           <span>请选择对比图像A</span>
@@ -171,6 +171,16 @@
 </script>
 
 <style>
+  .bdbd{
+    height: 900px!important;
+    min-width: 1600px!important;
+    border:0px!important;
+    background: url(/static/img/bdbd_back.png) no-repeat center!important ;
+    display: block!important;
+    background-size: 85% 85%!important;
+    color: azure;
+    margin-top: 20px!important;
+  }
   .el-collapse-item div {
     margin-left: 8px;
     text-align: left;
@@ -180,14 +190,14 @@
     margin-right: 15px;
   }
   .image {
-    margin-left: 33%;
-    width: 171px;
+    margin-left: 30%;
+    width: 220px;
     height: 240px;
     display: block;
   }
   .image2 {
-    margin-left: 38%;
-    width: 128px;
+    margin-left: 34%;
+    width: 160px;
     height: 180px;
     display: block;
   }
@@ -200,25 +210,15 @@
     border-bottom-right-radius: 0.5em;
     border-bottom-left-radius: 0.5em;
   }
- .box-card_bddb{
-   border:0px!important;
-  background: transparent;
-   margin: 20px 50px 20px 50px;
-   padding-bottom: 7%;
-   color: white;
-   /*z-index: 99;*/
-  }
-  .bdbd{
-    height: 900px;
-    min-width: 1600px;
+  .box-card_bddb{
     border:0px!important;
-    background-image: url(/static/img/bdbd_back.png)!important ;
-    background: center 10px  no-repeat;
-    display: block;
-    background-size: 85% 85%;
-    color: azure;
-    margin-top: 50px;
+    background: transparent!important;
+    margin: 20px 50px 20px 50px!important;
+    padding-bottom: 7%!important;
+    color: white!important;
+    /*z-index: 99;*/
   }
+
   .notice-col{
     margin-top: 20px;
     background: #4399CA;
@@ -227,8 +227,14 @@
     border-radius:8px;
     opacity:0.9;
   }
-  .empty-col{
-    margin-top: 20px;
-    height: 50px;
+  .highLine_bdbd {
+    background:url(/static/img/highLine.png) no-repeat center top;
+    z-index: 2;
+    height: 36px;
+    background-position-y: bottom;
+  }
+
+  .bdbd_row{
+    margin-top: 50px;
   }
 </style>

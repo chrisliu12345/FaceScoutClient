@@ -299,33 +299,33 @@
 <style>
   .bmd{
     /*overflow:hidden;*/
-    min-width: 1400px;
-    height: 880px;
-    background-image: url(/static/img/bmd_back.png);
-    background-repeat: no-repeat;
-    background-size: 84% 84%;
-    color: azure;
+    min-width: 1400px!important;
+    height: 880px!important;
+    background-image: url(/static/img/bmd_back.png)!important;
+    background-repeat: no-repeat!important;
+    background-size: 84% 84%!important;
+    color: azure!important;
    /* z-index: 9;*/
-    margin:5% 0% 5% 15%;
+    margin:5% 0% 5% 15%!important;
   }
   .box_card_bmd{
     border:0px!important;
-    background-color:rgba(255,255,255,0)!important;
-    margin-top:20px;
-    position:relative;
-    left:-181px;
+    background:transparent!important;
+    margin-top:20px!important;
+    position:relative!important;
+    left:-181px!important;
   }
   .bmd_inputType{
     width: 80%!important;
   }
   .bmd_inputType input{
-    color:white;
-    background:rgba(0,46,76,0.42);
-    border:1px solid rgba(47,123,165,1);
-    border-radius:2px;
+    color:white!important;
+    background:rgba(0,46,76,0.42)!important;
+    border:1px solid rgba(47,123,165,1)!important;
+    border-radius:2px!important;
   }
 .bmd_font{
-  color: white;
+  color: white!important;
 }
 .bmd_button{
   width: 120px;
@@ -340,28 +340,28 @@
   }
 
   .el-table, .el-table__expanded-cell{
-    background-color: transparent;
+    background-color: transparent!important;
   }
   .el-table th, .el-table tr{
-    background-color: transparent;
+    background-color: transparent!important;
   }
   .box_card_bmdlist{
-    padding-bottom: 50%;
+    padding-bottom: 50%!important;
   }
   .box_card_bmdlist .el-card__body{
-      padding-right: 12px;
-    padding-left: 12px;
+      padding-right: 12px!important;
+    padding-left: 12px!important;
   }
   .box_card_bmdform .el-card__body{
-    margin-left: 30px;
+    margin-left: 30px!important;
   }
 .el-icon-circle-close-outline:hover{
-  cursor: pointer;
+  cursor: pointer!important;
 }
   .highLine_bmd {
-    background:url(/static/img/highLine.png) no-repeat center top;
-    z-index: 2;
-    height: 36px;
-    background-position-y: bottom;
+    background:url(/static/img/highLine.png) no-repeat center top!important;
+    z-index: 2!important;
+    height: 36px!important;
+    background-position-y: bottom!important;
   }
 </style>
