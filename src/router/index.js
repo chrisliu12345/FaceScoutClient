@@ -12,8 +12,6 @@ import UserInfo from '@/components/layout/user/userinfo'
 import Password from '@/components/layout/user/changePassword'
 import Help from '@/components/layout/user/help'
 import Home from '@/components/home'
-import ProductAdd from '@/components/stencil/resource/productAdd'
-import InterfaceAdd from '@/components/stencil/resource/interfaceAdd'
 import Hjcc from '@/components/stencil/hjcc'
 import HjccCard from '@/components/stencil/hjcccard'
 Vue.use(Router)
@@ -104,22 +102,6 @@ const router = new Router({
             requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
           },
           component: Help
-        },
-        {
-          path: '/productAdd',
-          name: 'productAdd',
-          meta: {
-            requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-          component: ProductAdd
-        },
-        {
-          path: '/interfaceAdd',
-          name: 'interfaceAdd',
-          meta: {
-            requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
-          },
-          component: InterfaceAdd
         },
         {
           path: '/hjcc',
