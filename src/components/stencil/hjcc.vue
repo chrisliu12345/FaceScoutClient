@@ -6,7 +6,7 @@
   border-color: #62c1ff;">
         <div align="left" style="margin-top: 40px;margin-bottom: 20px;margin-left:90px; ">
           省份:
-          <el-select v-model="sheng" value-key="v" placeholder="请选择省" @change="selectPro" class="hjinput_inner">
+          <el-select v-model="sheng" value-key="v" placeholder="请选择省" @change="selectPro" class="hjinput_inner" style="width: 120px">
             <el-option
               v-for="item,index in prooptions"
               :key="index"
@@ -16,7 +16,7 @@
 
           </el-select>
           &nbsp;&nbsp;市区:
-          <el-select v-model="shi" value-key="v" placeholder="请选择市" @change="selectShi" class="hjinput_inner">
+          <el-select v-model="shi" value-key="v" placeholder="请选择市" @change="selectShi" class="hjinput_inner" style="width: 120px">
             <el-option
               v-for="item in shioptions"
               :key="item.v"
@@ -25,7 +25,7 @@
             </el-option>
           </el-select>
           &nbsp;&nbsp;区/县:
-          <el-select v-model="qu" value-key="v" placeholder="请选择区/县" class="hjinput_inner">
+          <el-select v-model="qu" value-key="v" placeholder="请选择区/县" class="hjinput_inner" style="width: 120px">
             <el-option
               v-for="item in quoptions"
               :key="item.v"
@@ -34,7 +34,7 @@
             </el-option>
           </el-select>
           &nbsp;&nbsp;类型:
-          <el-select v-model="type" placeholder="请选择类型" class="hjinput_inner">
+          <el-select v-model="type" placeholder="请选择类型" class="hjinput_inner" style="width: 180px">
             <el-option
               v-for="item in types"
               :key="item.value"
@@ -46,6 +46,28 @@
           <label style="margin-left: 25px">(已选择2项)</label>
           <el-button type="primary" plain size="small" @click="toggleSelection()">取消</el-button>
           <el-button type="primary" plain size="small" @click="exportData">确认导出</el-button>
+          <label style="margin-left: 25px">每</label>
+          <el-select v-model="dateH"  class="hjinput_inner" style="width: 60px">
+          <el-option
+            v-for="item in dateOptions"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+          <label>天</label>
+          <el-select v-model="timeH"  class="hjinput_inner" style="width: 60px">
+          <el-option
+            v-for="item in timeOptions"
+            :key="item"
+            :label="item"
+            :value="item">
+          </el-option>
+        </el-select>
+          <label>点更新特征</label>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          <el-button type="primary" plain size="small" @click="updateTime">修改</el-button>
+          <el-button type="primary" plain size="small" @click="updatedoNow">立即更新</el-button>
         </div>
         <el-table
           ref="filterTable"
@@ -90,6 +112,12 @@
           >
           </el-table-column>
           <el-table-column
+            label="操作">
+            <template slot-scope="scope">
+              <i class="el-icon-refresh" style="margin-left: 2%" v-on:click="updatehjcc(scope.row)"></i>
+            </template>
+          </el-table-column>
+          <el-table-column
             prop="id"
             type="expand"
           >
@@ -111,13 +139,16 @@
         </div>
       </el-col>
     </el-row>
+    <div v-if="dialogFormVisible===true">
+    <Hjcccard :hjdata="Myind" v-on:myEvent="dialogFormVisible=false"></Hjcccard>
+    </div>
   </div>
 </template>
 
 <script>
 import {StatusData} from '@/basedata/statusData.js'
 import {citydata} from '@/basedata/citydata-debug.js'
-
+import Hjcccard from  '@/components/stencil/hjcccard'
 export default {
   name: 'hjcc',
   data () {
@@ -125,35 +156,22 @@ export default {
       prooptions: citydata,
       shioptions: [],
       quoptions: [],
+      Myind:[],
+      dialogFormVisible:false,
       mzoptions: StatusData['Nationality'],
       types: [{
-        value: '0',
-        label: '常住'
+        value: 0,
+        label: '未处理'
       }, {
-        value: '1',
-        label: '流动'
+        value: 1,
+        label: '确认一人多证'
       }, {
-        value: '2',
-        label: '重点'
+        value: 2,
+        label: '确认不是同一人'
       }, {
-        value: '3',
-        label: '黄赌毒'
-      },{
-        value: '9',
-        label: '扒窃入口'
-      }, {
-        value: '4',
-        label: '诈骗犯'
-      }, {
-          value: '7',
-          label: '非法集资'
-        },{
-          value: '8',
-          label: '外地飞抢'
-        }, {
-          value: '6',
-          label: '出所'
-        }],
+        value: 3,
+        label: '确认其他'
+      }],
       sheng: '',
       shi: '',
       qu: '',
@@ -163,31 +181,59 @@ export default {
       currentPage4: 1,
       tableSizeSum: 50,
       multipleSelection: [],
-      selectResult:[]
+      selectResult:[],
+      modId:'',//特征ID
+      timeH:'',
+      timeOptions:[],
+      dateH:'',
+      dateOptions:[]
     }
   },
+  components:{
+    Hjcccard
+  },
   mounted: function () {
-    this.$axios({
-      method: 'post',
-      url: '/face/repeat/list',
-      data: {
-        pageNum: 1,
-        pageSize: 10
-      }
-    }).then(res => {
-      if (res.data.code === 200) {
-        this.tableSizeSum = res.data.page.totalCount
-        this.tableData = res.data.page.list
-        this.tableData.forEach(d =>{
-          d.time= new Date(parseInt(d.time)).toLocaleString('chinese',{hour12:false});
-
-        })
-      } else {
-        this.$message.error('请求失败')
-      }
-    })
+    this.updateTraitData();
   },
   methods: {
+    //初始化更新特征的时间和默认显示的数据
+    updateTraitData(){
+      //默认显示的数据
+      this.$axios({
+        method: 'post',
+        url: '/face/repeat/list',
+        data: {
+          pageNum: 1,
+          pageSize: 10
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.tableSizeSum = res.data.page.totalCount
+          this.tableData = res.data.page.list
+          this.tableData.forEach(d =>{
+            d.time= new Date(parseInt(d.time)).toLocaleString('chinese',{hour12:false});
+          })
+        } else {
+          this.$message.error('请求失败')
+        }
+      });
+      //特征的时间
+      this.$axios({
+        method: 'get',
+        url: '/face/update/getConfig',
+      }).then(res => {
+        this.dateH = res.data.data.daysSum;
+        this.timeH=res.data.data.setHour;
+         this.modId=res.data.data.id;
+      });
+      for(var i=0;i<24;i++){
+        this.timeOptions.push(i);
+      }
+      for(var j=1;j<=5;j++){
+        this.dateOptions.push(j);
+      }
+
+    },
     //表格选择checkbox时，获取选中行数据对象，val为选中的行数据对象
     handleSelectionChange (val) {
       console.log(val)
@@ -302,6 +348,46 @@ export default {
       }else{
         this.$message.error('请选择导出的数据行');
       }
+    },
+    //修改特征时间按钮
+    updateTime(){
+      this.$axios({
+        method: 'post',
+        url: '/face/update/config',
+        data:{
+          id:this.modId,
+          daysSum:this.dateH,
+          setHour:this.timeH
+        }
+      }).then(res => {
+        if (res.data.code === 200) {
+          this.$message.success('修改成功')
+        } else {
+          this.$message.error('请求失败')
+        }
+      })
+    },
+    //立即更新
+    updatedoNow(){
+      this.$axios({
+        method: 'post',
+        url: '/face/update/doNow',
+      }).then(res => {
+        console.log(res);
+        if (res.data.code === 200) {
+          this.$message.success('更新成功')
+        } else {
+          this.$message.error('更新失败，后端服务未启动')
+        }
+      })
+    },
+    //表格中的“操作”按钮
+    updatehjcc(data){
+      console.log("jinrucaozuo");
+      //this.$router.push({name: 'hjcccard',params:{dd:data}});
+      this.dialogFormVisible=true;
+      this.Myind=data;
+
     }
   }
 }

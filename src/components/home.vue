@@ -38,14 +38,14 @@ export default {
   .el-header {
     /*background-color: #2c3e50;
     color: #333;*/
-    text-align: center;
-    line-height: 20px;
+    text-align: center!important;
+    line-height: 20px!important;
 
   }
   .el-footer {
     /*background-color: #2c3e50;
     color: #333;*/
-    text-align: center;
+    text-align: center!important;
     /*line-height: 30px;*/
     /*height: 30px!important;*/
   }
@@ -59,36 +59,36 @@ export default {
   .el-main {
     /*background-color: #F2F6FC;
     color: #333;*/
-    text-align: center;
-    line-height: normal;
-    height: 890px;
+    text-align: center!important;
+    line-height: normal!important;
+    height: 890px!important;
   }
   .el-container {
-    height: 1080px;
-    background-image: url(/static/img/qjt.png);
-    background-repeat: no-repeat;
+    height: 1080px!important;
+    background-image: url(/static/img/qjt.png)!important;
+    background-repeat: no-repeat!important;
     background-size: 100% 100%;
-    color: azure;
-    z-index: -1;
+    color: azure!important;
+    z-index: -1!important;
   }
   body > .el-container {
-    margin-bottom: 0px;
+    margin-bottom: 0px!important;
   }
 
   .el-container:nth-child(5) .el-aside,
   .el-container:nth-child(6) .el-aside {
-    line-height: 260px;
+    line-height: 260px!important;
   }
 
   .el-container:nth-child(7) .el-aside {
-    line-height: 320px;
+    line-height: 320px!important;
   }
 
   .backImg{
-    overflow: hidden;
+    overflow: hidden!important;
   }
   .home_el-main{
-    overflow: hidden;
+    overflow: hidden!important;
   }
 
 

@@ -3,7 +3,7 @@
     <el-row :gutter="24">
       <el-col :span="8" :offset="0">
         <el-card class="box-card box-card_zhcx">
-          <div><span>模糊/精确查询</span></div>
+          <div class="highLine_zhcx"><span>模糊/精确查询</span></div>
           <div align="left" style="font-size: 14px"><br>
             <el-row>
               <el-col :span="14" :offset="2">
@@ -29,7 +29,7 @@
       </el-col>
       <el-col :span="14">
         <el-card class="box-card box-card_zhcx" >
-          <div><span>高级筛选</span></div>
+          <div class="highLine_zhcx"><span>高级筛选</span></div>
           <br>
           <div align="left" style="margin-left: 5%;margin-bottom: 15px; font-size: 14px" >
             <el-row :gutter="24">
@@ -304,7 +304,6 @@
             postdata.queryidCardString='';
             postdata.idcard=this.sums.idcard;
           }
-
           if(this.nameMHCX){
             postdata.queryNameString=this.sums.name;
             postdata.name='';
@@ -312,7 +311,6 @@
             postdata.queryNameString='';
             postdata.name=this.sums.name;
           }
-
         postdata.sex =this.highData.sex;
         postdata.pcc = (this.highData.jgsheng==''?'':this.highData.jgsheng.v)+(this.highData.jgshi==''?'':this.highData.jgshi.v)+(this.highData.jgqu==''?'':this.highData.jgqu.v);
         postdata.np = (this.highData.csdsheng==''?'':this.highData.csdsheng.v)+(this.highData.csdshi==''?'':this.highData.csdshi.v)+(this.highData.csdqu==''?'':this.highData.csdqu.v);
@@ -322,7 +320,7 @@
 
         this.$axios({
           method: 'post',
-          url: '/face/facePersonInfo/list',
+          url: '/ma/face/facePersonInfo/list',
           data: postdata,
           headers: {
             'Authorization': sessionStorage.getItem('Authorization')
@@ -448,5 +446,10 @@
   background-color:rgba(87,154,255,1);
   border-color: rgba(87,154,255,1);
 }
-
+.highLine_zhcx {
+  background:url(/static/img/highLine.png) no-repeat center top;
+  z-index: 2;
+  height: 36px;
+  background-position-y: bottom;
+}
 </style>

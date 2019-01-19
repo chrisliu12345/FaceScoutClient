@@ -4,7 +4,7 @@
     <el-row :gutter="24">
       <el-col :span="8" :offset="2">
         <el-card class="box-card box_card_bmd box_card_bmdform" style="padding-bottom: 50%">
-          <div class="bmd_font"><label>添加或修改白名单</label></div>
+          <div class="bmd_font highLine_bmd"><label>添加或修改白名单</label></div>
           <br><br>
           <div align="left" style="font-size: 13px"><br>
 
@@ -36,7 +36,7 @@
       </el-col>
       <el-col :span="13">
         <el-card class="box-card box_card_bmd box_card_bmdlist" >
-          <div class="bmd_font"><label>白名单列表</label></div>
+          <div class="bmd_font highLine_bmd"><label>白名单列表</label></div>
           <br>
           <br>
           <div align="left">
@@ -185,7 +185,6 @@
           if(res.data.code==200){
             console.log(res.data)
             //此处用来处理添加成功信息
-            rows.splice(index, 1);
             this.getBmdList();
           }else{
 
@@ -208,6 +207,12 @@
         return "color:white;opacity: 1;background-color: rgba(255,255,255,0.5)!important";
       },
       submitForm (formName,type) {
+        var sfzh = this.whiteDate.idCard;
+        var reg = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+        if(reg.test(sfzh)==false){
+          this.$message.error("身份证格式输入有误!");
+          return;
+        }
           if(type=='add'){
             this.$refs[formName].validate((valid) => {
               if (valid) {
@@ -353,4 +358,10 @@
 .el-icon-circle-close-outline:hover{
   cursor: pointer;
 }
+  .highLine_bmd {
+    background:url(/static/img/highLine.png) no-repeat center top;
+    z-index: 2;
+    height: 36px;
+    background-position-y: bottom;
+  }
 </style>
