@@ -11,7 +11,7 @@
     </el-row>
     <el-row :gutter="24">
       <el-col :span="7" :offset="1">
-        <div style="margin-bottom: 13%;margin-top: 23%">
+        <div style="margin-bottom: 13%;margin-top: 23%" class="highLine_bdbd">
           <span>请选择对比图像A</span>
         </div>
         <img :src="imageUrl1" class="image avatar">
@@ -31,7 +31,7 @@
         </div>
       </el-col>
       <el-col :span="7" ><div style="border-color: #0074D9">
-        <div style="margin-bottom: 5%;margin-top: 11%">
+        <div style="margin-bottom: 5%;margin-top: 11%" class="highLine_bdbd">
           <span>人脸图像A</span>
         </div>
         <div ><img :src="localImgUrl1" class="image2 avatar"></div>
@@ -39,12 +39,14 @@
           <el-button type="success" style="width: 180px; height: 50px;font-size: 17px;" @click="bddb_ksdb">开始对比</el-button>
         </div>
         <div ><img :src="localImgUrl2" class="image2 avatar"></div>
-        <div style="margin-top: 7%">
+        <div style="margin-top: 7%" class="highLine_bdbd">
           <span>人脸图像B</span>
         </div>
       </div>
       </el-col>
-      <el-col :span="7" ><div style="border-color: #0074D9"><div style="margin-bottom: 13%;margin-top: 23%">
+      <el-col :span="7" >
+        <div style="border-color: #0074D9">
+          <div style="margin-bottom: 13%;margin-top: 23%" class="highLine_bdbd">
         <span>请选择对比图像B</span>
       </div>
         <img :src="imageUrl2" class="image avatar">
@@ -61,7 +63,8 @@
               <el-button  type="primary" style="width: 150px;font-size: 16px;">浏览图片</el-button>
             </el-upload>
           </div>
-        </div></div>
+        </div>
+      </div>
       </el-col>
     </el-row>
   </el-card>
@@ -175,13 +178,13 @@
   }
   .image {
     margin-left: 30%;
-    width: 171px;
+    width: 220px;
     height: 240px;
     display: block;
   }
   .image2 {
     margin-left: 34%;
-    width: 128px;
+    width: 160px;
     height: 180px;
     display: block;
   }
@@ -220,5 +223,11 @@
     line-height: 50px;
     border-radius:8px;
     opacity:0.9;
+  }
+  .highLine_bdbd {
+    background:url(/static/img/highLine.png) no-repeat center top;
+    z-index: 2;
+    height: 36px;
+    background-position-y: bottom;
   }
 </style>

@@ -3,7 +3,7 @@
     <el-row :gutter="24">
       <el-col :span="8" :offset="0">
         <el-card class="box-card box-card_zhcx">
-          <div><span>模糊/精确查询</span></div>
+          <div class="highLine_zhcx"><span>模糊/精确查询</span></div>
           <div align="left" style="font-size: 14px"><br>
             <el-row>
               <el-col :span="14" :offset="2">
@@ -29,7 +29,7 @@
       </el-col>
       <el-col :span="14">
         <el-card class="box-card box-card_zhcx" >
-          <div><span>高级筛选</span></div>
+          <div class="highLine_zhcx"><span>高级筛选</span></div>
           <br>
           <div align="left" style="margin-left: 5%;margin-bottom: 15px; font-size: 14px" >
             <el-row :gutter="24">
@@ -448,5 +448,10 @@
   background-color:rgba(87,154,255,1);
   border-color: rgba(87,154,255,1);
 }
-
+.highLine_zhcx {
+  background:url(/static/img/highLine.png) no-repeat center top;
+  z-index: 2;
+  height: 36px;
+  background-position-y: bottom;
+}
 </style>
