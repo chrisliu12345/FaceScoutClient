@@ -3,11 +3,14 @@
     <el-card class="box-card box-card_rxrk">
       <el-row>
       <el-col :span="6" :offset="0" style="color:white;">
-        <el-row>
+        <!--<el-row>
           <el-col :span="11" :offset="3" >
             <p class="highLine" >请选择图像</p>
           </el-col>
-        </el-row>
+        </el-row>-->
+        <div class="highLine">
+          <span>请选择图像</span>
+        </div>
         <el-row>
           <el-col :span="11" :offset="2" >
             <img :src="imageUrl1" class="image_rxrk">
@@ -176,7 +179,7 @@
         prooptions:citydata,
         shioptions:[],
         quoptions:[],
-          imgageName:'',
+        imgageName:'',
         whcdoptions:StatusData['Culturallv'],
         navtivePlaces:StatusData['Nativeplace'],
         mzoptions:StatusData['Nationality'],
@@ -241,9 +244,10 @@
         this.quoptions = this.baseInfoForm.shi['c']
       },
       submitForm (formName) {
-          if(this.imgageName==''){
+          /*if(this.imgageName==''){
             this.$message.error('请先上传人脸照片');
-          }
+            return;
+          }*/
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios({
@@ -339,10 +343,8 @@
     border-bottom-left-radius: 0.5em;
   }
   .highLine {
-    background-image: url(/static/img/highLine.png);
-    background-repeat: no-repeat;
-   z-index: 2;
-    padding-left: 75px;
+    background:url(/static/img/highLine.png) no-repeat center top;
+    z-index: 2;
     height: 36px;
     background-position-y: bottom;
   }

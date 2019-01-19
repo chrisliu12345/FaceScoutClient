@@ -304,7 +304,6 @@
             postdata.queryidCardString='';
             postdata.idcard=this.sums.idcard;
           }
-
           if(this.nameMHCX){
             postdata.queryNameString=this.sums.name;
             postdata.name='';
@@ -312,7 +311,6 @@
             postdata.queryNameString='';
             postdata.name=this.sums.name;
           }
-
         postdata.sex =this.highData.sex;
         postdata.pcc = (this.highData.jgsheng==''?'':this.highData.jgsheng.v)+(this.highData.jgshi==''?'':this.highData.jgshi.v)+(this.highData.jgqu==''?'':this.highData.jgqu.v);
         postdata.np = (this.highData.csdsheng==''?'':this.highData.csdsheng.v)+(this.highData.csdshi==''?'':this.highData.csdshi.v)+(this.highData.csdqu==''?'':this.highData.csdqu.v);

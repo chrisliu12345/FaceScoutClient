@@ -2,7 +2,7 @@
 
       <el-dialog title="更正信息" :visible.sync="dialogFormVisible" status-icon :show-close="closeModel" :close-on-click-modal="closeOnClick"
                  :close-on-press-escape="closeEscape"
-                 width="30%">
+                 width="30%" class="hjcccard">
         <div v-show="resultMessage">
           <el-alert
             title="更正成功！"
@@ -18,20 +18,20 @@
           </el-alert>
         </div>
         <el-form align="left">
-          <el-form-item >
-           <label>姓名A:</label> <el-input v-model="dataList.namea" disabled style="width: 160px"></el-input>&nbsp;&nbsp;
-            <label>身份证号A:</label> <el-input v-model="dataList.codea" disabled style="width: 200px"></el-input>
+          <el-form-item>
+           <label>姓名A:</label> <el-input v-model="dataList.namea" disabled style="width: 160px" class="hjcccard_input"></el-input>&nbsp;&nbsp;
+            <label>身份证号A:</label> <el-input v-model="dataList.codea" disabled style="width: 200px" class="hjcccard_input"></el-input>
           </el-form-item>
           <el-form-item>
-            <label>姓名B:</label> <el-input v-model="dataList.nameb" disabled style="width: 160px"></el-input>&nbsp;&nbsp;
-            <label>身份证号B:</label> <el-input v-model="dataList.codeb" disabled style="width: 200px"></el-input>
+            <label>姓名B:</label> <el-input v-model="dataList.nameb" disabled style="width: 160px" class="hjcccard_input"></el-input>&nbsp;&nbsp;
+            <label>身份证号B:</label> <el-input v-model="dataList.codeb" disabled style="width: 200px" class="hjcccard_input"></el-input>
           </el-form-item>
           <el-form-item>
-            <label>相似度:</label> <el-input v-model="dataList.resemblep" disabled style="width: 155px"></el-input>&nbsp;&nbsp;
-            <label style="margin-left: 38px">时间:</label> <el-input v-model="dataList.time" disabled style="width: 200px"></el-input>
+            <label>相似度:</label> <el-input v-model="dataList.resemblep" disabled style="width: 155px" class="hjcccard_input"></el-input>&nbsp;&nbsp;
+            <label style="margin-left: 38px">时间:</label> <el-input v-model="dataList.time" disabled style="width: 200px" class="hjcccard_input"></el-input>
           </el-form-item>
           <el-form-item>
-            <label>类型:</label> <el-select v-model="type" placeholder="请选择类型"  style="width: 80%">
+            <label>类型:</label> <el-select v-model="type" placeholder="请选择类型"  style="width: 80%" class="hjcccard_input">
             <el-option
               v-for="item in types"
               :key="item.value"
@@ -41,7 +41,7 @@
           </el-select>
           </el-form-item>
           <el-form-item>
-            <label>备注:</label>  <el-input type="textarea" v-model="remark" style="width: 80%"></el-input>
+            <label>备注:</label>  <el-input type="textarea" v-model="remark" style="width: 80%" class="hjcccard_input"></el-input>
           </el-form-item>
         </el-form>
         <div v-if="beforeUpdata===true"> <el-button type="primary" @click="onSubmit">更正</el-button>
@@ -122,6 +122,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.hjcccard .el-dialog{
+  background:rgba(47, 123, 165, 0.5);
+  font-color: white;
+}
 
+.hjcccard .el-dialog .el-dialog__body{
+  color: white;
+}
+
+.hjcccard .el-dialog .el-dialog__header .el-dialog__title{
+  color: white;
+}
+.hjcccard_input .el-input__inner,.el-textarea__inner{
+  background: transparent!important;
+  color: white;
+}
 </style>
