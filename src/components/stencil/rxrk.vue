@@ -321,13 +321,11 @@
     z-index: 9!important;
     margin:5% 0% 5% 15%!important;
   }
-
-
   .box-card_rxrk{
     border:0px!important;
     background: transparent!important;
     margin: 20px 50px 20px 50px!important;
-    padding-bottom: 7%!important!important;
+    padding-bottom: 7%!important;
     color: white!important;
     /*z-index: 99;*/
   }
