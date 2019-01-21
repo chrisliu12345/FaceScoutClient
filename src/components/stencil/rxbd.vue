@@ -359,6 +359,9 @@
     border: 1px solid rgba(47,123,165,1);
     color:white!important;
   }
+  .rxbd_sxtj>.el-radio__label{
+    color:white;
+  }
   .type-label /deep/ .el-form-item__label{
     color:white;
   }

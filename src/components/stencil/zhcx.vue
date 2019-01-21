@@ -114,12 +114,12 @@
             :row-style="getRowClass" :header-row-style="getheaderClass"
             style="width: 100%">
             <el-table-column
-            >
+              width="30">
             </el-table-column>
             <el-table-column
               prop="tname"
               label="姓名"
-
+              width="150"
             >
             </el-table-column>
             <el-table-column
@@ -150,11 +150,13 @@
             <el-table-column
               prop="np"
               label="出生地"
+              width="300"
               >
             </el-table-column>
             <el-table-column
               prop="pcc"
               label="籍贯"
+              width="300"
               >
             </el-table-column>
           </el-table>
@@ -320,7 +322,7 @@
 
         this.$axios({
           method: 'post',
-          url: '/ma/face/facePersonInfo/list',
+          url: '/face/facePersonInfo/list',
           data: postdata,
           headers: {
             'Authorization': sessionStorage.getItem('Authorization')

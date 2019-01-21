@@ -83,7 +83,7 @@ export default {
         if (valid) {
           this.$axios({
             method: 'post',
-            url: '/login',
+            url: '/zc/login',
             data: {
               "username": this.ruleForm2.account,
               "password": this.ruleForm2.pass
@@ -159,6 +159,7 @@ export default {
   background-size: auto 18px;
   background-repeat: no-repeat;
   background-position: right center;
+  background-size: 80% 80%;
 }
 .bg-purple{
   background: transparent!important;
