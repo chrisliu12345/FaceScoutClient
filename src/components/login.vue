@@ -83,7 +83,7 @@ export default {
         if (valid) {
           this.$axios({
             method: 'post',
-            url: '/zc/login',
+            url: '/login',
             data: {
               "username": this.ruleForm2.account,
               "password": this.ruleForm2.pass

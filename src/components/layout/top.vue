@@ -15,8 +15,9 @@
       class="el-menu-demo"
         @select="handleSelect"
      >
-        <el-menu-item :index="item.id" :id="item.idname" v-for="item in itemss" :key="item.id" @click="handleClick(this,item.id)">
-          <router-link :to="item.router" class="Underline ele-menu-item-font" >{{item.title}}</router-link>
+        <el-menu-item :index="item.id" :id="item.idname" v-for="item in itemss" :key="item.id" @click="handleClick(item.router,item.id)">
+          <router-link :to="item.router" class="Underline ele-menu-item-font">
+            {{item.title}}</router-link>
         </el-menu-item>
 
       </el-menu>
@@ -87,20 +88,20 @@ export default {
     this.selectPicture();
     this.isSelect=1;
     console.log(this.$route.path);
-    if(this.$route.path=='/rxbdzh'){
-        this.activeIndex='2';
-    }else if(this.$route.path=='/bmd'){
-      this.activeIndex='3';
-    }else if(this.$route.path=='/bdbd'){
-      this.activeIndex='4';
-    }else if(this.$route.path=='/zhcx'){
-      this.activeIndex='5';
-    }else if(this.$route.path=='/hjcc'){
-      this.activeIndex='6';
-    }else{
-      this.activeIndex=1;
-    }
-  },
+if(this.$route.path=='/rxbdzh'){
+  this.activeIndex='2';
+}else if(this.$route.path=='/bmd'){
+  this.activeIndex='3';
+}else if(this.$route.path=='/bdbd'){
+  this.activeIndex='4';
+}else if(this.$route.path=='/zhcx'){
+  this.activeIndex='5';
+}else if(this.$route.path=='/hjcc'){
+  this.activeIndex='6';
+}else{
+  this.activeIndex=1;
+}
+},
   methods: {
     onLogout () {
       sessionStorage.removeItem('Authorization')// 移除token
@@ -134,13 +135,11 @@ export default {
       ]
     },
     handleSelect (item) {
-      console.log(item.value)
       this.isSelect = item.id
     },
     handleClick (obj,id) {
-      console.log(id)
-      this.isSelect = id
-      console.log(obj)
+      this.isSelect = id;
+      this.$router.push(obj);
     },
     handleCommand (command) {
       if (command === 'en') {
