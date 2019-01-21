@@ -220,12 +220,17 @@
   }
 
   .notice-col{
-    margin-top: 20px;
+    margin-top: 10px;
     background: #4399CA;
     height: 50px;
     line-height: 50px;
     border-radius:8px;
     opacity:0.9;
+  }
+  .empty-col{
+    margin-top: 10px;
+    height: 50px;
+    line-height: 50px;
   }
   .highLine_bdbd {
     background:url(/static/img/highLine.png) no-repeat center top;
