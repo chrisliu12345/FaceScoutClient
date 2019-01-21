@@ -76,6 +76,7 @@
           :row-style="getRowClass"
           :header-row-style="getheaderClass"
           :header-cell-style="getRowClass"
+
           style="background-color:transparent;margin-left:65px;padding-right: 50px;">
           <el-table-column
             type="selection"
@@ -369,12 +370,19 @@ export default {
     },
     //立即更新
     updatedoNow(){
+      const loading = this.$loading({
+        lock: true,
+        text: '正在更新，请稍后。。。',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.5)'
+      });
       this.$axios({
         method: 'post',
         url: '/face/update/doNow',
       }).then(res => {
         console.log(res);
         if (res.data.code === 200) {
+          loading.close();
           this.$message.success('更新成功')
         } else {
           this.$message.error('更新失败，后端服务未启动')
