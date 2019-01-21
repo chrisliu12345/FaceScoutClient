@@ -145,7 +145,7 @@
         </el-row>
         <el-row >
           <el-col :span="8">
-            <img :src="effectivImageUrl" class="image avatar effective_image" style="width: 60px; height: 60px;">
+            <img :src="effectivImageUrl" class="image avatar effective_image" style="width: 43px; height: 60px;">
           </el-col>
           <el-col :span="8">
             <el-button  type="primary" @click="submitForm('baseInfoForm')" style="width: 80px;margin-top:10px;">提交</el-button>
@@ -330,9 +330,9 @@
     /*z-index: 99;*/
   }
   .image_rxrk{
-    margin-left: 10%!important;
+    margin-left: 38%!important;
     margin-top: 40%!important;
-    width: 250px!important;
+    width: 178px!important;
     height: 250px!important;
     display: block!important;
     border-top-left-radius: 0.5em;

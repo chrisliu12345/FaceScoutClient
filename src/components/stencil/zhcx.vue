@@ -10,7 +10,7 @@
                 <el-input v-model="sums.name"  placeholder="请输入姓名" style="width: 90%;" class="zhcx_input"></el-input>
               </el-col>
               <el-col :span="7" :offset="1">
-                <div style="margin-top: 5%;color:rgba(87,154,255,1);">模糊查询&nbsp;&nbsp;<el-checkbox v-model="nameMHCX" ref="nameMHCX" class="zhcx_checkbox"></el-checkbox>
+                <div style="margin-top: 5%;color:white;">模糊查询&nbsp;&nbsp;<el-checkbox v-model="nameMHCX" ref="nameMHCX" class="zhcx_checkbox"></el-checkbox>
                 </div>
               </el-col>
             </el-row>
@@ -20,7 +20,7 @@
                 <el-input v-model="sums.idcard" placeholder="请输入身份证号" style="width: 90%;color:white;" class="zhcx_input" ></el-input>
               </el-col>
               <el-col :span="7" :offset="1">
-                <div style="margin-top: 5%;color:rgba(87,154,255,1);">模糊查询&nbsp;&nbsp;<el-checkbox v-model="idcardMHCX" id="idcardMHCX" class="zhcx_checkbox"></el-checkbox>
+                <div style="margin-top: 5%;color:white;">模糊查询&nbsp;&nbsp;<el-checkbox v-model="idcardMHCX" id="idcardMHCX" class="zhcx_checkbox"></el-checkbox>
                 </div>
               </el-col>
             </el-row>

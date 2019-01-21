@@ -84,7 +84,7 @@ export default {
         if (valid) {
           this.$axios({
             method: 'post',
-            url: '/zc/login',
+            url: '/login',
             data: {
               "username": this.ruleForm2.account,
               "password": this.ruleForm2.pass
@@ -142,7 +142,7 @@ export default {
 <style scoped>
 #login{
   height: 1080px;
-  background-image: url('/static/img/login.png');
+  background-image: url('/static/img/login2.png');
   background-repeat: no-repeat;
   background-size: 100% 100%;
   color: azure;
