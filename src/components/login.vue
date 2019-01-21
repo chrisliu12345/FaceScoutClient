@@ -17,14 +17,13 @@
             </el-form-item>
             <el-form-item label="" prop="pass">
               <img slot="label" src="/static/img/pass.png"></img>
-              <el-input type="password" v-model="ruleForm2.pass" autocomplete="off" id="pass" placeholder="请输入密码"></el-input>
+              <el-input type="password" v-model="ruleForm2.pass" autocomplete="off" id="pass" placeholder="请输入密码" @keyup.enter.native="submitForm('ruleForm2')"></el-input>
             </el-form-item>
 
-              <el-button type="primary" @click="submitForm('ruleForm2')" style="background-color: #68B709;width: 89%;margin-left:11%">提交</el-button>
+              <el-button type="primary"  @click="submitForm('ruleForm2')" style="background-color: #68B709;width: 89%;margin-left:11%">提交</el-button>
               <!--<el-button @click="resetForm('ruleForm2')">重置</el-button>
+
               <el-button type="success" @click="register">注册</el-button>-->
-
-
           </el-form>
         </div>
       </el-col>
@@ -163,5 +162,8 @@ export default {
 }
 .bg-purple{
   background: transparent!important;
+}
+.enterInput{
+  opacity:0!important;;
 }
 </style>
