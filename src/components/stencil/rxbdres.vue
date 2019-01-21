@@ -50,7 +50,7 @@
             <el-input v-model="ruleForm.agemax" style="width: 55px;margin-right: 10%" maxlength="3" class="rxbd_sxtj"></el-input>
             性别:&nbsp;&nbsp;<el-radio-group v-model="ruleForm.sex" style="margin-right: 10%">
             <el-radio :label="1" class="rxbd_sxtj">男</el-radio>
-            <el-radio :label="2" class="rxbd_sxtj">女</el-radio>
+            <el-radio :label="0" class="rxbd_sxtj">女</el-radio>
           </el-radio-group>
             民族:&nbsp;&nbsp;
             <el-select v-model="ruleForm.nation" placeholder="请选择" style="width: 95px" class="rxbd_sxtj">

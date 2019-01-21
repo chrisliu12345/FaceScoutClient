@@ -115,11 +115,13 @@ export default {
 
 <style>
 .hjcccard .el-dialog{
-  background:RGBA(16, 127, 169, 0.9);
+  background:url("/static/img/tck_back.png") no-repeat;
+  background-size:100% 100%;
   font-color: white;
 }
 
 .hjcccard .el-dialog .el-dialog__body{
+  margin-left: 20px;
   color: white;
 }
 
