@@ -31,14 +31,11 @@
         <el-card class="box-card box-card_zhcx" >
           <div class="highLine_zhcx"><span>高级筛选</span></div>
           <br>
-          <div align="left" style="margin-left: 5%;margin-bottom: 15px; font-size: 14px" >
+          <div align="left" style="margin-left: 10%;margin-bottom: 15px; font-size: 14px" >
             <el-row :gutter="24">
               <el-col :span="22">
-                性别:&nbsp;&nbsp;&nbsp;<el-radio-group v-model="highData.sex" style="margin-right: 10%">
-                <el-radio :label="1" class="zhcx_radio">男</el-radio>
-                <el-radio :label="2" class="zhcx_radio">女</el-radio>
-              </el-radio-group>
-                籍贯:&nbsp;<el-select v-model="highData.jgsheng" value-key="v" @change="selectJgPro" placeholder="请选择" style="width: 150px" class="zhcxSelect">
+
+                籍贯:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<el-select v-model="highData.jgsheng" value-key="v" @change="selectJgPro" placeholder="请选择" style="width: 150px" class="zhcxSelect">
                 <el-option
                   v-for="item,index in prooptionsjg"
                   :key="index"
@@ -61,7 +58,11 @@
                     :label="item.n"
                     :value="item">
                   </el-option>
-                </el-select>
+                </el-select>&nbsp;&nbsp;&nbsp;
+                性别:&nbsp;&nbsp;&nbsp;<el-radio-group v-model="highData.sex" style="margin-left: 2%">
+                <el-radio :label="1" class="zhcx_radio">男</el-radio>
+                <el-radio :label="2" class="zhcx_radio">女</el-radio>
+              </el-radio-group>
                 <br><br>
                 出生地:&nbsp;<el-select v-model="highData.csdsheng" value-key="v" @change="selectCsdPro" placeholder="请选择" style="width: 150px" class="zhcxSelect">
                 <el-option
@@ -87,11 +88,13 @@
                     :value="item">
                   </el-option>
                 </el-select>
+                <el-button type="primary"  size="small" style="margin-left: 5%" @click="goReset">重置</el-button>
+                <el-button type="success"  size="small"  @click="goSearch">查询</el-button>
               </el-col>
-              <el-col :span="2">
+             <!-- <el-col :span="2">
                 <br><br>
                 <el-button type="success" style="width: 70px;height: 50px;position:relative;left:-60px;" @click="goSearch">查询</el-button>
-              </el-col>
+              </el-col>-->
             </el-row>
 
           </div>
@@ -201,25 +204,7 @@
           name: '',
           idCard: ''
         },
-        tableData: [/*{
-          name: '郄梦岩',
-          sex: '女',
-          nation: '汉族',
-          idCard: '110224199112100339',
-          type: "？？？",
-          predecessor: "否",
-          birth: "北京市大兴区",
-          place: "北京市大兴区"
-        }, {
-          name: '郄梦岩',
-          sex: '女',
-          nation: '汉族',
-          idcard: '110224199112100339',
-          type: "？？？",
-          predecessor: "否",
-          birth: "北京市大兴区",
-          place: "北京市大兴区"
-        }*/],
+        tableData: [],
         highData: {
           sex: 1,
           jgsheng:'',
@@ -229,22 +214,6 @@
           csdshi:'',
           csdqu:''
         },
-        options: [{
-          value: 1,
-          label: '黄金糕'
-        }, {
-          value: 2,
-          label: '双皮奶'
-        }, {
-          value: 3,
-          label: '蚵仔煎'
-        }, {
-          value: 4,
-          label: '龙须面'
-        }, {
-          value: 5,
-          label: '北京烤鸭'
-        }],
         tableDataSum:[],
         currentPage: 1,
         pageSize:8,
@@ -295,6 +264,9 @@
       },
       getheaderClass({row, column, rowIndex, columnIndex}) {
         return "color:white;opacity: 1;background-color: rgba(255,255,255,0.5)!important";
+      },
+      goReset(){
+        Object.assign(this.$data, this.$options.data());
       },
       goSearch(){
           console.log(this.idcardMHCX);

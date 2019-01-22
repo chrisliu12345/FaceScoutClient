@@ -81,7 +81,7 @@ export default {
       language: sessionStorage.language || '中文',
       userInfo: sessionStorage.getItem('userInfo'),
       imageUrl: '',
-      isSelect:1
+      isSelect:1,
     }
   },
   mounted: function () {
