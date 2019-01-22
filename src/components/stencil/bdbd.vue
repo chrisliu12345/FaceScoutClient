@@ -16,7 +16,7 @@
         <div style="margin-bottom: 13%;margin-top: 23%">
           <span>请选择对比图像A</span>
         </div>
-        <img :src="imageUrl1" class="image avatar">
+        <img :src="imageUrl1" class="bdbdimage avatar">
         <div style="padding: 16px;">
           <span style="font-size: 14px;">请上传单人图片</span>
           <div style="margin-top: 15%" >
@@ -36,11 +36,11 @@
         <div style="margin-bottom: 5%;margin-top: 8%">
           <span>人脸图像A</span>
         </div>
-        <div ><img :src="localImgUrl1" class="image2 avatar"></div>
+        <div ><img :src="localImgUrl1" class="bdbdimage2 avatar"></div>
         <div style="margin-top: 10%;margin-bottom: 10%" >
           <el-button type="success" style="width: 180px; height: 50px;font-size: 17px;" @click="bddb_ksdb">开始对比</el-button>
         </div>
-        <div ><img :src="localImgUrl2" class="image2 avatar"></div>
+        <div ><img :src="localImgUrl2" class="bdbdimage2 avatar"></div>
         <div style="margin-top: 7%">
           <span>人脸图像B</span>
         </div>
@@ -49,7 +49,7 @@
       <el-col :span="7" ><div style="border-color: #0074D9"><div style="margin-bottom: 13%;margin-top: 23%">
         <span>请选择对比图像B</span>
       </div>
-        <img :src="imageUrl2" class="image avatar">
+        <img :src="imageUrl2" class="bdbdimage avatar">
         <div style="padding: 14px;font-size: 14px;">
           <span>请上传单人图片</span>
           <div style="margin-top: 15%" >
@@ -189,17 +189,17 @@
   .icon-right {
     margin-right: 15px;
   }
-  .image {
-    margin-left: 30%;
-    width: 220px;
-    height: 240px;
-    display: block;
+  .bdbdimage {
+    margin-left: 32%!important;
+    width: 171px!important;
+    height: 240px!important;
+    display: block!important;
   }
-  .image2 {
-    margin-left: 34%;
-    width: 160px;
-    height: 180px;
-    display: block;
+  .bdbdimage2 {
+    margin-left: 37%!important;
+    width: 128px!important;
+    height: 180px!important;
+    display: block!important;
   }
   .avatar {
     vertical-align: middle;
