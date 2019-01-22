@@ -26,7 +26,7 @@
           </el-card>
         </div>
       </el-col>
-      <el-col :span="11" :offset="2">
+      <el-col :span="12" :offset="1">
         <el-card class="box-card box_card_rxbd ">
           <div align="center" class="highLine_rxbd"><span >人脸图像</span><br>
 
@@ -340,6 +340,9 @@
     z-index: 333;
     color: white;
   }
+  .tjbutton span{
+    color: white!important;
+  }
   .rxbd_sxtj>.el-input--suffix>.el-input__inner{
     background-color: rgba(255,255,255,0);
     border: 2px solid rgba(47,123,165,1);
@@ -350,11 +353,7 @@
     border: 2px solid rgba(47,123,165,1);
     color:white;
   }
-  .rxbd_sxtj>.el-input__inner{
-    background-color: rgba(255,255,255,0);
-    border: 2px solid rgba(47,123,165,1);
-    color:white;
-  }
+
   .rxbd_sxtj>span[aria-checked="mixed"]>.el-checkbox__inner{
     background-color: rgba(255,255,255,0) !important;
     border: 1px solid rgba(47,123,165,1);
@@ -378,5 +377,7 @@
     background-position-y: bottom;
   }
 
-
+  .el-checkbox+.el-checkbox{
+    margin-left: 10px!important;
+  }
 </style>
