@@ -75,9 +75,9 @@
               class="rxrkDate">
               </el-date-picker>
             </el-form-item>
-            <el-form-item label="籍贯:" style="margin-left: 20px;margin-bottom:10px;" prop="nativePlace">
+            <el-form-item label="籍贯:" style="margin-left: 20px;margin-bottom:10px;" prop="">
 
-              <el-select v-model="baseInfoForm.sheng" value-key="v" @change="selectPro" placeholder="请选择"  class="rxrkSelect jgSelect">
+              <el-select v-model="baseInfoForm.sheng" value-key="v" @change="selectPro" placeholder="请选择"  class="rxrkSelect jgSelect" value="">
                 <el-option
                   v-for="item,index in prooptions"
                   :key="index"
@@ -85,7 +85,7 @@
                   :value="item">
                 </el-option>
               </el-select>
-              <el-select v-model="baseInfoForm.shi" value-key="v" @change="selectShi" placeholder="请选择"  class="rxrkSelect jgSelect">
+              <el-select v-model="baseInfoForm.shi" value-key="v" @change="selectShi" placeholder="请选择"  class="rxrkSelect jgSelect" value="">
                 <el-option
                   v-for="item in shioptions"
                   :key="item.v"
@@ -93,7 +93,7 @@
                   :value="item">
                 </el-option>
               </el-select>
-              <el-select v-model="baseInfoForm.qu" value-key="v"  placeholder="请选择" class="rxrkSelect jgSelect">
+              <el-select v-model="baseInfoForm.qu" value-key="v"  placeholder="请选择" class="rxrkSelect jgSelect" value="">
                 <el-option
                   v-for="item in quoptions"
                   :key="item.v"
@@ -304,6 +304,9 @@
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
+        this.baseInfoForm.sheng='';
+        this.baseInfoForm.shi='';
+        this.baseInfoForm.qu='';
       },
     },
 

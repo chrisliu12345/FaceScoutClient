@@ -236,16 +236,22 @@
         if(this.ruleForm.file === ''){
           return this.$message.error('请先上传人脸照片!');
         }
-        if(this.ruleForm.type.length == 0){
+        if(parseInt(this.ruleForm.agemin)<0||parseInt(this.ruleForm.agemax)<0){
+          return this.$message.error('年龄必须大于0!');
+        }
+        if(parseInt(this.ruleForm.agemin)>parseInt(this.ruleForm.agemax)){
+          return this.$message.error('年龄段最小值不能大于最大值！');
+        }
+        if(this.ruleForm.type.length === 0){
           return this.$message.error('请选择人员类型!');
         }
-        if(this.sheng != ''){
+        if(this.sheng !== ''){
           this.ruleForm.pcc = this.sheng['v']
         }
-        if(this.shi != ''){
+        if(this.shi !== ''){
           this.ruleForm.pcc = this.sheng['v'] + this.shi['v']
         }
-        if(this.qu != ''){
+        if(this.qu !== ''){
           this.ruleForm.pcc = this.sheng['v'] + this.shi['v'] + this.qu['v']
         }
         var _this= this

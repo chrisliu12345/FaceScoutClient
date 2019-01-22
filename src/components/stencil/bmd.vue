@@ -32,6 +32,12 @@
           <div style="padding-top: 25%" class="bmd_font" v-show="bmdFail">
             添加失败!
           </div>
+          <div style="padding-top: 25%" class="bmd_font" v-show="bmdUpdateSuccess">
+            更新成功!
+          </div>
+          <div style="padding-top: 25%" class="bmd_font" v-show="bmdUpdateFail">
+            更新失败!
+          </div>
         </el-card>
       </el-col>
       <el-col :span="13">
@@ -103,6 +109,8 @@
       return {
         labelPosition: 'right',
         bmdSuccess:false,
+        bmdUpdateSuccess:false,
+        bmdUpdateFail:false,
         bmdFail:false,
         pageCount:0,
         whiteDate: {
@@ -233,10 +241,14 @@
                     /*this.$alert('添加成功！');*/
                     this.bmdSuccess=true;
                     this.bmdFail=false;
+                    this.bmdUpdateSuccess=false
+                    this.bmdUpdateFail=false
                     this.getBmdList();
                   }else{
                     this.bmdSuccess=false;
                     this.bmdFail=true;
+                    this.bmdUpdateSuccess=false
+                    this.bmdUpdateFail=false
                   }
                   /*if (res.data.code === '401') {
                    this.$alert('账号或密码错误，请重新输入')
@@ -269,12 +281,16 @@
                     console.log(res.data)
                     //此处用来处理添加成功信息
                     /*this.$alert('添加成功！');*/
-                    this.bmdSuccess=true;
-                    this.bmdFail=false;
+                    this.bmdSuccess=false
+                    this.bmdFail=false
+                    this.bmdUpdateSuccess=true
+                    this.bmdUpdateFail=false
                     this.getBmdList();
                   }else{
-                    this.bmdSuccess=false;
-                    this.bmdFail=true;
+                    this.bmdSuccess=false
+                    this.bmdFail=false
+                    this.bmdUpdateSuccess=false
+                    this.bmdUpdateFail=true
                   }
                   /*if (res.data.code === '401') {
                    this.$alert('账号或密码错误，请重新输入')
