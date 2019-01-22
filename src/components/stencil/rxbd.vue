@@ -35,7 +35,7 @@
             <img :src="imageUrl2" class="img2">
           </div>
         </el-card>
-        <div class="sctpwc" ><span>上传图片完成，请选择条件或者直接点击开始对比!</span></div>
+        <div class="sctpwc" ><span>上传图片完成，请选择条件或者直接点击开始对比</span></div>
         <el-card class="box-card box_card_rxbd">
           <div align="center"><span>筛选条件</span><br><br><br></div>
           <div align="left" style="font-size: 15px;margin-left: 5%">
@@ -103,9 +103,12 @@
             <el-form>
               <el-form-item label="类型:" class="type-label">
                 <el-checkbox-group v-model="ruleForm.type">
+                  <div align="left">
                   <el-checkbox v-for="ct in types" :label="ct.value" :key="ct.value"  class="rxbd_sxtj">{{ct.label}}</el-checkbox>
+                  </div>
                 </el-checkbox-group>
               </el-form-item>
+
             </el-form>
           </div>
         </el-card>
@@ -378,6 +381,6 @@
   }
 
   .el-checkbox+.el-checkbox{
-    margin-left: 10px!important;
+    margin-left: 30px!important;
   }
 </style>
