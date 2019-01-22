@@ -19,6 +19,7 @@
           <router-link :to="item.router" class="Underline ele-menu-item-font">
             {{item.title}}</router-link>
         </el-menu-item>
+       <el-menu-item index="1000-4" @click="onLogout" class="ele-menu-item-font" style="margin-left: 15%">退出</el-menu-item>
 
       </el-menu>
       <!--<el-col :span="6">
