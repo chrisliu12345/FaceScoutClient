@@ -178,6 +178,7 @@ import {StatusData} from "@/basedata/statusData.js"
 import {citydata} from "@/basedata/citydata-debug.js"
 import processSlider from '@/components/stencil/ProcessSlider'
 
+
 export default {
   name: "rxbdres",
   components:{
@@ -422,6 +423,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

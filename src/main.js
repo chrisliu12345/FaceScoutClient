@@ -11,8 +11,11 @@ import i18n from './i18n/langs/index'
 import VideoPlayer from 'vue-video-player'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/display.css'
+import '../static/css/rxbdres.css';
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
+
+
 Vue.use(ElementUI)
 Vue.use(VideoPlayer)
 Vue.prototype.$axios = axios
