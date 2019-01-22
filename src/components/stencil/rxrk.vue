@@ -18,7 +18,7 @@
         </el-row>
         <el-row>
           <el-col :span="11" :offset="6" >
-            <p style="font-size: 13px">请上传单人图片!</p>
+            <p style="font-size: 13px">请上传单人图片</p>
           </el-col>
         </el-row>
 
@@ -70,7 +70,7 @@
               <el-date-picker
                 v-model="baseInfoForm.birthday"
                 type="date"
-                placeholder="请输入出生年月"
+                placeholder="请选择出生年月"
                 style="width:265px;"
               class="rxrkDate">
               </el-date-picker>

@@ -8,19 +8,19 @@
       <el-col :span="6" :offset="8">
         <div class="grid-content bg-purple" style="margin-top:500px;margin-left: 100px">
 
-          <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px"
+          <el-form :model="ruleForm2" status-icon :rules="rules2"  ref="ruleForm2" label-width="100px" inline-message
                    class="demo-ruleForm">
 
-            <el-form-item  prop="account" class="account">
+            <el-form-item  prop="account" class="account" >
               <img slot="label" src="/static/img/account.png"></img>
               <el-input type="text" v-model="ruleForm2.account" autocomplete="off" id="account" placeholder="请输入用户名"></el-input>
             </el-form-item>
-            <el-form-item label="" prop="pass">
+            <el-form-item label="" prop="pass" inline-message>
               <img slot="label" src="/static/img/pass.png"></img>
               <el-input type="password" v-model="ruleForm2.pass" autocomplete="off" id="pass" placeholder="请输入密码" @keyup.enter.native="submitForm('ruleForm2')"></el-input>
             </el-form-item>
 
-              <el-button type="primary"  @click="submitForm('ruleForm2')" style="background-color: #68B709;width: 89%;margin-left:11%">提交</el-button>
+              <el-button type="primary"  @click="submitForm('ruleForm2')" style="background-color: #68B709;width: 89%;margin-left:11%">登录</el-button>
               <!--<el-button @click="resetForm('ruleForm2')">重置</el-button>
 
               <el-button type="success" @click="register">注册</el-button>-->
@@ -64,14 +64,17 @@ export default {
       ruleForm2: {
         pass: '',
         account: '',
-        show2: true
+        show2: true,
+
       },
       rules2: {
         pass: [
           {validator: validatePass, trigger: 'blur'}
+
         ],
         account: [
           {validator: validateAccount, trigger: 'blur'}
+
         ]
       }
     }
@@ -92,10 +95,8 @@ export default {
               'Authorization': ' '
             }
           }).then(res => { // res是返回结果
-            if (res.data.code === '401') {
-              this.$alert('账号或密码错误，请重新输入')
-            } else {
-              console.log(res.data)
+            console.log(res);
+            if (res.status === 200) {
               // 将token存储到浏览器请求头
               /*this.userToken = 'Bearer ' + res.data.token*/
               this.userToken = res.headers.authorization
@@ -108,9 +109,11 @@ export default {
               this.$router.push('/rxrk')
               // this.$alert('登陆成功')
               this.open7(res.data.name)
+            } else {
+              this.$alert('服务正在维护，请稍后再试！')
             }
           }).catch(err => { // 请求失败就会捕获报错信息
-            console.log('服务正在维护，请稍后再试！')
+            this.$alert('账号或密码错误，请重新输入');
             console.log(err)
           })
         } else {

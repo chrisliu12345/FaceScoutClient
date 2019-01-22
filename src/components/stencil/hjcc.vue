@@ -43,7 +43,7 @@
             </el-option>
           </el-select>
           <el-button type="success" style="margin-left: 15px;" size="small" @click="startSearch">查询</el-button>
-          <label style="margin-left: 25px">(已选择2项)</label>
+          <label style="margin-left: 25px">(已选择{{selectCount}}项)</label>
           <el-button type="primary" plain size="small" @click="toggleSelection()">取消</el-button>
           <el-button type="primary" plain size="small" @click="exportData">确认导出</el-button>
           <label style="margin-left: 25px">每</label>
@@ -187,7 +187,8 @@ export default {
       timeH:'',
       timeOptions:[],
       dateH:'',
-      dateOptions:[]
+      dateOptions:[],
+      selectCount:0
     }
   },
   components:{
@@ -239,6 +240,7 @@ export default {
     handleSelectionChange (val) {
       console.log(val)
       this.multipleSelection=val;
+      this.selectCount=val.length;
 
     },
     //取消按钮
