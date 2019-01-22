@@ -58,8 +58,8 @@
                     :label="item.n"
                     :value="item">
                   </el-option>
-                </el-select>&nbsp;&nbsp;&nbsp;
-                性别:&nbsp;&nbsp;&nbsp;<el-radio-group v-model="highData.sex" style="margin-left: 2%">
+                </el-select>
+                <span style="margin-left: 5%">性别:</span>&nbsp;&nbsp;&nbsp;<el-radio-group v-model="highData.sex" >
                 <el-radio :label="1" class="zhcx_radio">男</el-radio>
                 <el-radio :label="2" class="zhcx_radio">女</el-radio>
               </el-radio-group>
@@ -89,7 +89,7 @@
                   </el-option>
                 </el-select>
                 <el-button type="primary"  size="small" style="margin-left: 5%" @click="goReset">重置</el-button>
-                <el-button type="success"  size="small"  @click="goSearch">查询</el-button>
+                <el-button type="success"  size="small"  @click="goSearch" style="margin-left: 5%">查询</el-button>
               </el-col>
              <!-- <el-col :span="2">
                 <br><br>
