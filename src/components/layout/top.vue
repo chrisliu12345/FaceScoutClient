@@ -100,7 +100,7 @@ if(this.$route.path=='/rxbdzh'){
 }else if(this.$route.path=='/hjcc'){
   this.activeIndex='6';
 }else{
-  this.activeIndex=1;
+  this.activeIndex='1';
 }
 },
   methods: {

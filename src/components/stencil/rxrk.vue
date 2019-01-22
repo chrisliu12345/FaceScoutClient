@@ -2,160 +2,162 @@
   <div class="rxrk">
     <el-card class="box-card box-card_rxrk">
       <el-row>
-      <el-col :span="6" :offset="0" style="color:white;">
-        <!--<el-row>
-          <el-col :span="11" :offset="3" >
-            <p class="highLine" >请选择图像</p>
-          </el-col>
-        </el-row>-->
-        <div class="highLine">
-          <span>请选择图像</span>
-        </div>
-        <el-row>
-          <el-col :span="11" :offset="2" >
-            <img :src="imageUrl1" class="image_rxrk">
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="11" :offset="6" >
-            <p style="font-size: 13px">请上传单人图片</p>
-          </el-col>
-        </el-row>
-
-       <el-row >
-        <el-upload
-          class="upload-demo"
-          action="/face/common/checkPhoto"
-          :headers="myHeaders"
-          auto-upload
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess1"
-          :before-upload="beforeAvatarUpload">
-          <el-button  type="primary" style="width: 150px;margin-top: 50px;">浏览图片</el-button>
-        </el-upload>
-      </el-row>
-
-
-      </el-col>
-      <el-col :span="6" :offset="5">
-        <el-row>
-
+        <el-col :span="6" :offset="0" style="color:white;">
+          <!--<el-row>
+            <el-col :span="11" :offset="3" >
+              <p class="highLine" >请选择图像</p>
+            </el-col>
+          </el-row>-->
+          <div class="highLine">
+            <span>请选择图像</span>
+          </div>
           <el-row>
-            <el-col :span="11" :offset="7" >
-              <p class="highLine" >基础信息</p>
+            <el-col :span="11" :offset="2" >
+              <img :src="imageUrl1" class="image_rxrk">
             </el-col>
           </el-row>
-          <el-form ref="baseInfoForm" :label-position="labelPosition" :model="baseInfoForm" label-width="80px" style="color:white;">
-            <el-form-item label="入库类型:" style="margin-left: 20px;margin-top:5%;margin-bottom: 10px;" prop="rktype">
-              <el-select v-model="baseInfoForm.rktype" placeholder="请选择类型" style="width:265px;height:36px;" class="rxrkSelect">
-                <el-option
-                  v-for="(item,index) in rkType"
-                  :key="index"
-                  :label="item.n"
-                  :value="item.v">
-                </el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item :label-position="labelPosition" label="身份证号码:" label-width="100px" style="margin-bottom: 10px;" prop="sfID">
-              <el-input v-model="baseInfoForm.sfID" placeholder="请输入18位身份证号" class="rxrk_jcxx" id="idcard" @blur="pdcsny"></el-input>
-            </el-form-item>
-            <el-form-item :label-position="labelPosition" label="姓名:" label-width="100px" style="margin-bottom: 10px;" prop="name">
-              <el-input v-model="baseInfoForm.name" placeholder="请输入姓名" class="rxrk_jcxx"></el-input>
-            </el-form-item>
-            <el-form-item :label-position="labelPosition" label="性别:" label-width="100px" style="margin-bottom: 10px;" prop="gender">
-              <el-radio v-model="baseInfoForm.gender" label="1" class="rxrk_radio">男</el-radio>
-              <el-radio v-model="baseInfoForm.gender" label="2" class="rxrk_radio">女</el-radio>
-            </el-form-item>
-            <el-form-item :label-position="labelPosition" label="出生年月:" label-width="100px" style="margin-bottom: 10px;" prop="birthday">
-              <el-date-picker
-                v-model="baseInfoForm.birthday"
-                type="date"
-                placeholder="请选择出生年月"
-                style="width:265px;"
-              class="rxrkDate">
-              </el-date-picker>
-            </el-form-item>
-            <el-form-item label="籍贯:" style="margin-left: 20px;margin-bottom:10px;" prop="">
+          <el-row>
+            <el-col :span="11" :offset="6" >
+              <p style="font-size: 13px" ref="tssctu" v-if="showtssc">请上传单人图片</p>
+              <img :src="upsuUrl" v-if="showtssucc">
+            </el-col>
+          </el-row>
 
-              <el-select v-model="baseInfoForm.sheng" value-key="v" @change="selectPro" placeholder="请选择"  class="rxrkSelect jgSelect" value="">
-                <el-option
-                  v-for="item,index in prooptions"
-                  :key="index"
-                  :label="item.n"
-                  :value="item">
-                </el-option>
-              </el-select>
-              <el-select v-model="baseInfoForm.shi" value-key="v" @change="selectShi" placeholder="请选择"  class="rxrkSelect jgSelect" value="">
-                <el-option
-                  v-for="item in shioptions"
-                  :key="item.v"
-                  :label="item.n"
-                  :value="item">
-                </el-option>
-              </el-select>
-              <el-select v-model="baseInfoForm.qu" value-key="v"  placeholder="请选择" class="rxrkSelect jgSelect" value="">
-                <el-option
-                  v-for="item in quoptions"
-                  :key="item.v"
-                  :label="item.n"
-                  :value="item">
-                </el-option>
-              </el-select>
-            </el-form-item>
+          <el-row >
+            <el-upload
+              class="upload-demo"
+              action="/face/common/checkPhoto"
+              :headers="myHeaders"
+              auto-upload
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess1"
+              :before-upload="beforeAvatarUpload">
+              <el-button  type="primary" style="width: 150px;margin-top: 50px;">浏览图片</el-button>
+            </el-upload>
+          </el-row>
 
 
+        </el-col>
+        <el-col :span="6" :offset="5">
+          <el-row>
 
-            <el-form-item label="民族:" style="margin-left: 20px;margin-bottom: 10px;" prop="nation">
-              <el-select v-model="baseInfoForm.nation" placeholder="请选择民族" style="width:265px;" class="rxrkSelect">
-                <el-option
-                  v-for="(item,index) in mzoptions"
-                  :key="index"
-                  :label="item.n"
-                  :value="item.v"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="宗教信仰:" style="margin-left: 20px;margin-bottom: 10px;" prop="faith">
-              <el-select v-model="baseInfoForm.faith" placeholder="请选择宗教信仰" style="width:265px;" class="rxrkSelect">
-                <el-option
-                  v-for="(item,index) in zjoptions"
-                  :key="index"
-                  :label="item.n"
-                  :value="item.v"
-                 ></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="文化程度:" style="margin-left: 20px;margin-bottom: 10px;" prop="educationDegree">
-              <el-select v-model="baseInfoForm.educationDegree" placeholder="请选择文化程度" style="width:265px;" class="rxrkSelect">
-                <el-option
-                  v-for="(item,index) in whcdoptions"
-                  :key="index"
-                  :label="item.n"
-                  :value="item.v"
-                ></el-option>
-              </el-select>
-            </el-form-item>
-          </el-form>
-        </el-row>
+            <el-row>
+              <el-col :span="11" :offset="7" >
+                <p class="highLine" >基础信息</p>
+              </el-col>
+            </el-row>
+            <el-form ref="baseInfoForm" :label-position="labelPosition" status-icon :rules="rules2" :model="baseInfoForm" label-width="80px" style="color:white;">
+              <el-form-item label="入库类型:" style="margin-left: 20px;margin-top:5%;margin-bottom: 10px;" prop="rktype">
+                <el-select v-model="baseInfoForm.rktype" placeholder="请选择类型" style="width:265px;height:36px;" class="rxrkSelect">
+                  <el-option
+                    v-for="(item,index) in rkType"
+                    :key="index"
+                    :label="item.n"
+                    :value="item.v">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item :label-position="labelPosition" label="身份证号码:" label-width="100px" style="margin-bottom: 10px;" prop="sfID">
+                <el-input v-model="baseInfoForm.sfID" placeholder="请输入18位身份证号" class="rxrk_jcxx" id="idcard" @blur="pdcsny"></el-input>
+              </el-form-item>
+              <el-form-item :label-position="labelPosition" label="姓名:" label-width="100px" style="margin-bottom: 10px;" prop="name">
+                <el-input v-model="baseInfoForm.name" placeholder="请输入姓名" class="rxrk_jcxx"></el-input>
+              </el-form-item>
+              <el-form-item :label-position="labelPosition" label="性别:" label-width="100px" style="margin-bottom: 10px;" prop="gender">
+                <el-radio v-model="baseInfoForm.gender" label="1" class="rxrk_radio">男</el-radio>
+                <el-radio v-model="baseInfoForm.gender" label="2" class="rxrk_radio">女</el-radio>
+              </el-form-item>
+              <el-form-item :label-position="labelPosition" label="出生年月:" label-width="100px" style="margin-bottom: 10px;" prop="birthday">
+                <el-date-picker
+                  :picker-options="pickerBeginDateBefore"
+                  v-model="baseInfoForm.birthday"
+                  type="date"
+                  placeholder="请输入出生年月"
+                  style="width:265px;"
+                  class="rxrkDate">
+                </el-date-picker>
+              </el-form-item>
+              <el-form-item label="籍贯:" style="margin-left: 20px;margin-bottom:10px;" prop="nativePlace">
 
-        <el-row>
-          <el-col :span="11" :offset="8" >
-            <p class="highLine" >有效人脸</p>
-          </el-col>
-        </el-row>
-        <el-row >
-          <el-col :span="8">
-            <img :src="effectivImageUrl" class="image avatar effective_image" style="width: 43px; height: 60px;">
-          </el-col>
-          <el-col :span="8">
-            <el-button  type="primary" @click="submitForm('baseInfoForm')" style="width: 80px;margin-top:10px;">提交</el-button>
-          </el-col>
-          <el-col :span="8">
-            <el-button  type="primary" style="width:80px;margin-top:10px;" @click="resetForm('baseInfoForm')">重置</el-button>
-          </el-col>
-        </el-row>
+                <el-select v-model="baseInfoForm.sheng" value-key="v" @change="selectPro" placeholder="请选择"  class="rxrkSelect jgSelect">
+                  <el-option
+                    v-for="item,index in prooptions"
+                    :key="index"
+                    :label="item.n"
+                    :value="item">
+                  </el-option>
+                </el-select>
+                <el-select v-model="baseInfoForm.shi" value-key="v" @change="selectShi" placeholder="请选择"  class="rxrkSelect jgSelect">
+                  <el-option
+                    v-for="item in shioptions"
+                    :key="item.v"
+                    :label="item.n"
+                    :value="item">
+                  </el-option>
+                </el-select>
+                <el-select v-model="baseInfoForm.qu" value-key="v"  placeholder="请选择" class="rxrkSelect jgSelect">
+                  <el-option
+                    v-for="item in quoptions"
+                    :key="item.v"
+                    :label="item.n"
+                    :value="item">
+                  </el-option>
+                </el-select>
+              </el-form-item>
 
-      </el-col>
+
+
+              <el-form-item label="民族:" style="margin-left: 20px;margin-bottom: 10px;" prop="nation">
+                <el-select v-model="baseInfoForm.nation" placeholder="请选择民族" style="width:265px;" class="rxrkSelect">
+                  <el-option
+                    v-for="(item,index) in mzoptions"
+                    :key="index"
+                    :label="item.n"
+                    :value="item.v"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="宗教信仰:" style="margin-left: 20px;margin-bottom: 10px;" prop="faith">
+                <el-select v-model="baseInfoForm.faith" placeholder="请选择宗教信仰" style="width:265px;" class="rxrkSelect">
+                  <el-option
+                    v-for="(item,index) in zjoptions"
+                    :key="index"
+                    :label="item.n"
+                    :value="item.v"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+              <el-form-item label="文化程度:" style="margin-left: 20px;margin-bottom: 10px;" prop="educationDegree">
+                <el-select v-model="baseInfoForm.educationDegree" placeholder="请选择文化程度" style="width:265px;" class="rxrkSelect">
+                  <el-option
+                    v-for="(item,index) in whcdoptions"
+                    :key="index"
+                    :label="item.n"
+                    :value="item.v"
+                  ></el-option>
+                </el-select>
+              </el-form-item>
+            </el-form>
+          </el-row>
+
+          <el-row>
+            <el-col :span="11" :offset="8" >
+              <p class="highLine" >有效人脸</p>
+            </el-col>
+          </el-row>
+          <el-row >
+            <el-col :span="8">
+              <img :src="effectivImageUrl" class="image avatar effective_image" style="width: 43px; height: 60px;">
+            </el-col>
+            <el-col :span="8">
+              <el-button  type="primary" @click="submitForm('baseInfoForm')" style="width: 80px;margin-top:10px;">提交</el-button>
+            </el-col>
+            <el-col :span="8">
+              <el-button  type="primary" style="width:80px;margin-top:10px;" @click="resetForm('baseInfoForm')">重置</el-button>
+            </el-col>
+          </el-row>
+
+        </el-col>
       </el-row>
     </el-card>
   </div>
@@ -172,10 +174,40 @@
     components: {
     },
     data() {
+      var checkName = (rule, value, callback) => {
+        console.log(value.length);
+        var regHan = /[\u4e00-\u9fa5]/;
+        var regYing = /[a-zA-z]/;
+        var han = true;
+        var ying = true;
+        var valueArray = value.split('');
+        valueArray.forEach(v => {
+          if (!regHan.test(v)) {
+            han = false;
+          } else if (!regYing.test(v)) {
+            ying = false;
+          }
+        });
+      };
+        var checksfzh = (rule, value, callback) => {
+          var reg = /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[012])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/;
+          var city={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江 ",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北 ",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏 ",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外 "};
+          var sfzh = this.baseInfoForm.sfID;
+          var birthdate = sfzh.substring(6,10)+'-'+sfzh.substring(10,12)+'-'+sfzh.substring(12,14);
+          if(reg.test(sfzh)==false){
+            callback(new Error('身份证格式输入有误'));
+          }else if(!city[sfzh.substr(0,2)]){
+            callback(new Error('地址编码错误'));
+          }else if(birthdate>this.formatDate(new Date())){
+            callback(new Error('身份证格式输入有误'));
+          }else{
+            callback();
+          }
+        };
       return {
-          myHeaders:{
-            Authorization:sessionStorage.getItem('Authorization')
-          },
+        myHeaders:{
+          Authorization:sessionStorage.getItem('Authorization')
+        },
         prooptions:citydata,
         shioptions:[],
         quoptions:[],
@@ -200,25 +232,50 @@
           sheng:'',
           shi:'',
           qu:''
-        }
+        },
+        pickerBeginDateBefore:this.endDate(),
+        upsuUrl:'/static/img/succ.png',
+        showtssc:true,
+        showtssucc:false,
+        rules2: {
+          name: [
+            { validator: checkName, trigger: 'blur' }
+          ],
+          sfID:[
+            { validator: checksfzh, trigger: 'blur' }
+          ]
+        },
       }
     },
     mounted() {
 
     },
     methods: {
-      handleAvatarSuccess1(res, file) {
-          if(res.msg=='1'){
-            this.$message.error('照片中未检测到人像！');
-          }else if(res.msg=='2'){
-            this.$message.error('照片中检测到多个人像！');
-          }else{
-              this.$message('单人照片上传成功');
-            this.imageUrl1 = URL.createObjectURL(file.raw);
-            this.effectivImageUrl="data:image/jpeg;base64,"+res.img;
-            this.imgageName=res.imgPath;
+      endDate(){
+        return {
+          disabledDate(time){
+            return time.getTime() > Date.now()//开始时间不选时，结束时间最大值小于等于当天
           }
-
+        }
+      },
+      handleAvatarSuccess1(res, file) {
+        if(res.msg=='1'){
+          this.$message.error('未检测到人脸');
+          this.$refs.tssctu.style.color='red';
+        }else if(res.msg=='2'){
+          //this.$message.error('照片中检测到多个人像！');
+          this.$refs.tssctu.innerText='照片中检测到多个人像';
+          this.$refs.tssctu.style.color='red';
+        }else{
+          /*this.$message.success('单人照片上传成功');*/
+          this.$refs.tssctu.innerText='照片上传成功';
+          this.$refs.tssctu.style.color='green';
+          /*this.showtssc=false;
+           this.showtssucc=true;*/
+          this.imageUrl1 = URL.createObjectURL(file.raw);
+          this.effectivImageUrl="data:image/jpeg;base64,"+res.img;
+          this.imgageName=res.imgPath;
+        }
       },
       beforeAvatarUpload(file) {
 
@@ -244,10 +301,10 @@
         this.quoptions = this.baseInfoForm.shi['c']
       },
       submitForm (formName) {
-          if(this.imgageName==''){
-            this.$message.error('请先上传人脸照片');
-            return;
-          }
+        if(this.imgageName==''){
+          this.$message.error('请先上传人脸照片');
+          return;
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios({
@@ -274,14 +331,14 @@
                 console.log(res.data)
                 //此处用来处理添加成功信息
                 //this.$alert('提交成功！');
-                this.$message('提交成功');
+                this.$message.success('提交成功');
               }else{
                 //this.$alert('提交失败！');
                 this.$message.error('提交失败');
               }
               /*if (res.data.code === '401') {
-                this.$alert('账号或密码错误，请重新输入')
-              }*/
+               this.$alert('账号或密码错误，请重新输入')
+               }*/
             }).catch(err => { // 请求失败就会捕获报错信息
               console.log('服务正在维护，请稍后再试！')
               console.log(err)
@@ -292,22 +349,28 @@
           }
         })
       },
-      pdcsny(){
+      pdcsny(){//从输入身份证号码来判断出生年月
         var sfzh = this.baseInfoForm.sfID;
-        var reg = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-        if(reg.test(sfzh)==false){
-            this.$message.error("身份证格式输入有误!");
-            return;
-        }
         var birthdate = sfzh.substring(6,10)+'-'+sfzh.substring(10,12)+'-'+sfzh.substring(12,14);
         this.baseInfoForm.birthday=birthdate;
+        let sex = sfzh.substring(16,17);
+        if(sex%2==0){
+          this.baseInfoForm.gender='2';
+        }else{
+          this.baseInfoForm.gender='1';
+        }
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
-        this.baseInfoForm.sheng='';
-        this.baseInfoForm.shi='';
-        this.baseInfoForm.qu='';
       },
+      formatDate (date) {
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? '0' + m : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        return y + '-' + m + '-' + d;
+      }
     },
 
   }
