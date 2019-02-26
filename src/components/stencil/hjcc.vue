@@ -42,11 +42,12 @@
               :value="item.value">
             </el-option>
           </el-select>
-          <el-button type="success" style="margin-left: 15px;" size="small" @click="startSearch">查询</el-button>
-          <label style="margin-left: 25px">(已选择{{selectCount}}项)</label>
+          <el-button type="success" style="margin-left: 5px;" size="small" @click="startSearch">查询</el-button>
+          <el-button type="success" style="margin-left: 5px;" size="small" @click="reset">重置</el-button>
+          <label style="margin-left: 10px">(已选择{{selectCount}}项)</label>
           <el-button type="primary" plain size="small" @click="toggleSelection()">取消选择</el-button>
           <el-button type="primary" plain size="small" @click="exportData">确认导出</el-button>
-          <label style="margin-left: 25px">每</label>
+          <label style="margin-left: 10px">每</label>
           <el-select v-model="dateH"  class="hjinput_inner" style="width: 60px">
           <el-option
             v-for="item in dateOptions"
@@ -65,7 +66,7 @@
           </el-option>
         </el-select>
           <label>点更新特征</label>
-          &nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;
           <el-button type="primary" plain size="small" @click="updateTime">修改</el-button>
           <el-button type="primary" plain size="small" @click="updatedoNow">立即更新</el-button>
         </div>
@@ -111,6 +112,11 @@
             prop="time"
             label="时间"
           >
+          </el-table-column>
+          <el-table-column prop="state" label="状态">
+            <template slot-scope="scope" >
+              <p :class="stateClassPre + scope.row.state">{{getStateStr(scope.row.state)}}</p>
+            </template>
           </el-table-column>
           <el-table-column
             label="操作">
@@ -173,6 +179,7 @@ export default {
         value: 3,
         label: '确认其他'
       }],
+      typeStrings:['未处理','确认一人多证','确认不是同一人','确认其他'],
       sheng: '',
       shi: '',
       qu: '',
@@ -188,7 +195,8 @@ export default {
       timeOptions:[],
       dateH:'',
       dateOptions:[],
-      selectCount:0
+      selectCount:0,
+      stateClassPre:'state-'
     }
   },
   components:{
@@ -293,9 +301,32 @@ export default {
       this.qu = ''
       this.quoptions = this.shi['c']
     },
+    //重置查询条件
+    reset(){
+      this.sheng = ''
+      this.shi = ''
+      this.qu = ''
+      this.type = 0
+      this.quoptions = []
+      this.shioptions = []
+      this.startSearch()
+    },
+    //获取状态名称
+    getStateStr(index){
+      return this.typeStrings[index]
+    },
     //开始查询
     startSearch () {
-      let locationData = this.sheng + this.shi + this.qu
+      let locationData = ''
+      if(this.sheng != ''){
+        locationData = locationData + this.sheng['v']
+      }
+      if(this.shi != ''){
+        locationData = locationData + this.shi['v']
+      }
+      if(this.qu != ''){
+        locationData = locationData + this.qu['v']
+      }
       this.$axios({
         method: 'post',
         url: '/face/repeat/list',
@@ -439,5 +470,10 @@ export default {
     min-width: 1400px;
     margin-top: 5%;
   }
-
+  .state-1{
+    color: red;
+  }
+  .state-2{
+    color: #67c23a;
+  }
 </style>

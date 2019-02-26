@@ -65,7 +65,7 @@
               </el-form-item>
               <el-form-item :label-position="labelPosition" label="性别:" label-width="100px" style="margin-bottom: 10px;" prop="gender">
                 <el-radio v-model="baseInfoForm.gender" label="1" class="rxrk_radio">男</el-radio>
-                <el-radio v-model="baseInfoForm.gender" label="2" class="rxrk_radio">女</el-radio>
+                <el-radio v-model="baseInfoForm.gender" label="0" class="rxrk_radio">女</el-radio>
               </el-form-item>
               <el-form-item :label-position="labelPosition" label="出生年月:" label-width="100px" style="margin-bottom: 10px;" prop="birthday">
                 <el-date-picker
@@ -168,6 +168,7 @@
   import ElFormItem from "../../../node_modules/element-ui/packages/form/src/form-item";
   import {StatusData} from "@/basedata/statusData.js"
   import {citydata} from "@/basedata/citydata-debug.js"
+  import {IceIdcard} from '@/utils/IceIdcard.js'
 
   export default {
     name: "rxrk",
@@ -208,6 +209,7 @@
         myHeaders:{
           Authorization:sessionStorage.getItem('Authorization')
         },
+        errorinfo:'',
         prooptions:citydata,
         shioptions:[],
         quoptions:[],
@@ -305,6 +307,10 @@
           this.$message.error('请先上传人脸照片');
           return;
         }
+        if(! this.errorinfo ==''){
+          // this.$message.error(this.errorinfo);
+          return
+        }
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.$axios({
@@ -351,14 +357,42 @@
       },
       pdcsny(){//从输入身份证号码来判断出生年月
         var sfzh = this.baseInfoForm.sfID;
+        var param = IceIdcard.checkIdcard(sfzh)
+        if(param.result != 1){
+          this.errorinfo = param.error
+          //this.$message.error(param.error);
+          return;
+        }
+        this.errorinfo = ''
         var birthdate = sfzh.substring(6,10)+'-'+sfzh.substring(10,12)+'-'+sfzh.substring(12,14);
         this.baseInfoForm.birthday=birthdate;
         let sex = sfzh.substring(16,17);
         if(sex%2==0){
-          this.baseInfoForm.gender='2';
+          this.baseInfoForm.gender='0';
         }else{
           this.baseInfoForm.gender='1';
         }
+        for (let i = 0; i < citydata.length; i++) {
+          if (citydata[i]['v'] === (sfzh.substr(0, 2) + '')) {
+            this.baseInfoForm.sheng = citydata[i];
+            this.shioptions = this.baseInfoForm.sheng['c']
+            for (let j = 0; j < citydata[i]['c'].length; j++) {
+              if (citydata[i]['c'][j]['v'] === (sfzh.substr(2, 2) + '')) {
+                this.baseInfoForm.shi = citydata[i]['c'][j];
+                this.quoptions = this.baseInfoForm.shi['c']
+                for (let k = 0; k < this.quoptions.length; k++) {
+                  if (this.quoptions[k]['v'] === (sfzh.substr(4, 2) + '')) {
+                    this.baseInfoForm.qu = this.quoptions[k];
+                    return;
+                  }
+                }
+                return;
+              }
+            }
+            return;
+          }
+        }
+
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();

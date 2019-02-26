@@ -16,7 +16,7 @@
                 <el-input v-model="whiteDate.name" placeholder="请输入姓名" id="bmd_name" class="bmd_inputType"></el-input>
               </el-form-item>
               <el-form-item :label-position="labelPosition" label="身份证号码:" label-width="100px" style="margin-bottom: 10px;" prop="sfID">
-                <el-input v-model="whiteDate.idCard" placeholder="请输入18位身份证号" id="bmd_idCard" class="bmd_inputType"></el-input>
+                <el-input v-model="whiteDate.idCard" placeholder="请输入18位身份证号" id="bmd_idCard" class="bmd_inputType" @blur="pdcsny"></el-input>
               </el-form-item>
             </el-form>
           </div>
@@ -103,10 +103,13 @@
 </template>
 
 <script>
+  import {IceIdcard} from '@/utils/IceIdcard.js';
+
   export default {
     name: "bmd",
     data(){
       return {
+        errorinfo:'',
         labelPosition: 'right',
         bmdSuccess:false,
         bmdUpdateSuccess:false,
@@ -214,12 +217,19 @@
       getheaderClass({row, column, rowIndex, columnIndex}) {
         return "color:white;opacity: 1;background-color: rgba(255,255,255,0.5)!important";
       },
-      submitForm (formName,type) {
+      pdcsny(){
         var sfzh = this.whiteDate.idCard;
-        var reg = /(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-        if(reg.test(sfzh)==false){
-          this.$message.error("身份证格式输入有误!");
+        var param = IceIdcard.checkIdcard(sfzh)
+        if(param.result != 1){
+          this.errorinfo = param.error
+          this.$message.error(param.error);
           return;
+        }
+        this.errorinfo = ''
+      },
+      submitForm (formName,type) {
+        if(! this.errorinfo ==''){
+          return this.$message.error(this.errorinfo);
         }
           if(type=='add'){
             this.$refs[formName].validate((valid) => {
@@ -239,16 +249,10 @@
                     console.log(res.data)
                     //此处用来处理添加成功信息
                     /*this.$alert('添加成功！');*/
-                    this.bmdSuccess=true;
-                    this.bmdFail=false;
-                    this.bmdUpdateSuccess=false
-                    this.bmdUpdateFail=false
+                    this.$message.success("添加成功")
                     this.getBmdList();
                   }else{
-                    this.bmdSuccess=false;
-                    this.bmdFail=true;
-                    this.bmdUpdateSuccess=false
-                    this.bmdUpdateFail=false
+                    this.$message.error(res.data.msg)
                   }
                   /*if (res.data.code === '401') {
                    this.$alert('账号或密码错误，请重新输入')
@@ -278,19 +282,12 @@
                   }
                 }).then(res => { // res是返回结果
                   if(res.data.msg=="1"){
-                    console.log(res.data)
                     //此处用来处理添加成功信息
                     /*this.$alert('添加成功！');*/
-                    this.bmdSuccess=false
-                    this.bmdFail=false
-                    this.bmdUpdateSuccess=true
-                    this.bmdUpdateFail=false
+                    this.$message.success("修改成功")
                     this.getBmdList();
                   }else{
-                    this.bmdSuccess=false
-                    this.bmdFail=false
-                    this.bmdUpdateSuccess=false
-                    this.bmdUpdateFail=true
+                    this.$message.error(res.data.msg)
                   }
                   /*if (res.data.code === '401') {
                    this.$alert('账号或密码错误，请重新输入')
