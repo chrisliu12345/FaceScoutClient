@@ -167,6 +167,9 @@ export default {
       dialogFormVisible:false,
       mzoptions: StatusData['Nationality'],
       types: [{
+        value: '111',
+        label: '全部'
+      }, {
         value: 0,
         label: '未处理'
       }, {
@@ -183,7 +186,7 @@ export default {
       sheng: '',
       shi: '',
       qu: '',
-      type: '',
+      type: 0,
       tableData: [],
       pageSize: 10,
       currentPage4: 1,
@@ -213,6 +216,7 @@ export default {
         method: 'post',
         url: '/face/repeat/list',
         data: {
+          type: this.type,
           pageNum: 1,
           pageSize: 10
         }
